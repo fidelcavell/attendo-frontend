@@ -123,7 +123,7 @@ export default function AddLeaveApplicationDialog({
 
   return (
     <AlertDialog open={isOpen}>
-      <AlertDialogContent className="max-w-md">
+      <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Add Leave Application</AlertDialogTitle>
         </AlertDialogHeader>

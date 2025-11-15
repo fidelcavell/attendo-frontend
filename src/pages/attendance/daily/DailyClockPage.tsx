@@ -247,9 +247,6 @@ export default function DailyClockPage() {
           <p className="text-[11px] sm:text-xs text-muted-foreground">
             {currentTime}, {formatDate(new Date().toLocaleString())}
           </p>
-          <p>
-            asc
-          </p>
         </CardHeader>
 
         <Separator className="mb-4" />

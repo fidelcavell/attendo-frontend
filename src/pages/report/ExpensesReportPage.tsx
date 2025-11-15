@@ -108,7 +108,7 @@ export default function ExpensesReportPage() {
               </SelectContent>
             </Select>
           </div>
-          
+
           {/* Download as PDF button */}
           <Button
             onClick={handleDownloadReport}
@@ -271,7 +271,7 @@ export default function ExpensesReportPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center p-4 bg-blue-50 rounded-lg">
               <div className="text-2xl font-bold text-blue-600">
-                {expensesReport?.highestMonth?.amount > 0
+                {expensesReport?.highestMonth?.amount
                   ? (
                       ((expensesReport.highestMonth.amount -
                         (expensesReport.lowestMonth?.amount ?? 0)) /

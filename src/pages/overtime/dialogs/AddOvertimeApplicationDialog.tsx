@@ -4,7 +4,6 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -119,12 +118,9 @@ export default function AddOvertimeApplicationDialog({
 
   return (
     <AlertDialog open={isOpen}>
-      <AlertDialogContent className="max-w-md">
+      <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Add Overtime Application</AlertDialogTitle>
-          <AlertDialogDescription>
-            Fill in the details below to submit a new overtime application.
-          </AlertDialogDescription>
         </AlertDialogHeader>
 
         <div className="space-y-4 py-4">

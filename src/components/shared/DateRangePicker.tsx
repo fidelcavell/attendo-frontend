@@ -13,7 +13,7 @@ interface DateRangePickerProps {
   endDate: string;
   handleDateRangeChange: (field: string, value: string) => void;
   handleClearDateRange: () => void;
-  position: string;
+  position: "center" | "start" | "end" | undefined;
 }
 
 export default function DateRangePicker({
