@@ -67,6 +67,9 @@ export default function ForgotPasswordPage() {
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
         <a href="#" className="flex items-center gap-2 self-center font-medium">
+          <div className="size-7 rounded-md bg-primary/10 grid place-items-center">
+            <img src="/logo.png" alt="Logo" />
+          </div>
           Attendo.
         </a>
         <div className={cn("flex flex-col gap-6")}>
@@ -127,7 +130,10 @@ export default function ForgotPasswordPage() {
                   </div>
                   <div className="text-center text-sm">
                     Remember your account?{" "}
-                    <Link to="/sign-in" className="underline underline-offset-4">
+                    <Link
+                      to="/sign-in"
+                      className="underline underline-offset-4"
+                    >
                       Sign in
                     </Link>
                   </div>

@@ -1,4 +1,4 @@
-import { Clock, Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState, type FormEvent } from "react";
 import type { AxiosError } from "axios";
@@ -75,8 +75,8 @@ export default function RegisterPage() {
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
         <a href="#" className="flex items-center gap-2 self-center font-medium">
-          <div className="size-6 rounded-md bg-primary/10 grid place-items-center">
-            <Clock className="w-3.5 h-3.5 text-primary" />
+          <div className="size-7 rounded-md bg-primary/10 grid place-items-center">
+            <img src="/logo.png" alt="Logo" />
           </div>
           Attendo.
         </a>

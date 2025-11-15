@@ -14,11 +14,11 @@ import { useEffect } from "react";
 import { useLoginContext } from "@/hooks/useLogin";
 
 export default function LandingPage() {
-const { token } = useLoginContext();
-const navigate = useNavigate();
+  const { token } = useLoginContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if(token) {
+    if (token) {
       navigate("/sign-in", { replace: true });
     }
   }, [navigate, token]);
@@ -29,8 +29,8 @@ const navigate = useNavigate();
       <header className="sticky top-0 z-10 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
           <Link to="" className="inline-flex items-center gap-2">
-            <div className="size-6 rounded-md bg-primary/10 grid place-items-center">
-              <Clock className="w-3.5 h-3.5 text-primary" />
+            <div className="size-7 rounded-md bg-primary/10 grid place-items-center">
+              <img src="/logo.png" alt="Logo" />
             </div>
             <span className="font-semibold">Attendo.</span>
           </Link>
