@@ -8,7 +8,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// Add a request interceptor to include JWT and CSRF tokens in every endpoint requests
+// Add a request interceptor to include JWT in every endpoint requests
 api.interceptors.request.use(
   async (config) => {
     const jwtToken = localStorage.getItem("JWT_TOKEN");
@@ -16,21 +16,6 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${jwtToken}`;
     }
 
-    // let csrfToken;
-    // try {
-    //   const response = await axios.get<{ token: string }>(
-    //     `${import.meta.env.VITE_BASE_URL}/api/csrf-token`,
-    //     { withCredentials: true }
-    //   );
-    //   csrfToken = response.data.token;
-    //   localStorage.setItem("CSRF_TOKEN", csrfToken);
-    // } catch (error) {
-    //   console.error("Failed to fetch CSRF token", error);
-    // }
-
-    // if (csrfToken && config.headers) {
-    //   config.headers["X-XSRF-TOKEN"] = csrfToken;
-    // }
     return config;
   },
   (error) => {
