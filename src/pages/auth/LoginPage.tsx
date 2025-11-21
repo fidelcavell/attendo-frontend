@@ -70,7 +70,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (!currentUser) return; // wait until user is fetched
    
-    if (!storeLoaded) return; // wait until currentStore is fetched
+    if (!storeLoaded && currentUser.role === "ROLE_OWNER") return; // wait until currentStore is fetched
 
     // Optional: You can also track loading states in your context
     if (currentUser.role === "ROLE_OWNER") {
