@@ -119,9 +119,13 @@ export const columns = (
     cell: ({ row }) => (
       <div>
         {row.getValue("idSchedule") != null ? (
-          <Badge className="bg-green-600 flex items-center gap-1 px-2 py-1 text-sm text-white rounded-md shadow-sm">Assigned</Badge>
+          <Badge className="bg-green-600 flex items-center gap-1 px-2 py-1 text-sm text-white rounded-md shadow-sm">
+            Assigned
+          </Badge>
         ) : (
-          <Badge className="bg-red-500 flex items-center gap-1 px-2 py-1 text-sm text-white rounded-md shadow-sm">Unassigned</Badge>
+          <Badge className="bg-red-500 flex items-center gap-1 px-2 py-1 text-sm text-white rounded-md shadow-sm">
+            Unassigned
+          </Badge>
         )}
       </div>
     ),
@@ -132,9 +136,13 @@ export const columns = (
     cell: ({ row }) => (
       <div>
         {row.getValue("roleName") === "ROLE_EMPLOYEE" ? (
-          <Badge className="bg-amber-600 flex items-center gap-1 px-2 py-1 text-sm text-white rounded-md shadow-sm">Employee</Badge>
+          <Badge className="bg-amber-600 flex items-center gap-1 px-2 py-1 text-sm text-white rounded-md shadow-sm">
+            Employee
+          </Badge>
         ) : (
-          <Badge className="bg-blue-500 flex items-center gap-1 px-2 py-1 text-sm text-white rounded-md shadow-sm">Admin</Badge>
+          <Badge className="bg-blue-500 flex items-center gap-1 px-2 py-1 text-sm text-white rounded-md shadow-sm">
+            Admin
+          </Badge>
         )}
       </div>
     ),
@@ -603,7 +611,7 @@ export function EmployeeManagementTable() {
             <AlertDialogCancel onClick={() => setSelectedScheduleId("")}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction onClick={onUpdateSchedule}>
+            <AlertDialogAction onClick={onUpdateSchedule} disabled={isLoading || selectedScheduleId.length == 0}>
               {isLoading ? (
                 <>
                   <Spinner className="size-4 mr-2" />

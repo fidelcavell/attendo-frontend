@@ -409,7 +409,7 @@ export default function LeaveVsOvertimeReportPage() {
         <CardContent>
           <div className="flex flex-col lg:flex-row items-center justify-between space-y-6 lg:space-y-0 lg:space-x-8">
             <div className="flex-1">
-              {comparisonDistribution.every((item) => item.total !== 0) ? (
+              {comparisonDistribution.some((item) => item.total !== 0) ? (
                 <ChartContainer
                   config={leavePieChartConfig}
                   className="mx-auto aspect-square md:h-[300px] h-48"

@@ -21,6 +21,8 @@ interface ContextType {
   setOwnedStoreData: React.Dispatch<React.SetStateAction<OwnedStore[]>>;
   getUserData: () => Promise<void>;
   getAllOwnedStore: (username: string) => Promise<void>;
+  storeLoaded: boolean;
+  setStoreLoaded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ContextApi = createContext<ContextType | undefined>(undefined);
@@ -36,6 +38,7 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({
   const [currentStore, setCurrentStore] = useState<OwnedStore | null>(null);
 
   const [ownedStoreData, setOwnedStoreData] = useState<OwnedStore[]>([]);
+  const [storeLoaded, setStoreLoaded] = useState(false);
 
   const getUserData = async () => {
     const storedUsername = localStorage.getItem("USERNAME");
@@ -80,6 +83,7 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({
             active: storeResponse.data.active,
           };
           setCurrentStore(currentStore);
+          setStoreLoaded(true);
         }
       } catch (error) {
         console.log(error);
@@ -101,6 +105,8 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setStoreLoaded(true);
     }
   };
 
@@ -131,6 +137,8 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({
         setOwnedStoreData,
         getUserData,
         getAllOwnedStore,
+        storeLoaded,
+        setStoreLoaded
       }}
     >
       {children}

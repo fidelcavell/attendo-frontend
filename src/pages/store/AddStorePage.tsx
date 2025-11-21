@@ -22,7 +22,7 @@ import {
 import { useLoginContext } from "@/hooks/useLogin";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import type { AxiosError } from "axios";
-import { Info, MapPin } from "lucide-react";
+import { Info, MapPin, Navigation } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -54,8 +54,29 @@ export default function AddStorePage() {
     message: string;
   } | null>(null);
 
-  const handleSetCurrentLocation = () => {
-    if (!navigator.geolocation) return alert("Geolocation not supported!");
+  // Checking user's current used device
+  const isMobileDevice = () => {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  };
+
+  const onSetCurrentLocation = () => {
+    // Need mobile device's GPS for more accurate coordinates
+    if (!isMobileDevice()) {
+      setResponse({
+        success: false,
+        message:
+          "This feature requires your mobile device’s GPS to provide accurate location data!",
+      });
+      setOpenDialog(true);
+      return;
+    }
+
+    if (!navigator.geolocation) {
+      setResponse({ success: false, message: "Geolocation is not supported!" });
+      setOpenDialog(true);
+      return;
+    }
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setPosition({
@@ -68,7 +89,13 @@ export default function AddStorePage() {
           lng: position.coords.longitude.toString(),
         });
       },
-      (err) => alert("Failed to get current location: " + err.message)
+      () => {
+        setResponse({
+          success: false,
+          message: `Failed to get current location: No Internet Connection! Please turn on your GPS feature`,
+        });
+        setOpenDialog(true);
+      }
     );
   };
 
@@ -79,11 +106,15 @@ export default function AddStorePage() {
     setOpenDialog(false);
 
     try {
-      const response = await api.post(`/store/${currentUser?.username}`, store, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await api.post(
+        `/store/${currentUser?.username}`,
+        store,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       setResponse(response.data);
       await getUserData();
     } catch (exception: unknown) {
@@ -371,7 +402,7 @@ export default function AddStorePage() {
                           <div className="flex items-center justify-center h-full text-gray-500">
                             <div className="text-center">
                               <MapPin className="size-8 mx-auto mb-2" />
-                              <p>Click "Set Store Location" to load map</p>
+                              <p>Click "Use Current Location" to load map</p>
                             </div>
                           </div>
                         )}
@@ -379,9 +410,10 @@ export default function AddStorePage() {
                       <Button
                         type="button"
                         className="w-full"
-                        onClick={handleSetCurrentLocation}
+                        onClick={onSetCurrentLocation}
                       >
-                        Set Store Location
+                        <Navigation className="size-4 mr-2" />
+                        Use Current Location
                       </Button>
                     </div>
                   </div>

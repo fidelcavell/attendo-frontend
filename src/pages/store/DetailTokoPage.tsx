@@ -42,8 +42,7 @@ export default function DetailTokoPage() {
     null
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [store, setStore] = useState<any>({
+  const [store, setStore] = useState({
     name: "",
     address: "",
     lat: "",
@@ -76,7 +75,6 @@ export default function DetailTokoPage() {
         lat: response.data.lat,
         lng: response.data.lng,
       });
-      console.log(response.data);
     } catch (exception) {
       const error = exception as AxiosError<{
         success: boolean;
@@ -86,18 +84,39 @@ export default function DetailTokoPage() {
     }
   }, [currentStore]);
 
+  // Checking user's current used device
+  const isMobileDevice = () => {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  };
+
   const onSetCurrentLocation = () => {
+    // Need mobile device's GPS for more accurate coordinates
+    if (!isMobileDevice()) {
+      setResponse({
+        success: false,
+        message:
+          "This feature requires your mobile device’s GPS to provide accurate location data!",
+      });
+      setOpenDialog(true);
+      return;
+    }
+
     if (!navigator.geolocation) {
-      setResponse({ success: false, message: "Geolocation not supported!" });
+      setResponse({ success: false, message: "Geolocation is not supported!" });
       setOpenDialog(true);
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
+      (position) => {
         setPosition({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+        setStore({
+          ...store,
+          lat: position.coords.latitude.toString(),
+          lng: position.coords.longitude.toString(),
         });
       },
       () => {
@@ -492,18 +511,7 @@ export default function DetailTokoPage() {
                         apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}
                       >
                         <div style={{ height: "100%", width: "100%" }}>
-                          <Map
-                            defaultCenter={position}
-                            defaultZoom={16}
-                            onClick={(event) => {
-                              console.log(position);
-                              if (!isUpdate) return;
-                              if (!event.detail.latLng) return;
-                              const { lat, lng } = event.detail.latLng;
-                              setPosition({ lat, lng });
-                              setStore({ ...store, lat: lat, lng: lng });
-                            }}
-                          >
+                          <Map defaultCenter={position} defaultZoom={16}>
                             <Marker position={position} />
                           </Map>
                         </div>

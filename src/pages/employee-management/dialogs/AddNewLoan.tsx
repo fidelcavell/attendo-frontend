@@ -131,7 +131,7 @@ export default function AddNewLoan({
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={onAddLoan}
-            disabled={loanAmount.length == 0}
+            disabled={loanAmount.trim().length == 0}
           >
             {isLoading ? (
               <>

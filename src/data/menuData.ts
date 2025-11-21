@@ -70,7 +70,7 @@ export const menuData: Record<string, { menu: any[] }> = {
   ROLE_ADMIN: {
     menu: [
       {
-        title: "Admin's Dashboard",
+        title: "Dashboard",
         url: "/app/dashboard",
         icon: LayoutDashboard,
         isActive: true,

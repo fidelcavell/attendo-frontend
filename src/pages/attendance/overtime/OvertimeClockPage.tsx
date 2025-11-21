@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Spinner } from "@/components/ui/spinner";
 import type { Attendance } from "@/data/dataTypes";
 import { formatDate, getLocalISOTime } from "@/helper/Formatter";
 import URLtoFile from "@/helper/URLToFileConverter";
@@ -177,31 +178,48 @@ export default function OvertimeClockPage() {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    setIsDialogOpen(false);
+  // Checking user's current used device
+  const isMobileDevice = () => {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  };
+
+  const onSetCurrentLocation = useCallback(() => {
+    if (!isMobileDevice()) {
+      setResponse({
+        success: false,
+        message:
+          "This feature requires your mobile device’s GPS to provide accurate location data!",
+      });
+      setIsDialogOpen(true);
+      return;
+    }
 
     if (!navigator.geolocation) {
-      setResponse({ success: false, message: "Geolocation not supported!" });
+      setResponse({ success: false, message: "Geolocation is not supported!" });
       setIsDialogOpen(true);
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
+      (position) => {
         setPosition({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
         });
       },
       () => {
         setResponse({
           success: false,
-          message: `Failed to get current location: No Internet Connection! Please turn on your GPS feature`,
+          message: `Failed to get current location: No Internet Connection or Turn on your GPS feature`,
         });
         setIsDialogOpen(true);
       }
     );
   }, []);
+
+  useEffect(() => {
+    onSetCurrentLocation();
+  }, [onSetCurrentLocation]);
 
   if (!currentStore && position?.lat && position.lng) {
     return (
@@ -293,7 +311,12 @@ export default function OvertimeClockPage() {
                   }
                   className="text-[10px] py-0.5 px-1.5"
                 >
-                  {areaStatus || "Unknown"}
+                  {areaStatus || (
+                    <>
+                      <Spinner className="size-4" /> Getting Location
+                      information
+                    </>
+                  )}
                 </Badge>
               </div>
             </div>

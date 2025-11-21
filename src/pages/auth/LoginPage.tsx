@@ -27,7 +27,8 @@ import { useLoginContext } from "@/hooks/useLogin";
 import { Spinner } from "@/components/ui/spinner";
 
 export default function LoginPage() {
-  const { setToken, currentUser, currentStore } = useLoginContext();
+  const { setToken, currentUser, currentStore, storeLoaded } =
+    useLoginContext();
   const navigate = useNavigate();
 
   const username = useRef<HTMLInputElement>(null);
@@ -68,13 +69,15 @@ export default function LoginPage() {
   // Check the currentUser's value due to async is take a while to set new data on currentUser.
   useEffect(() => {
     if (!currentUser) return; // wait until user is fetched
+   
+    if (!storeLoaded) return; // wait until currentStore is fetched
 
     // Optional: You can also track loading states in your context
     if (currentUser.role === "ROLE_OWNER") {
       if (currentUser.idProfile == null) {
         navigate("/add-profile", { replace: true });
       } else if (currentStore === null) {
-        return;
+        navigate("/add-store", { replace: true });
       } else {
         navigate("/app/dashboard", { replace: true });
       }
@@ -83,7 +86,7 @@ export default function LoginPage() {
     } else {
       navigate("/app/attendance-report", { replace: true });
     }
-  }, [currentStore, currentUser, navigate]);
+  }, [currentStore, currentUser, navigate, storeLoaded]);
 
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">

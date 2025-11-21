@@ -132,7 +132,7 @@ export default function UpdateEmployeeSalary({
           </Label>
           <Input
             id="salary"
-            type="text"
+            type="number"
             placeholder="Enter new salary"
             value={salaryAmount}
             onChange={(event) => setSalaryAmount(event.target.value)}
@@ -190,7 +190,7 @@ export default function UpdateEmployeeSalary({
           <AlertDialogCancel onClick={() => setSalaryAmount("")}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={onUpdateSalary}>
+          <AlertDialogAction onClick={onUpdateSalary} disabled={salaryAmount.trim().length == 0 || isLoading}>
             {isLoading ? (
               <>
                 <Spinner className="size-4 mr-2" /> Updating...

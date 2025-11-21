@@ -23,7 +23,6 @@ import type {
 import api from "@/api/api-config";
 import { useLoginContext } from "@/hooks/useLogin";
 import {
-  Ban,
   BanknoteArrowDown,
   Calculator,
   CircleAlert,
@@ -89,13 +88,6 @@ export default function AttendanceReportPage() {
       label: "Overtime",
     },
     "no-data": {
-      color: "text-yellow-500",
-      bgColor: "bg-white-50",
-      borderColor: "border-yellow-200",
-      icon: <Ban className="size-4" />,
-      label: "Close",
-    },
-    "": {
       color: "text-muted-500",
       bgColor: "bg-muted-50",
       borderColor: "border-muted-200",
@@ -131,8 +123,7 @@ export default function AttendanceReportPage() {
     | "late"
     | "leave"
     | "overtime"
-    | "no-data"
-    | "";
+    | "no-data";
   const [attendanceList, setAttendanceList] = useState<Attendance[] | null>(
     null
   );
@@ -173,7 +164,6 @@ export default function AttendanceReportPage() {
 
   const days = Array.from({ length: daysInMonth }, (_, i) => {
     const date = new Date(year, month, i + 1);
-    const dayOfWeek = date.getDay(); // 0 = Sunday, 6 = Saturday
     let status: AttendanceStatus = "no-data";
     let timeIn: string | undefined = "-";
     let timeOut: string | undefined = "-";
@@ -232,14 +222,9 @@ export default function AttendanceReportPage() {
       }
     } else {
       // No attendance data available
-      if (dayOfWeek === 0) {
-        // Sunday
         status = "no-data";
-      } else {
-        status = "";
         timeIn = "";
         timeOut = "";
-      }
     }
     return {
       date,

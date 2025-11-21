@@ -42,7 +42,7 @@ import DeleteAccountDialog from "../dialogs/DeleteAccountDialog";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const { currentUser, setToken, setCurrentUser, setCurrentStore } =
+  const { currentUser, setToken, setCurrentUser, setCurrentStore,setStoreLoaded } =
     useLoginContext();
 
   const navigate = useNavigate();
@@ -69,6 +69,7 @@ export function NavUser() {
     setToken(null);
     setCurrentUser(null);
     setCurrentStore(null);
+    setStoreLoaded(false);
 
     setLastAction("logout");
     navigate("/sign-in", { replace: true });

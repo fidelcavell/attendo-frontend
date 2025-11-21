@@ -32,6 +32,7 @@ import type { AxiosError } from "axios";
 import type { Attendance } from "@/data/dataTypes";
 import { formatDate, getLocalISOTime } from "@/helper/Formatter";
 import UnavailableCard from "@/components/shared/UnavailableCard";
+import { Spinner } from "@/components/ui/spinner";
 
 const videoConstraints = {
   width: 720,
@@ -178,18 +179,33 @@ export default function DailyClockPage() {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
+  // Checking user's current used device
+  const isMobileDevice = () => {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  };
+
+  const onSetCurrentLocation = useCallback(() => {
+    if (!isMobileDevice()) {
+      setResponse({
+        success: false,
+        message:
+          "This feature requires your mobile device’s GPS to provide accurate location data!",
+      });
+      setIsDialogOpen(true);
+      return;
+    }
+
     if (!navigator.geolocation) {
-      setResponse({ success: false, message: "Geolocation not supported!" });
+      setResponse({ success: false, message: "Geolocation is not supported!" });
       setIsDialogOpen(true);
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
+      (position) => {
         setPosition({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
         });
       },
       () => {
@@ -201,6 +217,10 @@ export default function DailyClockPage() {
       }
     );
   }, []);
+
+  useEffect(() => {
+    onSetCurrentLocation();
+  }, [onSetCurrentLocation]);
 
   if (!currentStore && position?.lat && position?.lng) {
     return (
@@ -298,7 +318,12 @@ export default function DailyClockPage() {
                   }
                   className="text-[10px] py-0.5 px-1.5"
                 >
-                  {areaStatus || "Unknown"}
+                  {areaStatus || (
+                    <>
+                      <Spinner className="size-4" /> Getting Location
+                      information
+                    </>
+                  )}
                 </Badge>
               </div>
             </div>
