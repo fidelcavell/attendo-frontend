@@ -157,7 +157,7 @@ export default function AttendanceReportPage() {
       console.log(exception);
     }
   }, [targetedUserId, selectedMonth, selectedYear]);
-  
+
   useEffect(() => {
     getAttendanceList();
   }, [getAttendanceList]);
@@ -222,9 +222,9 @@ export default function AttendanceReportPage() {
       }
     } else {
       // No attendance data available
-        status = "no-data";
-        timeIn = "";
-        timeOut = "";
+      status = "no-data";
+      timeIn = "";
+      timeOut = "";
     }
     return {
       date,
@@ -329,6 +329,14 @@ export default function AttendanceReportPage() {
   const onDownloadReport = () => {
     window.print();
   };
+
+  const isMobileDevice = () => {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  };
+
+  const [mobileAttendances, setMobileAttendances] = useState<
+    Attendance[] | null
+  >(null);
 
   return (
     <div className="flex flex-col gap-6 p-4">
@@ -441,16 +449,30 @@ export default function AttendanceReportPage() {
               <Tooltip key={item.date.toISOString()}>
                 <TooltipTrigger asChild>
                   <div
-                    onClick={handleClick}
-                    className={`h-14 p-1.5 rounded-md border cursor-pointer transition-all hover:shadow-md ${
-                      config.bgColor
-                    } ${config.borderColor} ${config.color} ${
-                      isToday ? "ring-2 ring-blue-500 ring-offset-1" : ""
-                    } ${
-                      item.allAttendances && item.allAttendances.length > 0
-                        ? "hover:scale-105"
-                        : "cursor-default"
-                    }`}
+                    onClick={(event) => {
+                      if (isMobileDevice()) {
+                        // Mobile behavior override
+                        if (item.allAttendances.length >= 2) {
+                          event.stopPropagation();
+                          event.preventDefault();
+                          setMobileAttendances(item.allAttendances);
+                        } else {
+                          handleClick();
+                        }
+                        return;
+                      }
+
+                      // Desktop behavior
+                      handleClick();
+                    }}
+                    className={`h-14 p-1.5 rounded-md border cursor-pointer transition-all 
+      md:hover:shadow-md ${config.bgColor} ${config.borderColor} ${config.color}
+      ${isToday ? "ring-2 ring-blue-500 ring-offset-1" : ""}
+      ${
+        item.allAttendances && item.allAttendances.length > 0
+          ? "md:hover:scale-105"
+          : "cursor-default"
+      }`}
                   >
                     <div className="flex flex-col h-full">
                       <div className="flex items-center justify-between">
@@ -525,6 +547,55 @@ export default function AttendanceReportPage() {
               </Tooltip>
             );
           })}
+
+          {/* Mobile mode */}
+          {mobileAttendances && (
+            <div
+              className="fixed inset-0 bg-black/40 z-50 flex items-end md:hidden"
+              onClick={() => setMobileAttendances(null)}
+            >
+              <div
+                className="bg-white w-full p-4 rounded-t-xl shadow-xl max-h-[60vh] overflow-y-auto"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className="text-center font-semibold mb-2">
+                  Attendances
+                </div>
+
+                {mobileAttendances.map((attendance) => (
+                  <div
+                    key={attendance.id}
+                    className="border-b py-2 active:bg-gray-100"
+                    onClick={() => {
+                      navigate(`/app/detail-attendance/${attendance.id}`);
+                      setMobileAttendances(null);
+                    }}
+                  >
+                    <div className="text-sm font-medium">{attendance.type}</div>
+                    <div className="text-xs opacity-60">
+                      {attendance.status}
+                    </div>
+                    <div className="text-xs opacity-60">
+                      {attendance.clockIn
+                        ? formatDateTime(attendance.clockIn)
+                        : "None"}{" "}
+                      -{" "}
+                      {attendance.clockOut
+                        ? formatDateTime(attendance.clockOut)
+                        : "None"}
+                    </div>
+                  </div>
+                ))}
+
+                <button
+                  onClick={() => setMobileAttendances(null)}
+                  className="mt-3 w-full py-2 text-sm font-medium bg-gray-200 rounded-md"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </Card>
 

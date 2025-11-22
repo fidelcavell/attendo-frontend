@@ -53,6 +53,7 @@ export default function DeleteOvertimeApplicationDialog({
         message: string;
       }>;
       setResponse(error.response?.data || null);
+    } finally {
       setResponseDialog(true);
       setIsLoading(false);
     }

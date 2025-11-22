@@ -443,7 +443,7 @@ export default function DetailAttendancePage() {
                     <img
                       src={photoInUrl}
                       alt="Clock In Photo"
-                      className="w-full h-72 object-cover rounded-lg border"
+                      className="w-full h-72 object-contain rounded-lg border"
                     />
                     <div className="absolute top-2 right-2 bg-green-500 text-white px-3 py-1.5 rounded-md text-sm font-medium shadow-lg">
                       {selectedAttendance.attendanceData.clockIn?.replace(
@@ -484,7 +484,7 @@ export default function DetailAttendancePage() {
                     <img
                       src={photoOutUrl}
                       alt="Clock Out Photo"
-                      className="w-full h-72 object-cover rounded-lg border"
+                      className="w-full h-72 object-contain rounded-lg border"
                     />{" "}
                     <div className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1.5 rounded-md text-sm font-medium shadow-lg">
                       {selectedAttendance.attendanceData.clockOut?.replace(
@@ -618,7 +618,7 @@ export default function DetailAttendancePage() {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={onDeleteAttendance}>
-              Submit
+              Delete
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

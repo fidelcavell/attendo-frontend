@@ -53,6 +53,7 @@ import {
   ClockFading,
   Image,
   MoreHorizontal,
+  User,
 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -326,9 +327,14 @@ export function BreakEmployeeListTable() {
             onChange={(event) => setSearch(event.target.value)}
             className="w-full sm:max-w-sm"
           />
-          <Badge variant={"outline"} className="text-sm px-3 py-1">
-            Current break count : {currentStore?.currentBreakCount} person
-          </Badge>
+          <div className="flex flex-row gap-2">
+            <Badge variant={"outline"} className="text-sm px-3 py-1">
+              Current break : {currentStore?.currentBreakCount} <User />
+            </Badge>
+            <Badge variant={"outline"} className="text-sm px-3 py-1">
+              Max break : {currentStore?.maxBreakCount} <User />
+            </Badge>
+          </div>
         </div>
 
         {/* Data Table */}

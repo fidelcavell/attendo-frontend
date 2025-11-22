@@ -458,7 +458,7 @@ export function OvertimeApplicationTable() {
       {/* Response Message alert dialog */}
       {response && (
         <AlertDialog open={isDialogOpen}>
-          <AlertDialogContent>
+          <AlertDialogContent className="w-4/5 md:w-1/3">
             <AlertDialogHeader>
               <AlertDialogTitle>
                 {response.success ? "Success" : "Error"}

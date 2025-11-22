@@ -352,7 +352,7 @@ export default function OvertimeClockPage() {
             {/* Attendance Log */}
             <div className="rounded-lg border bg-muted/30 p-3">
               <h4 className="font-medium text-xs mb-1.5">Attendance Log</h4>
-              {!selectedOvertime ? (
+              {!selectedOvertime.clockIn && !selectedOvertime.clockOut ? (
                 <p className="text-[11px] text-muted-foreground">
                   No activity yet.
                 </p>

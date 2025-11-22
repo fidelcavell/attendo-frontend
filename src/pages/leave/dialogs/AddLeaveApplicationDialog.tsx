@@ -4,6 +4,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -126,11 +127,14 @@ export default function AddLeaveApplicationDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Add Leave Application</AlertDialogTitle>
+          <AlertDialogDescription>
+            Fill in the details below to create new leave application
+          </AlertDialogDescription>
         </AlertDialogHeader>
 
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="startDate">Start Date</Label>
+            <Label htmlFor="startDate">Start Date *</Label>
             <Input
               id="startDate"
               type="date"
@@ -143,7 +147,7 @@ export default function AddLeaveApplicationDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="endDate">End Date</Label>
+            <Label htmlFor="endDate">End Date *</Label>
             <Input
               id="endDate"
               type="date"
@@ -156,7 +160,7 @@ export default function AddLeaveApplicationDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="type">Leave Type</Label>
+            <Label htmlFor="type">Leave Type *</Label>
             <Select
               value={formData.type}
               onValueChange={(value) => handleFormChange("type", value)}
@@ -175,7 +179,7 @@ export default function AddLeaveApplicationDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">Description *</Label>
             <Textarea
               id="description"
               placeholder="Enter reason for leave..."

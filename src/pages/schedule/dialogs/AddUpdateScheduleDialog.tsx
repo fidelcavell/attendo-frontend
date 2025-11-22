@@ -112,8 +112,8 @@ export default function AddUpdateScheduleDialog({
           </AlertDialogTitle>
           <AlertDialogDescription>
             {selectedSchedule
-              ? "Modify the existing schedule below."
-              : "Fill in the details to create a new schedule."}
+              ? "Modify the existing schedule below"
+              : "Fill in the details below to create a new schedule"}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -123,7 +123,7 @@ export default function AddUpdateScheduleDialog({
         >
           <div>
             <Label className="mt-4 mb-2" htmlFor="name">
-              Schedule name
+              Schedule name *
             </Label>
             <Input
               id="name"
@@ -131,13 +131,13 @@ export default function AddUpdateScheduleDialog({
               onChange={(event) =>
                 setForm({ ...form, name: event.target.value })
               }
-              placeholder="Enter name"
+              placeholder="Enter schedule's name"
               required
             />
           </div>
           <div>
             <Label className="mt-4 mb-2" htmlFor="late-tolerance">
-              Late tolerance (minutes)
+              Late tolerance (minutes) *
             </Label>
             <Input
               id="late-tolerance"
@@ -153,7 +153,7 @@ export default function AddUpdateScheduleDialog({
 
           <div>
             <Label className="mt-4 mb-2" htmlFor="start-time">
-              Start time
+              Start time *
             </Label>
             <Input
               id="start-time"
@@ -168,7 +168,7 @@ export default function AddUpdateScheduleDialog({
 
           <div>
             <Label className="mt-4 mb-2" htmlFor="end-time">
-              End time
+              End time *
             </Label>
             <Input
               id="end-time"

@@ -216,7 +216,7 @@ export default function LeaveRequestTable() {
             onChange={(event) => setSearch(event.target.value)}
             className="w-full sm:max-w-sm"
           />
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
             {/* Date Range Picker */}
             <DateRangePicker
               isOpen={isDateRangeOpen}
@@ -228,33 +228,38 @@ export default function LeaveRequestTable() {
               handleClearDateRange={handleClearDateRange}
               position="end"
             />
-            {/* Status selection */}
-            <Select value={status} onValueChange={(value) => setStatus(value)}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="PENDING">Pending</SelectItem>
-                  <SelectItem value="APPROVED">Approved</SelectItem>
-                  <SelectItem value="REJECTED">Rejected</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            {/* Type Selection */}
-            <Select value={type} onValueChange={(value) => setType(value)}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="All">All</SelectItem>
-                  <SelectItem value="SICK">Sick</SelectItem>
-                  <SelectItem value="PERSONAL">Personal</SelectItem>
-                  <SelectItem value="OTHER">Other</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            <div className="flex flex-row gap-2">
+              {/* Status selection */}
+              <Select
+                value={status}
+                onValueChange={(value) => setStatus(value)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="PENDING">Pending</SelectItem>
+                    <SelectItem value="APPROVED">Approved</SelectItem>
+                    <SelectItem value="REJECTED">Rejected</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              {/* Type Selection */}
+              <Select value={type} onValueChange={(value) => setType(value)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="All">All</SelectItem>
+                    <SelectItem value="SICK">Sick</SelectItem>
+                    <SelectItem value="PERSONAL">Personal</SelectItem>
+                    <SelectItem value="OTHER">Other</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
 

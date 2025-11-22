@@ -4,6 +4,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -121,6 +122,9 @@ export default function AddOvertimeApplicationDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Add Overtime Application</AlertDialogTitle>
+          <AlertDialogDescription>
+            Fill in the details below to create new overtime application
+          </AlertDialogDescription>
         </AlertDialogHeader>
 
         <div className="space-y-4 py-4">
@@ -144,7 +148,7 @@ export default function AddOvertimeApplicationDialog({
           </div>
           {/* Schedule */}
           <div>
-            <Label className="my-4">Available work schedule</Label>
+            <Label className="my-4">Available work schedule *</Label>
             <Select
               value={selectedScheduleId}
               onValueChange={(value) => setSelectedScheduleId(value)}
