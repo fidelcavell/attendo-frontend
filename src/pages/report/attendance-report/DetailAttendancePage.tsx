@@ -22,7 +22,7 @@ import type {
   AttendanceInfo,
   OvertimeApplication,
   Profile,
-} from "@/data/dataTypes";
+} from "@/types/dataTypes";
 import api from "@/api/api-config";
 import Loading from "@/components/shared/Loading";
 import { formatDate, formatIDR } from "@/helper/Formatter";
@@ -60,7 +60,7 @@ export default function DetailAttendancePage() {
           bgColor: "bg-green-50",
           borderColor: "border-green-200",
           icon: <CheckCircle className="size-4" />,
-          label: "Present",
+          label: "Hadir",
         };
       case "LATE":
         return {
@@ -68,7 +68,7 @@ export default function DetailAttendancePage() {
           bgColor: "bg-amber-50",
           borderColor: "border-amber-200",
           icon: <AlertCircle className="size-4" />,
-          label: "Late",
+          label: "Telat",
         };
       case "ABSENT":
         return {
@@ -76,7 +76,7 @@ export default function DetailAttendancePage() {
           bgColor: "bg-red-50",
           borderColor: "border-red-200",
           icon: <XCircle className="size-4" />,
-          label: "Absent",
+          label: "Absen",
         };
       case "LEAVE":
         return {
@@ -84,7 +84,7 @@ export default function DetailAttendancePage() {
           bgColor: "bg-blue-50",
           borderColor: "border-blue-200",
           icon: <ClockFading className="size-4" />,
-          label: "On Leave",
+          label: "Izin",
         };
       default:
         return {
@@ -311,7 +311,7 @@ export default function DetailAttendancePage() {
   }, [getOvertimeApplication, selectedAttendance?.attendanceData.idOvertime]);
 
   if (!selectedAttendance) {
-    return <Loading message="Attendance Detail" />;
+    return <Loading message="Detail Presensi" />;
   }
 
   return (
@@ -321,9 +321,8 @@ export default function DetailAttendancePage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">
-              Attendance Detail
+              Detail Presensi
             </h1>
-            <p className="text-gray-600">Detailed attendance information</p>
           </div>
           <div className="flex items-center gap-2 text-sm text-gray-600 bg-white px-4 py-2 rounded-lg border">
             <Calendar className="size-4" />
@@ -337,7 +336,7 @@ export default function DetailAttendancePage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
                 <User className="size-5" />
-                Employee Information
+                Informasi Karyawan
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -369,7 +368,9 @@ export default function DetailAttendancePage() {
                 </div>
                 <div className="flex justify-end items-start">
                   <Badge className="text-sm">
-                    {selectedAttendance.attendanceData.type}
+                    {selectedAttendance.attendanceData.type === "DAILY"
+                      ? "Harian"
+                      : "Lembur"}
                   </Badge>
                 </div>
               </div>
@@ -379,14 +380,14 @@ export default function DetailAttendancePage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
                 <Banknote className="size-5" />
-                Salary Information
+                Informasi Gaji
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 sm:grid-cols-2">
                 {/* Base Salary */}
                 <div className="flex flex-col items-start gap-2 mb-4">
-                  <p className="font-semibold">Base Salary (in a day)</p>
+                  <p className="font-semibold">Gaji Kotor (per hari)</p>
                   <div className="text-gray-800 font-semibold">
                     {selectedOvertimeApplication
                       ? formatIDR(
@@ -398,7 +399,7 @@ export default function DetailAttendancePage() {
 
                 {/* Deduction Amount */}
                 <div className="flex flex-col items-start gap-2">
-                  <p className="font-semibold">Deduction Amount</p>
+                  <p className="font-semibold">Jumlah Potongan</p>
                   <div className="text-gray-800 font-semibold">
                     {formatIDR(
                       selectedAttendance.attendanceData.deductionAmount
@@ -414,13 +415,13 @@ export default function DetailAttendancePage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Info className="size-5" />
-              Attendance description
+              Deskripsi
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-gray-600 px-7">
               {selectedAttendance.attendanceData.description ??
-                "No description yet"}
+                "Belum ada deskripsi yang ditambahkan!"}
             </p>
           </CardContent>
         </Card>
@@ -460,7 +461,7 @@ export default function DetailAttendancePage() {
                   <div className="flex-col justify-center items-center w-full h-72 border border-dashed rounded-sm flex">
                     <CameraOff className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground" />
                     <p className="mt-2 text-sm text-gray-500">
-                      No data available yet!
+                      Tidak ada data yag tersedia!
                     </p>
                   </div>
                 )}
@@ -501,7 +502,7 @@ export default function DetailAttendancePage() {
                   <div className="flex-col justify-center items-center w-full h-72 border border-dashed rounded-sm flex">
                     <CameraOff className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground" />
                     <p className="mt-2 text-sm text-gray-500">
-                      No data available yet!
+                      Tidak ada data yag tersedia!
                     </p>
                   </div>
                 )}
@@ -515,7 +516,7 @@ export default function DetailAttendancePage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Clock className="size-5" />
-              Time Summary
+              Ringkasan Waktu
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -570,10 +571,10 @@ export default function DetailAttendancePage() {
                   variant={"destructive"}
                   onClick={() => setIsDeleteAttendance(true)}
                 >
-                  Delete Attendance
+                  Delete Presensi
                 </Button>
                 <Button onClick={() => setIsUpdateAttendance(true)}>
-                  Edit Attendance
+                  Edit Presensi
                 </Button>
               </div>
             </>
@@ -609,10 +610,10 @@ export default function DetailAttendancePage() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirmation</AlertDialogTitle>
+            <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure to delete this attendance{" "}
-              <span className="font-bold">PERMANENTLY</span> ?
+              Apakah Anda yakin untuk menghapus presensi ini secara{" "}
+              <span className="font-bold">PERMANENT</span> ?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -630,13 +631,13 @@ export default function DetailAttendancePage() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Update attendance</AlertDialogTitle>
+            <AlertDialogTitle>Update presensi</AlertDialogTitle>
             <AlertDialogDescription>
               <div className="flex flex-col gap-4 mt-4">
                 <div className="flex flex-row gap-4">
                   <div className="flex-1">
                     <Label className="my-4" htmlFor="attendance-status">
-                      Attendance status
+                      Status presensi
                     </Label>
                     <Select
                       value={attendanceStatus}
@@ -647,15 +648,15 @@ export default function DetailAttendancePage() {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectItem value="PRESENT">Present</SelectItem>
-                          <SelectItem value="LATE">Late</SelectItem>
-                          <SelectItem value="ABSENT">Absent</SelectItem>
+                          <SelectItem value="PRESENT">Hadir</SelectItem>
+                          <SelectItem value="LATE">Telat</SelectItem>
+                          <SelectItem value="ABSENT">Absen</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="flex-1">
-                    <Label className="my-4">Deduction amount</Label>
+                    <Label className="my-4">Jumlah Potongan</Label>
                     <Input
                       className="mb-4"
                       id="deduction-amount"
@@ -664,14 +665,14 @@ export default function DetailAttendancePage() {
                       onChange={(event) =>
                         setDeductionAmount(event.target.value)
                       }
-                      placeholder="Enter deduction amount"
+                      placeholder="Enter jumlah potongan"
                       required
                     />
                   </div>
                 </div>
                 <div>
                   <Label className="mb-4" htmlFor="attendance-description">
-                    Description
+                    Deskripsi
                   </Label>
                   <Textarea
                     className="mb-4"
@@ -680,7 +681,7 @@ export default function DetailAttendancePage() {
                     onChange={(event) =>
                       setAttendanceDescription(event.target.value)
                     }
-                    placeholder="Enter attendance description"
+                    placeholder="Enter deskripsi"
                   />
                 </div>
               </div>

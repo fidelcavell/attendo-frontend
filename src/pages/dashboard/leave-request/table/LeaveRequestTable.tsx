@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { LeaveApplication } from "@/data/dataTypes";
+import type { LeaveApplication } from "@/types/dataTypes";
 import { useLoginContext } from "@/hooks/useLogin";
 import {
   flexRender,
@@ -202,7 +202,7 @@ export default function LeaveRequestTable() {
   }, [debouncedSearch]);
 
   if (!data) {
-    return <Loading message="Leave Request List" />;
+    return <Loading message="Daftar Pengajuan Perizinan" />;
   }
 
   return (
@@ -211,7 +211,7 @@ export default function LeaveRequestTable() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           {/* Search Bar */}
           <Input
-            placeholder="Search username..."
+            placeholder="Cari berdasarkan username..."
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             className="w-full sm:max-w-sm"
@@ -221,7 +221,6 @@ export default function LeaveRequestTable() {
             <DateRangePicker
               isOpen={isDateRangeOpen}
               setIsOpen={setIsDateRangeOpen}
-              message="Select start and end dates to filter leave application."
               startDate={dateRange.startDate}
               endDate={dateRange.endDate}
               handleDateRangeChange={handleDateRangeChange}
@@ -302,7 +301,7 @@ export default function LeaveRequestTable() {
               ) : (
                 <TableRow>
                   <TableCell colSpan={6} className="h-24 text-center">
-                    No data available
+                    Tidak ada data yang tersedia
                   </TableCell>
                 </TableRow>
               )}
@@ -316,7 +315,7 @@ export default function LeaveRequestTable() {
           totalPages={totalPages}
           dataLength={data.length}
           totalElements={totalElements}
-          dataName="requests"
+          dataName="applications"
           pageSize={table.getState().pagination.pageSize}
           setPageSize={table.setPageSize}
           onPreviousPage={table.previousPage}

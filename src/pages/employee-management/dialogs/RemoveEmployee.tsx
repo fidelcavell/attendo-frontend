@@ -10,7 +10,7 @@ import {
   AlertDialogDescription,
 } from "@/components/ui/alert-dialog";
 import { Spinner } from "@/components/ui/spinner";
-import type { Profile } from "@/data/dataTypes";
+import type { Profile } from "@/types/dataTypes";
 import { useLoginContext } from "@/hooks/useLogin";
 import type { AxiosError } from "axios";
 import { useState } from "react";
@@ -64,16 +64,16 @@ export default function RemoveEmployeeDialog({
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Confirmation</AlertDialogTitle>
+          <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to remove this{" "}
-            <span className="font-bold">{selectedProfile.username}</span> from{" "}
+            Apakah Anda yakin ingin menghapus{" "}
+            <span className="font-bold">{selectedProfile.username}</span> dari{" "}
             <span className="font-bold">{currentStore?.name}</span> ?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onRemoveEmployee}>
+          <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={onRemoveEmployee} disabled={isLoading}>
             {isLoading ? (
               <>
                 <Spinner className="size-4 mr-2" /> Removing...

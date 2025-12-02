@@ -1,5 +1,5 @@
 import api from "@/api/api-config";
-import type { OwnedStore, User } from "@/data/dataTypes";
+import type { OwnedStore, User } from "@/types/dataTypes";
 import React, {
   createContext,
   useState,
@@ -138,7 +138,7 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({
         getUserData,
         getAllOwnedStore,
         storeLoaded,
-        setStoreLoaded
+        setStoreLoaded,
       }}
     >
       {children}

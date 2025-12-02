@@ -41,7 +41,8 @@ function isTokenExpired(token: string | null): boolean {
 }
 
 export default function useJwtExpiryWatcher() {
-  const { setToken, setCurrentUser, setCurrentStore } = useLoginContext();
+  const { setToken, setCurrentUser, setCurrentStore, setStoreLoaded } =
+    useLoginContext();
   const navigate = useNavigate();
   const intervalMs = 1000;
   const [expired, setExpired] = useState(false);
@@ -53,12 +54,12 @@ export default function useJwtExpiryWatcher() {
     const id = window.setInterval(() => {
       const token = localStorage.getItem("JWT_TOKEN");
       if (isTokenExpired(token)) {
-        localStorage.removeItem("CSRF_TOKEN");
         localStorage.removeItem("JWT_TOKEN");
         localStorage.removeItem("USERNAME");
         setToken(null);
         setCurrentUser(null);
         setCurrentStore(null);
+        setStoreLoaded(false);
         setExpired(true);
         if (intervalRef.current) {
           clearInterval(intervalRef.current);
@@ -68,7 +69,15 @@ export default function useJwtExpiryWatcher() {
 
     intervalRef.current = id;
     return () => clearInterval(id);
-  }, [navigate, intervalMs, setToken, setCurrentUser, setCurrentStore, expired]);
+  }, [
+    navigate,
+    intervalMs,
+    setToken,
+    setCurrentUser,
+    setCurrentStore,
+    expired,
+    setStoreLoaded,
+  ]);
 
   const acknowledgeExpiry = () => {
     setExpired(false);

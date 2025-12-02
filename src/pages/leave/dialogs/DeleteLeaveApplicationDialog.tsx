@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Spinner } from "@/components/ui/spinner";
-import type { LeaveApplication } from "@/data/dataTypes";
+import type { LeaveApplication } from "@/types/dataTypes";
 import type { AxiosError } from "axios";
 import { useState } from "react";
 
@@ -65,10 +65,10 @@ export default function DeleteLeaveApplicationDialog({
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Leave Application</AlertDialogTitle>
+          <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete this leave application? <br /> This
-            action cannot be <span className="font-semibold">UNDONE</span>.
+            Apakah Anda yakin untuk menghapus pengajuan perizinan ini? <br />{" "}
+            Aksi ini bersifat <span className="font-semibold">PERMANENT</span>.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

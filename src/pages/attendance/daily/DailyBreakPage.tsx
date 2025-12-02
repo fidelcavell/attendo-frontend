@@ -17,7 +17,7 @@ import {
   Store,
 } from "lucide-react";
 import { formatDate, getLocalISOTime } from "@/helper/Formatter";
-import type { Attendance } from "@/data/dataTypes";
+import type { Attendance } from "@/types/dataTypes";
 import api from "@/api/api-config";
 import type { AxiosError } from "axios";
 import { useLoginContext } from "@/hooks/useLogin";
@@ -31,6 +31,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import UnavailableCard from "@/components/shared/UnavailableCard";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function DailyBreakPage() {
   const { currentUser, currentStore } = useLoginContext();
@@ -41,7 +42,6 @@ export default function DailyBreakPage() {
     success: boolean;
     message: string;
   } | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const [currentTime, setCurrentTime] = useState<string>(
     new Date().toLocaleTimeString("id-ID", {
@@ -50,8 +50,10 @@ export default function DailyBreakPage() {
       second: "2-digit",
     })
   );
-
   const [currentDuration, setCurrentDuration] = useState<number>(0);
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getTodayAttendanceInfo = useCallback(async () => {
     try {
@@ -76,6 +78,7 @@ export default function DailyBreakPage() {
 
   const handleBreakIn = async () => {
     setResponse(null);
+    setIsLoading(true);
 
     try {
       const requestParams = new URLSearchParams();
@@ -97,12 +100,14 @@ export default function DailyBreakPage() {
       setResponse(error.response?.data || null);
     } finally {
       setIsDialogOpen(true);
+      setIsLoading(false);
       getTodayAttendanceInfo();
     }
   };
 
   const handleBreakOut = async () => {
     setResponse(null);
+    setIsLoading(true);
 
     try {
       const requestParams = new URLSearchParams();
@@ -124,6 +129,7 @@ export default function DailyBreakPage() {
       setResponse(error.response?.data || null);
     } finally {
       setIsDialogOpen(true);
+      setIsLoading(false);
       getTodayAttendanceInfo();
     }
   };
@@ -173,9 +179,8 @@ export default function DailyBreakPage() {
     return (
       <UnavailableCard
         icon={Store}
-        title="No Store Assigned"
-        message="You are not added to any store yet. Please contact your
-                   administrator to be assigned to a store."
+        title="Belum Ada Toko yang Ditugaskan"
+        message="Anda belum ditambahkan ke toko mana pun. Silakan hubungi administrator untuk mendapatkan penugasan toko."
       />
     );
   }
@@ -184,9 +189,8 @@ export default function DailyBreakPage() {
     return (
       <UnavailableCard
         icon={CalendarX2}
-        title="No Schedule Assigned"
-        message="Your work schedule hasn't been set yet. Please contact your
-                  administrator to be assigned to a schedule."
+        title="Belum Ada Jadwal"
+        message="Jadwal kerja Anda belum ditetapkan. Silakan hubungi administrator untuk mendapatkan penugasan jadwal."
       />
     );
   }
@@ -195,9 +199,8 @@ export default function DailyBreakPage() {
     return (
       <UnavailableCard
         icon={ClockFading}
-        title="You're on Leave"
-        message="You are currently on leave. Access to store features will be
-                      available once your leave period ends."
+        title="Anda sedang izin"
+        message="Anda sedang dalam masa izin. Akses ke fitur ini akan tersedia kembali setelah masa izin berakhir."
       />
     );
   }
@@ -220,36 +223,38 @@ export default function DailyBreakPage() {
         <CardContent className="space-y-3 sm:space-y-4 text-center">
           <div>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              Current Attendance Status
+              Status presensi saat ini
             </p>
             <p className="text-sm sm:text-base font-medium">
               {!selectedAttendance
-                ? "Not clocked in yet"
+                ? "Belum Clock In"
                 : selectedAttendance.clockOut
-                ? "Clocked Out"
+                ? "Sudah Clock Out"
                 : selectedAttendance.breakOut
-                ? "Break Out"
+                ? "Sudah Break Out"
                 : selectedAttendance.breakIn
-                ? "Break In"
-                : "Clocked In"}
+                ? "Sudah Break In"
+                : "Sudah Clock In"}
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-2.5 sm:gap-4">
             <div className="p-2.5 sm:p-3 rounded-lg border bg-muted/30">
               <p className="text-[11px] sm:text-xs text-muted-foreground">
-                Current Duration
+                Durasi istirahat yang dilakukan
               </p>
-              <p className="text-sm sm:text-base font-semibold">
+              <p className="text-sm sm:text-base font-semibold pt-2">
                 {currentDuration ? formatDuration(currentDuration) : "—"}
               </p>
             </div>
 
             <div className="p-2.5 sm:p-3 rounded-lg border bg-muted/30">
               <p className="text-[11px] sm:text-xs text-muted-foreground">
-                Allowed Duration
+                Durasi istirahat yang berlaku
               </p>
-              <p className="text-sm sm:text-base font-semibold">60m</p>
+              <p className="text-sm sm:text-base font-semibold pt-2">
+                {currentStore.breakDuration}m
+              </p>
             </div>
           </div>
         </CardContent>
@@ -260,12 +265,21 @@ export default function DailyBreakPage() {
             disabled={
               selectedAttendance == null ||
               selectedAttendance.breakIn != null ||
-              selectedAttendance.clockOut != null
+              selectedAttendance.clockOut != null ||
+              isLoading
             }
             onClick={handleBreakIn}
           >
-            <PlayCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            Break In
+            {isLoading ? (
+              <>
+                <Spinner className="w-3.5 h-3.5" /> Processing...
+              </>
+            ) : (
+              <>
+                <PlayCircle className="w-3.5 h-3.5" />
+                Break In
+              </>
+            )}
           </Button>
 
           <Button
@@ -274,12 +288,21 @@ export default function DailyBreakPage() {
             disabled={
               selectedAttendance == null ||
               selectedAttendance.breakIn == null ||
-              selectedAttendance.breakOut != null
+              selectedAttendance.breakOut != null ||
+              isLoading
             }
             onClick={handleBreakOut}
           >
-            <PauseCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            Break Out
+            {isLoading ? (
+              <>
+                <Spinner className="w-3.5 h-3.5" /> Processing ...
+              </>
+            ) : (
+              <>
+                <PauseCircle className="w-3.5 h-3.5" />
+                Break Out
+              </>
+            )}
           </Button>
         </CardFooter>
       </Card>

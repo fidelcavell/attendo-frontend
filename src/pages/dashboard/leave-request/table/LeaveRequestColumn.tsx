@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { LeaveApplication } from "@/data/dataTypes";
+import type { LeaveApplication } from "@/types/dataTypes";
 import { formatDate } from "@/helper/Formatter";
 import type { ColumnDef } from "@tanstack/react-table";
 import { CircleCheck, CircleX, Info, MoreHorizontal } from "lucide-react";
@@ -22,17 +22,17 @@ export const LeaveRequestColumns = (
 ): ColumnDef<LeaveApplication>[] => [
   {
     accessorKey: "startDate",
-    header: "Start Date",
+    header: "Tanggal Mulai",
     cell: ({ row }) => <div>{formatDate(row.getValue("startDate"))}</div>,
   },
   {
     accessorKey: "endDate",
-    header: "End Date",
+    header: "Tanggal Selesai",
     cell: ({ row }) => <div>{formatDate(row.getValue("endDate"))}</div>,
   },
   {
     accessorKey: "type",
-    header: "Type",
+    header: "Tipe",
     cell: ({ row }) => (
       <div>
         {row.getValue("type") === "SICK" ? (
@@ -53,12 +53,12 @@ export const LeaveRequestColumns = (
   },
   {
     accessorKey: "issuedBy",
-    header: "Issued by",
+    header: "Dibuat Oleh",
     cell: ({ row }) => <div>{row.getValue("issuedBy")}</div>,
   },
   {
     accessorKey: "approvedBy",
-    header: "Approved by",
+    header: "Disetujui Oleh",
     cell: ({ row }) => <div>{row.getValue("approvedBy")}</div>,
   },
   {
@@ -103,7 +103,7 @@ export const LeaveRequestColumns = (
               onClick={() => handleViewRequestDetail(leaveRequest)}
             >
               <Info className="mr-2" />
-              View request detail
+              Detail pengajuan
             </DropdownMenuItem>
             {leaveRequest.status == "PENDING" ? (
               <>
@@ -113,7 +113,7 @@ export const LeaveRequestColumns = (
                   }
                 >
                   <CircleCheck className="mr-2" />
-                  Approve request
+                  Menyetujui pengajuan
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() =>
@@ -121,7 +121,7 @@ export const LeaveRequestColumns = (
                   }
                 >
                   <CircleX className="mr-2" />
-                  Reject request
+                  Menolak pengajuan
                 </DropdownMenuItem>
               </>
             ) : (

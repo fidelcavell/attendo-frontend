@@ -1,11 +1,11 @@
-import type { ActivityLog } from "@/data/dataTypes";
+import type { ActivityLog } from "@/types/dataTypes";
 import { formatDate } from "@/helper/Formatter";
 import type { ColumnDef } from "@tanstack/react-table";
 
 export const ActivityLogColumns = (): ColumnDef<ActivityLog>[] => [
   {
     accessorKey: "createdOn",
-    header: "Created Date",
+    header: "Tanggal pembuatan",
     cell: ({ row }) => (
       <div className="text-xs">{formatDate(row.getValue("createdOn"))}</div>
     ),
@@ -24,14 +24,14 @@ export const ActivityLogColumns = (): ColumnDef<ActivityLog>[] => [
   },
   {
     accessorKey: "actionName",
-    header: "Action Name",
+    header: "Nama aksi",
     cell: ({ row }) => (
       <div className="text-xs">{row.getValue("actionName")}</div>
     ),
   },
   {
     accessorKey: "description",
-    header: "Description",
+    header: "Deskripsi",
     cell: ({ row }) => (
       <div className="whitespace-normal break-words max-w-sm text-xs">
         {row.getValue("description")}
@@ -40,7 +40,7 @@ export const ActivityLogColumns = (): ColumnDef<ActivityLog>[] => [
   },
   {
     accessorKey: "createdBy",
-    header: "Performed by",
+    header: "Dibuat oleh",
     cell: ({ row }) => (
       <div className="text-xs">{row.getValue("createdBy")}</div>
     ),

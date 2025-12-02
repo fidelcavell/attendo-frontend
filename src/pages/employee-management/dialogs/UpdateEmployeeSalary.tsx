@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
-import type { Profile } from "@/data/dataTypes";
+import type { Profile } from "@/types/dataTypes";
 import { months } from "@/data/monthData";
 import { formatIDR } from "@/helper/Formatter";
 import { useLoginContext } from "@/hooks/useLogin";
@@ -120,20 +120,20 @@ export default function UpdateEmployeeSalary({
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Update Salary</AlertDialogTitle>
+          <AlertDialogTitle>Update Gaji</AlertDialogTitle>
           <AlertDialogDescription>
             <div className="mb-2">
-              Current applied base salary:{" "}
+              Data gaji yang berlaku saat ini:{" "}
               <strong>{formatIDR(currentBaseSalary)}</strong>
             </div>
           </AlertDialogDescription>
           <Label className="my-2" htmlFor="salary">
-            Employee's New Salary
+            Jumlah gaji yang ingin diterapkan
           </Label>
           <Input
             id="salary"
             type="number"
-            placeholder="Enter new salary"
+            placeholder="Enter jumlah gaji baru"
             value={salaryAmount}
             onChange={(event) => setSalaryAmount(event.target.value)}
             required
@@ -141,7 +141,7 @@ export default function UpdateEmployeeSalary({
           />
           <div className="flex gap-6">
             <div>
-              <Label className="my-2">Effective year</Label>
+              <Label className="my-2">Tahun efektif</Label>
               <Select
                 value={selectedYear.toString()}
                 onValueChange={(value) => {
@@ -166,7 +166,7 @@ export default function UpdateEmployeeSalary({
               </Select>
             </div>
             <div>
-              <Label className="my-2">Effective month</Label>
+              <Label className="my-2">Bulan efektif</Label>
               <Select
                 value={selectedMonth.toString()}
                 onValueChange={(value) => setSelectedMonth(Number(value))}
@@ -187,10 +187,16 @@ export default function UpdateEmployeeSalary({
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setSalaryAmount("")}>
+          <AlertDialogCancel
+            onClick={() => setSalaryAmount("")}
+            disabled={isLoading}
+          >
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={onUpdateSalary} disabled={salaryAmount.trim().length == 0 || isLoading}>
+          <AlertDialogAction
+            onClick={onUpdateSalary}
+            disabled={salaryAmount.trim().length == 0 || isLoading}
+          >
             {isLoading ? (
               <>
                 <Spinner className="size-4 mr-2" /> Updating...

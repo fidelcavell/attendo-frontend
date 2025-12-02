@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Spinner } from "@/components/ui/spinner";
-import type { OvertimeApplication } from "@/data/dataTypes";
+import type { OvertimeApplication } from "@/types/dataTypes";
 import type { AxiosError } from "axios";
 import { useState } from "react";
 
@@ -63,10 +63,10 @@ export default function DeleteOvertimeApplicationDialog({
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Confirmation</AlertDialogTitle>
+          <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete this overtime application? <br />{" "}
-            This action cannot be <span className="font-semibold">UNDONE</span>.
+            Apakah Anda yakin untuk menghapus pengajuan lembur ini? <br />{" "}
+            Aksi ini bersifat <span className="font-semibold">PERMANENT</span>.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

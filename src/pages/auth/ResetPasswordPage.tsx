@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -69,7 +68,7 @@ export default function ResetPasswordPage() {
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <a href="#" className="flex items-center gap-2 self-center font-medium">
+        <a href="/" className="flex items-center gap-2 self-center font-medium">
           <div className="size-7 rounded-md bg-primary/10 grid place-items-center">
             <img src="/logo.png" alt="Logo" />
           </div>
@@ -79,20 +78,19 @@ export default function ResetPasswordPage() {
           <Card>
             <CardHeader className="text-center">
               <CardTitle className="text-xl">Reset Password</CardTitle>
-              <CardDescription>Enter your new password!</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit}>
                 <div className="grid gap-6">
                   <div className="grid gap-6">
                     <div className="space-y-3">
-                      <Label htmlFor="password">New Password</Label>
+                      <Label htmlFor="password">Password Baru</Label>
                       <div className="relative">
                         <Input
                           id="password"
                           className="pr-10"
                           type={showPassword ? "text" : "password"}
-                          placeholder="Enter new password"
+                          placeholder="Enter password baru"
                           required
                           ref={password}
                         />
@@ -145,7 +143,7 @@ export default function ResetPasswordPage() {
                     </Button>
                   </div>
                   <div className="text-center text-sm">
-                    Remember your account?{" "}
+                    Ingat akun Anda?{" "}
                     <Link
                       to="/sign-in"
                       className="underline underline-offset-4"

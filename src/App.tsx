@@ -35,7 +35,7 @@ import NoInternetConnection from "./pages/error/NoInternetConnection";
 function App() {
   return (
     <BrowserRouter>
-    <NoInternetConnection />
+      <NoInternetConnection />
       <Routes>
         {/* Public Path */}
         <Route path="/" element={<LandingPage />} />
@@ -58,7 +58,9 @@ function App() {
         <Route
           path="/add-profile"
           element={
-            <ProtectedRoleRoute allowedRoles={["ROLE_OWNER", "ROLE_ADMIN", "ROLE_EMPLOYEE"]}>
+            <ProtectedRoleRoute
+              allowedRoles={["ROLE_OWNER", "ROLE_ADMIN", "ROLE_EMPLOYEE"]}
+            >
               <AddProfilePage />
             </ProtectedRoleRoute>
           }
@@ -211,10 +213,19 @@ function App() {
               </ProtectedRoleRoute>
             }
           />
+          <Route
+            path="attendance-report"
+            element={
+              <ProtectedRoleRoute
+                allowedRoles={["ROLE_ADMIN", "ROLE_EMPLOYEE"]}
+              >
+                <AttendanceReportPage />
+              </ProtectedRoleRoute>
+            }
+          />
 
           {/* Authenticated path */}
           <Route path="profile" element={<DetailProfilePage />} />
-          <Route path="attendance-report" element={<AttendanceReportPage />} />
 
           {/* Report Path */}
           <Route

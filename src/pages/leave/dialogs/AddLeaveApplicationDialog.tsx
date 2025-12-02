@@ -71,7 +71,7 @@ export default function AddLeaveApplicationDialog({
     ) {
       setResponse({
         success: false,
-        message: "Please fill in all required fields.",
+        message: "Harap isi semua field yang wajib diisi.",
       });
       setResponseDialog(true);
       return;
@@ -80,7 +80,7 @@ export default function AddLeaveApplicationDialog({
     if (new Date(formData.startDate) > new Date(formData.endDate)) {
       setResponse({
         success: false,
-        message: "Start date cannot be later than end date.",
+        message: "Tanggal mulai tidak boleh lebih besar dari tanggal selesai.",
       });
       setResponseDialog(true);
       return;
@@ -126,15 +126,15 @@ export default function AddLeaveApplicationDialog({
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Add Leave Application</AlertDialogTitle>
+          <AlertDialogTitle>Tambah Pengajuan Perizinan</AlertDialogTitle>
           <AlertDialogDescription>
-            Fill in the details below to create new leave application
+            Isi detail di bawah ini untuk membuat pengajuan perizinan baru
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="startDate">Start Date *</Label>
+            <Label htmlFor="startDate">Tanggal mulai *</Label>
             <Input
               id="startDate"
               type="date"
@@ -147,7 +147,7 @@ export default function AddLeaveApplicationDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="endDate">End Date *</Label>
+            <Label htmlFor="endDate">Tanggal selesai *</Label>
             <Input
               id="endDate"
               type="date"
@@ -160,18 +160,18 @@ export default function AddLeaveApplicationDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="type">Leave Type *</Label>
+            <Label htmlFor="type">Tipe perizinan *</Label>
             <Select
               value={formData.type}
               onValueChange={(value) => handleFormChange("type", value)}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select leave type" />
+                <SelectValue placeholder="Pilih tipe perizinan" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="SICK">Sick Leave</SelectItem>
-                  <SelectItem value="PERSONAL">Personal Leave</SelectItem>
+                  <SelectItem value="SICK">Sick</SelectItem>
+                  <SelectItem value="PERSONAL">Personal</SelectItem>
                   <SelectItem value="OTHER">Other</SelectItem>
                 </SelectGroup>
               </SelectContent>
@@ -179,10 +179,10 @@ export default function AddLeaveApplicationDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description *</Label>
+            <Label htmlFor="description">Deskripsi *</Label>
             <Textarea
               id="description"
-              placeholder="Enter reason for leave..."
+              placeholder="Enter alasan melakukan perizinan..."
               value={formData.description}
               onChange={(event) =>
                 handleFormChange("description", event.target.value)
@@ -218,7 +218,7 @@ export default function AddLeaveApplicationDialog({
                 Submitting...
               </>
             ) : (
-              "Submit Application"
+              "Submit"
             )}
           </AlertDialogAction>
         </AlertDialogFooter>

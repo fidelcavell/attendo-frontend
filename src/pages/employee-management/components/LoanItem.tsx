@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import type { Loan } from "@/data/dataTypes";
+import type { Loan } from "@/types/dataTypes";
 import { formatDate, formatIDR } from "@/helper/Formatter";
 import { useLoginContext } from "@/hooks/useLogin";
 import type { AxiosError } from "axios";

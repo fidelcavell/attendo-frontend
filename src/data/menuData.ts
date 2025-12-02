@@ -28,39 +28,39 @@ export const menuData: Record<string, { menu: any[] }> = {
         icon: UserRoundPen,
       },
       {
-        title: "Store Setting",
+        title: "Pengaturan Toko",
         url: "/app/store-setting",
         icon: Store,
       },
       {
-        title: "Work Schedule",
+        title: "Jadwal Kerja",
         url: "/app/work-schedule",
         icon: CalendarSync,
       },
       {
-        title: "Admin's Activity Log",
+        title: "Aktivitas Log Admin",
         url: "/app/activity-log",
         icon: ScrollText,
       },
       {
-        title: "Report",
+        title: "Laporan",
         url: "#",
         icon: FileChartLine,
         items: [
           {
-            title: "Employee's Attendance",
+            title: "Presensi Karyawan",
             url: "/app/employee-attendance-list",
           },
           {
-            title: "Store's Expenses",
+            title: "Pengeluaran Toko",
             url: "/app/expenses-report",
           },
           {
-            title: "Frequently Late Employee",
+            title: "Karyawan yang sering telat",
             url: "/app/frequently-late-report",
           },
           {
-            title: "Leave vs Overtime",
+            title: "Izin vs Lembur",
             url: "/app/leave-vs-overtime-report",
           },
         ],
@@ -81,61 +81,61 @@ export const menuData: Record<string, { menu: any[] }> = {
         icon: UserRoundPen,
       },
       {
-        title: "Work Schedule",
+        title: "Jadwal Kerja",
         url: "/app/work-schedule",
         icon: CalendarSync,
       },
       {
-        title: "Daily Attendance",
+        title: "Presensi Harian",
         url: "#",
         icon: ClipboardClock,
         items: [
           {
-            title: "Clock",
+            title: "Presensi",
             url: "/app/daily-clock",
           },
           {
-            title: "Break",
+            title: "Istirahat",
             url: "/app/daily-break",
           },
         ],
       },
       {
-        title: "Overtime Attendance",
+        title: "Presensi Lembur",
         url: "#",
         icon: ClockPlus,
         items: [
           {
-            title: "Clock",
+            title: "Presensi",
             url: "/app/overtime-clock",
           },
           {
-            title: "Break",
+            title: "Istirahat",
             url: "/app/overtime-break",
           },
         ],
       },
       {
-        title: "Leave Application",
+        title: "Pengajuan Perizinan",
         url: "/app/leave-application",
         icon: Ticket,
       },
       {
-        title: "Overtime Application",
+        title: "Pengajuan Lembur",
         url: "/app/overtime-application",
         icon: Tickets,
       },
       {
-        title: "Report",
+        title: "Laporan",
         url: "#",
         icon: FileChartLine,
         items: [
           {
-            title: "My Attendance",
+            title: "Presensi Saya",
             url: "/app/attendance-report",
           },
           {
-            title: "Employee's Attendance",
+            title: "Presensi Karyawan",
             url: "/app/employee-attendance-list",
           },
         ],
@@ -145,48 +145,48 @@ export const menuData: Record<string, { menu: any[] }> = {
   ROLE_EMPLOYEE: {
     menu: [
       {
-        title: "Attendance Report",
+        title: "Laporan Presensi",
         url: "/app/attendance-report",
         icon: FileChartColumn,
         isActive: true,
       },
       {
-        title: "Daily Attendance",
+        title: "Presensi Harian",
         url: "#",
         icon: ClipboardClock,
         items: [
           {
-            title: "Clock",
+            title: "Presensi",
             url: "/app/daily-clock",
           },
           {
-            title: "Break",
+            title: "Istirahat",
             url: "/app/daily-break",
           },
         ],
       },
       {
-        title: "Overtime Attendance",
+        title: "Presensi Lembur",
         url: "#",
         icon: ClockPlus,
         items: [
           {
-            title: "Clock",
+            title: "Presensi",
             url: "/app/overtime-clock",
           },
           {
-            title: "Break",
+            title: "Istirahat",
             url: "/app/overtime-break",
           },
         ],
       },
       {
-        title: "Leave Application",
+        title: "Pengajuan Perizinan",
         url: "/app/leave-application",
         icon: Ticket,
       },
       {
-        title: "Overtime Application",
+        title: "Pengajuan Lembur",
         url: "/app/overtime-application",
         icon: Tickets,
       },

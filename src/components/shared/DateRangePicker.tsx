@@ -8,7 +8,6 @@ import { formatDate } from "@/helper/Formatter";
 interface DateRangePickerProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  message: string;
   startDate: string;
   endDate: string;
   handleDateRangeChange: (field: string, value: string) => void;
@@ -19,7 +18,6 @@ interface DateRangePickerProps {
 export default function DateRangePicker({
   isOpen,
   setIsOpen,
-  message,
   startDate,
   endDate,
   handleDateRangeChange,
@@ -28,7 +26,7 @@ export default function DateRangePicker({
 }: DateRangePickerProps) {
   const formatDateRange = () => {
     if (!startDate && !endDate) {
-      return "Select date range";
+      return "Pilih rentang tanggal";
     }
     if (startDate && endDate) {
       return `${formatDate(startDate)} - ${formatDate(endDate)}`;
@@ -39,7 +37,7 @@ export default function DateRangePicker({
     if (endDate) {
       return `Until ${formatDate(endDate)}`;
     }
-    return "Select date range";
+    return "Pilih rentang tanggal";
   };
 
   return (
@@ -53,8 +51,7 @@ export default function DateRangePicker({
       <PopoverContent className="w-80 p-4" align={position}>
         <div className="space-y-4">
           <div>
-            <h4 className="font-medium text-sm mb-2">Filter by Date Range</h4>
-            <p className="text-xs text-gray-600">{message}</p>
+            <h4 className="font-medium text-sm mb-2">Filter dengan rentang tanggal</h4>
           </div>
 
           <div className="grid grid-cols-2 gap-3">

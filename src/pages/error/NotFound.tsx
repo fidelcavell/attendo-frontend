@@ -9,7 +9,9 @@ export default function NotFound() {
           <CardContent className="p-8 text-center space-y-6">
             {/* 404 Illustration */}
             <div className="space-y-4">
-              <div className="text-6xl font-bold text-muted-foreground/20">404</div>
+              <div className="text-6xl font-bold text-muted-foreground/20">
+                404
+              </div>
               <div className="w-16 h-16 mx-auto rounded-full bg-destructive/10 flex items-center justify-center">
                 <Search className="w-8 h-8 text-destructive" />
               </div>
@@ -17,9 +19,13 @@ export default function NotFound() {
 
             {/* Content */}
             <div className="space-y-2">
-              <h1 className="text-2xl font-semibold">Page Not Found</h1>
+              <h1 className="text-2xl font-semibold">
+                Halaman Tidak Ditemukan
+              </h1>
               <p className="text-sm text-muted-foreground">
-                Sorry, we couldn't find the page you're looking for. It might have been moved, deleted, or you entered the wrong URL.
+                Maaf, kami tidak dapat menemukan halaman yang Anda cari. Halaman
+                tersebut mungkin telah dipindahkan, dihapus, atau Anda
+                memasukkan URL yang salah.
               </p>
             </div>
           </CardContent>

@@ -7,7 +7,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import type { LeaveApplication } from "@/data/dataTypes";
+import type { LeaveApplication } from "@/types/dataTypes";
 import { formatDate } from "@/helper/Formatter";
 
 interface ViewDetailLeaveApplicationProps {
@@ -27,29 +27,29 @@ export default function ViewDetailLeaveApplication({
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Leave Request Detail</AlertDialogTitle>
+          <AlertDialogTitle>Detail Pengajuan Perizinan</AlertDialogTitle>
           <AlertDialogDescription>
             <div className="flex flex-col gap-3 mt-2 mb-4">
               <div className="flex gap-3">
-                <div>Start Date :</div>
+                <div>Tanggal mulai :</div>
                 <div>{formatDate(selectedLeaveApplication.startDate)}</div>
               </div>
               <div className="flex gap-3">
-                <div>End Date :</div>
+                <div>Tanggal selesai :</div>
                 <div>{formatDate(selectedLeaveApplication.endDate)}</div>
               </div>
-              <div className="flex gap-3">
-                <div>Description :</div>
+              <div className="flex flex-col gap-3 items-start">
+                <div>Deskripsi :</div>
                 <div>{selectedLeaveApplication.description}</div>
               </div>
-              <div className="col-span-2 flex justify-end">
+              <div className="col-span-2 flex justify-end mt-4">
                 <div className="flex flex-col gap-3">
-                  <div>Issued by : {selectedLeaveApplication.issuedBy}</div>
+                  <div>Diajukan oleh : {selectedLeaveApplication.issuedBy}</div>
                   <div>
                     {selectedLeaveApplication.status === "REJECTED"
-                      ? "Rejected"
-                      : "Approved"}{" "}
-                    by : {selectedLeaveApplication.approvedBy}
+                      ? "Ditolak"
+                      : "Disetujui"}{" "}
+                    oleh : {selectedLeaveApplication.approvedBy}
                   </div>
                 </div>
               </div>

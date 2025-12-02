@@ -14,26 +14,26 @@ export default function AccessDenied() {
                 <ShieldX className="w-8 h-8 text-destructive" />
               </div>
               <Badge variant="destructive" className="text-xs">
-                Access Denied
+                Akses ditolak
               </Badge>
             </div>
 
             {/* Content */}
             <div className="space-y-2">
-              <h1 className="text-2xl font-semibold">Access Restricted</h1>
+              <h1 className="text-2xl font-semibold">Akses terbatas</h1>
               <p className="text-sm text-muted-foreground">
-                You don't have permission to access this page. This area is
-                restricted to authorized personnel only.
+                Anda tidak memiliki izin untuk mengakses halaman ini. Area ini
+                hanya dapat diakses oleh pengguna yang berwenang.
               </p>
             </div>
 
             {/* Additional Info */}
             <div className="bg-muted/50 rounded-lg p-4 space-y-2">
-              <p className="text-xs font-medium">Possible reasons:</p>
+              <p className="text-xs font-medium">Kemungkinan penyebab:</p>
               <ul className="text-xs text-muted-foreground space-y-1">
-                <li>• Your account doesn't have the required role</li>
-                <li>• You need to be logged in with proper credentials</li>
-                <li>• This resource is temporarily unavailable</li>
+                <li>• Akun Anda tidak memiliki peran yang sesuai</li>
+                <li>• Anda perlu login dengan kredensial yang benar</li>
+                <li>• Sumber daya ini sedang tidak tersedia</li>
               </ul>
             </div>
           </CardContent>

@@ -69,7 +69,7 @@ export default function LoginPage() {
   // Check the currentUser's value due to async is take a while to set new data on currentUser.
   useEffect(() => {
     if (!currentUser) return; // wait until user is fetched
-   
+
     if (!storeLoaded && currentUser.role === "ROLE_OWNER") return; // wait until currentStore is fetched
 
     // Optional: You can also track loading states in your context
@@ -101,7 +101,7 @@ export default function LoginPage() {
           <Card>
             <CardHeader className="text-center">
               <CardTitle className="text-xl">Welcome back</CardTitle>
-              <CardDescription>Login with your Account!</CardDescription>
+              <CardDescription>Login dengan akun mu!</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={onSubmit}>
@@ -124,7 +124,7 @@ export default function LoginPage() {
                           className="ml-auto text-sm underline-offset-4 hover:underline"
                           to="/forgot-password"
                         >
-                          Forgot your password?
+                          Lupa password?
                         </Link>
                       </div>
                       <div className="relative">
@@ -156,7 +156,7 @@ export default function LoginPage() {
                           <AlertDialogHeader>
                             <AlertDialogTitle>{error}</AlertDialogTitle>
                             <AlertDialogDescription>
-                              Your username or password is invalid!
+                              Username atau password Anda tidak valid!
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
@@ -179,7 +179,7 @@ export default function LoginPage() {
                     </Button>
                   </div>
                   <div className="text-center text-sm">
-                    Don&apos;t have an account?{" "}
+                    Belum punya akun?{" "}
                     <Link
                       to="/sign-up"
                       className="underline underline-offset-4"

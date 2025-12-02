@@ -65,10 +65,10 @@ export default function DeleteAccountDialog({
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Confirmation</AlertDialogTitle>
+          <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure to <span className="font-bold">PERMANENT DELETE</span>{" "}
-            your account ?
+            Apakah Anda yakin untuk menghapus akun ini secara{" "}
+            <span className="font-bold">PERMANENT</span> ?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -78,7 +78,10 @@ export default function DeleteAccountDialog({
           >
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={() => onDeleteAccount()}>
+          <AlertDialogAction
+            onClick={() => onDeleteAccount()}
+            disabled={isLoading}
+          >
             {isLoading ? (
               <>
                 <Spinner className="size-4 mr-2" /> Deleting...

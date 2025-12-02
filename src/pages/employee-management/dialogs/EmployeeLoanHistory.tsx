@@ -8,7 +8,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import LoanItem from "../components/LoanItem";
-import type { Loan, Profile } from "@/data/dataTypes";
+import type { Loan, Profile } from "@/types/dataTypes";
 import { months } from "@/data/monthData";
 import { useCallback, useEffect, useState } from "react";
 import api from "@/api/api-config";
@@ -60,14 +60,14 @@ export default function EmployeeLoanHistory({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {selectedProfile.username}'s loan history -{" "}
+            Daftar peminjaman uang {selectedProfile.username} -{" "}
             {months[new Date().getMonth()].toLowerCase()} {currentYear}
           </AlertDialogTitle>
           <AlertDialogDescription>
             <div className="w-full min-h-80 flex flex-col items-center justify-start pt-2">
               {!loanHistory || loanHistory.length === 0 ? (
                 <div className="text-gray-500 text-sm mt-8 border border-dashed rounded-lg py-16 w-full text-center">
-                  No data recorded!
+                  Tidak ada yang tersedia
                 </div>
               ) : (
                 <div className="flex flex-col items-center w-full space-y-3 max-h-80 pb-2 overflow-y-auto scroll-smooth">

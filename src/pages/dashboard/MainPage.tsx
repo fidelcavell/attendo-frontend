@@ -9,19 +9,17 @@ export default function DashboardPage() {
       <Tabs defaultValue="today-attendances">
         <TabsList className="gap-2 mb-4 flex sticky top-4 z-30 px-2">
           <TabsTrigger value="today-attendances">
-            <span className="hidden sm:inline">Today attendances</span>
+            <span className="hidden sm:inline">Presensi Hari Ini</span>
             <span className="inline sm:hidden">Today attends</span>
           </TabsTrigger>
 
           <TabsTrigger value="leave-request">
-            <span className="hidden sm:inline">Leave application requests</span>
+            <span className="hidden sm:inline">Pengajuan Perizinan</span>
             <span className="inline sm:hidden">Leave reqs</span>
           </TabsTrigger>
 
           <TabsTrigger value="overtime-request">
-            <span className="hidden sm:inline">
-              Overtime application requests
-            </span>
+            <span className="hidden sm:inline">Pengajuan Lembur</span>
             <span className="inline sm:hidden">Overtime reqs</span>
           </TabsTrigger>
         </TabsList>

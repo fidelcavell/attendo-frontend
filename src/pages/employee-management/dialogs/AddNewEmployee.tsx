@@ -77,7 +77,7 @@ export default function AddEmployeeDialog({
     <AlertDialog open={open} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Add new employee</AlertDialogTitle>
+          <AlertDialogTitle>Tambah karyawan baru</AlertDialogTitle>
           <AlertDialogDescription>
             <div>
               <Label className="my-4" htmlFor="username">
@@ -87,7 +87,7 @@ export default function AddEmployeeDialog({
                 className="mb-2"
                 id="username"
                 type="text"
-                placeholder="Enter employee username"
+                placeholder="Enter username karyawan"
                 value={newEmployee}
                 onChange={(event) => setNewEmployee(event.target.value)}
                 required
@@ -101,7 +101,7 @@ export default function AddEmployeeDialog({
                 className="mb-4"
                 id="username"
                 type="number"
-                placeholder="Enter employee salary"
+                placeholder="Enter gaji karyawan"
                 value={salaryAmount}
                 onChange={(event) => setSalaryAmount(event.target.value)}
                 required
@@ -110,12 +110,15 @@ export default function AddEmployeeDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setSalaryAmount("")}>
+          <AlertDialogCancel
+            onClick={() => setSalaryAmount("")}
+            disabled={isLoading}
+          >
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={onAddNewEmployee}
-            disabled={!newEmployee.trim() || !salaryAmount.trim()}
+            disabled={!newEmployee.trim() || !salaryAmount.trim() || isLoading}
           >
             {isLoading ? (
               <>

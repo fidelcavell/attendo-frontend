@@ -48,8 +48,9 @@ export default function AddProfilePage() {
   const birthDate = useRef<HTMLInputElement>(null);
   const [gender, setGender] = useState<string>("");
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+
   const [response, setResponse] = useState<{
     success: boolean;
     message: string;
@@ -69,7 +70,7 @@ export default function AddProfilePage() {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
     setResponse(null);
     setOpenDialog(false);
 
@@ -113,7 +114,7 @@ export default function AddProfilePage() {
       setResponse(error.response?.data || null);
     } finally {
       setOpenDialog(true);
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -124,7 +125,7 @@ export default function AddProfilePage() {
           <div className="text-xl font-semibold">
             Hi, Welcome {currentUser?.username}
           </div>
-          <div className="text-[14px]">Please fill up your data!</div>
+          <div className="text-[14px]">Lengkapi data Anda dibawah ini!</div>
         </div>
 
         <div className={cn("flex flex-col gap-6")}>
@@ -135,11 +136,11 @@ export default function AddProfilePage() {
                   <div className="grid lg:grid-cols-2 gap-6">
                     {/* Name */}
                     <div className="grid gap-3">
-                      <Label htmlFor="name">Name</Label>
+                      <Label htmlFor="name">Nama</Label>
                       <Input
                         id="name"
                         type="text"
-                        placeholder="Enter name"
+                        placeholder="Enter nama"
                         required
                         ref={name}
                       />
@@ -154,7 +155,7 @@ export default function AddProfilePage() {
                         <img
                           className="w-32 rounded-2xl border border-black object-center object-cover"
                           src={url}
-                          alt="Your picture profile"
+                          alt="Profile picture Anda"
                         />
                       )}
 
@@ -163,17 +164,17 @@ export default function AddProfilePage() {
                           className="w-40"
                           onClick={() => setCaptureEnable(true)}
                         >
-                          Take a picture
+                          Ambil Foto
                         </Button>
                       )}
                     </div>
                     {/* Phone Number */}
                     <div className="grid gap-3">
-                      <Label htmlFor="phone">Phone Number</Label>
+                      <Label htmlFor="phone">Nomor Telepon</Label>
                       <Input
                         id="phone"
                         type="tel"
-                        placeholder="Enter phone number"
+                        placeholder="Enter nomor telepon"
                         required
                         ref={phone}
                       />
@@ -184,7 +185,7 @@ export default function AddProfilePage() {
                       <Input
                         id="birthDate"
                         type="date"
-                        placeholder="Enter birth date"
+                        placeholder="Enter tanggal lahir"
                         required
                         ref={birthDate}
                         max={new Date().toISOString().split("T")[0]}
@@ -192,10 +193,10 @@ export default function AddProfilePage() {
                     </div>
                     {/* Gender */}
                     <div className="grid gap-3">
-                      <Label htmlFor="gender">Gender</Label>
+                      <Label htmlFor="gender">Jenis Kelamin</Label>
                       <Select value={gender} onValueChange={setGender} required>
                         <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select gender" />
+                          <SelectValue placeholder="Pilih jenis kelamin" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
@@ -207,9 +208,9 @@ export default function AddProfilePage() {
                     </div>
                     {/* Address */}
                     <div className="grid gap-3">
-                      <Label htmlFor="address">Address</Label>
+                      <Label htmlFor="address">Alamat</Label>
                       <Textarea
-                        placeholder="Enter address"
+                        placeholder="Enter alamat"
                         ref={address}
                         required
                       />
@@ -223,8 +224,8 @@ export default function AddProfilePage() {
                           <div className="font-semibold text-sm flex items-center gap-2">
                             <TriangleAlert className="size-4" />
                             <div>
-                              Make sure your face is not blurred and clearly
-                              visible
+                              Pastikan wajah Anda tidak blur dan terlihat dengan
+                              jelas
                             </div>
                           </div>
                           <button
@@ -293,9 +294,16 @@ export default function AddProfilePage() {
                   <Button
                     type="submit"
                     className="w-full h-10 mb-4"
-                    disabled={loading}
+                    disabled={isLoading}
                   >
-                    {loading ? <Spinner className="size-6" /> : "Submit"}
+                    {isLoading ? (
+                      <>
+                        <Spinner className="size-6" />
+                        Submitting...
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </div>
               </form>

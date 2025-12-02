@@ -58,9 +58,11 @@ export default function AccountEmailChangePage() {
               </div>
 
               <div className="space-y-2">
-                <h1 className="text-xl font-semibold">Verifying your email…</h1>
+                <h1 className="text-xl font-semibold">
+                  Memverifikasi email anda...
+                </h1>
                 <p className="text-sm text-muted-foreground">
-                  Please wait while we check your verification link.
+                  Mohon tunggu, kami sedang memeriksa link verifikasi Anda.
                 </p>
               </div>
             </CardContent>
@@ -76,16 +78,18 @@ export default function AccountEmailChangePage() {
     let desc = "";
     if (message.includes("verified")) {
       desc =
-        "Your email has been successfully verified. You can now log in to your account.";
+        "Email Anda berhasil diverifikasi. Anda sekarang dapat masuk ke akun Anda.";
     } else if (message.includes("expired")) {
-      desc = "The verification link has expired. Please request a new one.";
+      desc = "Link verifikasi telah kedaluwarsa. Silakan minta link baru.";
     } else if (message.includes("already")) {
-      desc = "Your account is already verified. You can go ahead and log in.";
+      desc =
+        "Akun Anda sudah diverifikasi. Anda bisa langsung masuk ke akun Anda.";
     } else if (message.includes("not found") || message.includes("invalid")) {
       desc =
-        "We couldn’t find the verification token. Please check your email or request a new one.";
+        "Kami tidak dapat menemukan token verifikasi. Silakan periksa email Anda atau minta link baru.";
     } else {
-      desc = "We couldn’t process your request. Please try again later.";
+      desc =
+        "Permintaan Anda tidak dapat diproses. Silakan coba lagi beberapa saat lagi.";
     }
 
     return {

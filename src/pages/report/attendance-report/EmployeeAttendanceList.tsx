@@ -29,7 +29,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { AxiosError } from "axios";
 import api from "@/api/api-config";
 import { Badge } from "@/components/ui/badge";
-import type { Profile } from "@/data/dataTypes";
+import type { Profile } from "@/types/dataTypes";
 import { Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
@@ -58,7 +58,7 @@ export const columns = (
   },
   {
     accessorKey: "phoneNumber",
-    header: "Phone Number",
+    header: "Nomor Telepon",
     cell: ({ row }) => <div>{row.getValue("phoneNumber")}</div>,
   },
   {
@@ -89,7 +89,7 @@ export const columns = (
           size="sm"
         >
           <Eye className="w-4 h-4 mr-2" />
-          View Report
+          Lihat Laporan
         </Button>
       );
     },
@@ -201,7 +201,7 @@ export function EmployeeAttendanceListTable() {
   }, [debouncedSearch]);
 
   if (!data) {
-    return <Loading message="Employee Attendance List" />;
+    return <Loading message="Daftar Presensi Karyawan" />;
   }
 
   return (
@@ -255,7 +255,7 @@ export function EmployeeAttendanceListTable() {
             ) : (
               <TableRow>
                 <TableCell colSpan={6} className="h-24 text-center">
-                  No results found.
+                  Tidak ada data yang tersedia
                 </TableCell>
               </TableRow>
             )}

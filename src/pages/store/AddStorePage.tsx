@@ -47,7 +47,7 @@ export default function AddStorePage() {
     multiplierOvertime: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [response, setResponse] = useState<{
     success: boolean;
@@ -101,7 +101,7 @@ export default function AddStorePage() {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
     setResponse(null);
     setOpenDialog(false);
 
@@ -125,7 +125,7 @@ export default function AddStorePage() {
       setResponse(error.response?.data || null);
     } finally {
       setOpenDialog(true);
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -137,7 +137,7 @@ export default function AddStorePage() {
             Hi, Welcome {currentUser?.username}
           </div>
           <div className="text-[14px]">
-            Please set up your store information!
+            Silakan lengkapi informasi toko Anda!
           </div>
         </div>
 
@@ -150,11 +150,11 @@ export default function AddStorePage() {
                     <div className="flex flex-col gap-6 w-full">
                       {/* Store Name */}
                       <div className="grid gap-3">
-                        <Label htmlFor="name">Store Name</Label>
+                        <Label htmlFor="name">Nama Toko</Label>
                         <Input
                           id="name"
                           type="text"
-                          placeholder="Enter store name"
+                          placeholder="Enter nama toko"
                           value={store.name}
                           onChange={(event) =>
                             setStore({ ...store, name: event.target.value })
@@ -168,7 +168,7 @@ export default function AddStorePage() {
                         <div className="flex flex-row gap-3">
                           <div className="w-1/2">
                             <Label htmlFor="break-duration">
-                              Break duration (in minutes)
+                              Durasi Istirahat (minutes)
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <span>
@@ -176,10 +176,7 @@ export default function AddStorePage() {
                                   </span>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                  <p>
-                                    Individual rest and meal duration per
-                                    employee
-                                  </p>
+                                  <p>Durasi istirahat dan makan per karyawan</p>
                                 </TooltipContent>
                               </Tooltip>
                             </Label>
@@ -187,7 +184,7 @@ export default function AddStorePage() {
                               className="mt-2"
                               id="break-duration"
                               type="number"
-                              placeholder="Enter break duration"
+                              placeholder="Enter durasi istirahat"
                               value={store.breakDuration}
                               onChange={(event) =>
                                 setStore({
@@ -200,7 +197,7 @@ export default function AddStorePage() {
                           </div>
                           <div className="w-1/2">
                             <Label htmlFor="max-break-count">
-                              Max break count
+                              Jumlah Maksimal Istirahat
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <span>
@@ -209,8 +206,8 @@ export default function AddStorePage() {
                                 </TooltipTrigger>
                                 <TooltipContent>
                                   <p>
-                                    Maximum number of employees allowed to rest
-                                    at the same time
+                                    Jumlah maksimal karyawan yang diperbolehkan
+                                    istirahat pada waktu yang sama
                                   </p>
                                 </TooltipContent>
                               </Tooltip>
@@ -219,7 +216,7 @@ export default function AddStorePage() {
                               className="mt-2"
                               id="max-break-count"
                               type="number"
-                              placeholder="Enter max break count"
+                              placeholder="Enter jumlah maksimal istirahat"
                               value={store.maxBreakCount}
                               onChange={(event) =>
                                 setStore({
@@ -238,7 +235,7 @@ export default function AddStorePage() {
                         <div className="flex flex-row gap-3">
                           <div className="w-1/2">
                             <Label htmlFor="clock-in-penalty">
-                              Late Clock in Penalty (in rupiah)
+                              Penalti telat clock-in (Rupiah)
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <span>
@@ -247,8 +244,9 @@ export default function AddStorePage() {
                                 </TooltipTrigger>
                                 <TooltipContent>
                                   <p>
-                                    Salary deduction applied when an employee
-                                    arrives after the scheduled time
+                                    Potongan gaji yang diterapkan ketika
+                                    karyawan datang melewati waktu yang
+                                    dijadwalkan
                                   </p>
                                 </TooltipContent>
                               </Tooltip>
@@ -257,7 +255,7 @@ export default function AddStorePage() {
                               className="mt-2"
                               id="clock-in-penalty"
                               type="number"
-                              placeholder="Enter penalty amount (eg. 10000)"
+                              placeholder="Enter jumlah pinalti (eg. 10000)"
                               value={store.lateClockInPenaltyAmount}
                               onChange={(event) =>
                                 setStore({
@@ -270,7 +268,7 @@ export default function AddStorePage() {
                           </div>
                           <div className="w-1/2">
                             <Label htmlFor="break-out-penalty">
-                              Late Break out penalty (in rupiah)
+                              Penalti telat break-out (in rupiah)
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <span>
@@ -279,8 +277,9 @@ export default function AddStorePage() {
                                 </TooltipTrigger>
                                 <TooltipContent>
                                   <p>
-                                    Salary deduction applied when an employee
-                                    rests beyond the allocated break time
+                                    Potongan gaji yang diterapkan ketika
+                                    karyawan beristirahat melebihi waktu
+                                    istirahat yang dialokasikan
                                   </p>
                                 </TooltipContent>
                               </Tooltip>
@@ -289,7 +288,7 @@ export default function AddStorePage() {
                               className="mt-2"
                               id="break-out-penalty"
                               type="number"
-                              placeholder="Enter penalty amount (eg. 10000)"
+                              placeholder="Enter jumlah pinalti (eg. 10000)"
                               value={store.lateBreakOutPenaltyAmount}
                               onChange={(event) =>
                                 setStore({
@@ -308,7 +307,7 @@ export default function AddStorePage() {
                         <div className="flex flex-row gap-3">
                           <div className="w-1/2">
                             <Label htmlFor="overtime-multiplier">
-                              Overtime multiplier
+                              Koefisien Lembur
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <span>
@@ -317,8 +316,8 @@ export default function AddStorePage() {
                                 </TooltipTrigger>
                                 <TooltipContent>
                                   <p>
-                                    Multiplier applied to base salary for
-                                    overtime pay
+                                    Pengali yang diterapkan pada gaji pokok
+                                    untuk tanggal lembur
                                   </p>
                                 </TooltipContent>
                               </Tooltip>
@@ -328,7 +327,7 @@ export default function AddStorePage() {
                               id="overtime-multiplier"
                               type="number"
                               step="0.1"
-                              placeholder="Enter multiplier (eg. 1.2 = 120%)"
+                              placeholder="Enter koefisien (eg. 1.2 = 120%)"
                               value={store.multiplierOvertime}
                               onChange={(event) =>
                                 setStore({
@@ -340,7 +339,7 @@ export default function AddStorePage() {
                             />
                           </div>
                           <div className="w-1/2">
-                            <Label htmlFor="radius">Radius (in meter)</Label>
+                            <Label htmlFor="radius">Radius (meters)</Label>
                             <Input
                               className="mt-2"
                               id="radius"
@@ -361,10 +360,10 @@ export default function AddStorePage() {
 
                       {/* Address */}
                       <div className="grid gap-3">
-                        <Label htmlFor="address">Address</Label>
+                        <Label htmlFor="address">Alamat</Label>
                         <Textarea
                           id="address"
-                          placeholder="Enter store address"
+                          placeholder="Enter alamat toko"
                           value={store.address}
                           onChange={(event) =>
                             setStore({ ...store, address: event.target.value })
@@ -402,7 +401,9 @@ export default function AddStorePage() {
                           <div className="flex items-center justify-center h-full text-gray-500">
                             <div className="text-center">
                               <MapPin className="size-8 mx-auto mb-2" />
-                              <p>Click "Use Current Location" to load map</p>
+                              <p>
+                                Klik "Gunakan Lokasi Saat Ini" untuk memuat map
+                              </p>
                             </div>
                           </div>
                         )}
@@ -413,7 +414,7 @@ export default function AddStorePage() {
                         onClick={onSetCurrentLocation}
                       >
                         <Navigation className="size-4 mr-2" />
-                        Use Current Location
+                        Gunakan Lokasi Saat Ini
                       </Button>
                     </div>
                   </div>
@@ -421,9 +422,16 @@ export default function AddStorePage() {
                   <Button
                     type="submit"
                     className="w-full h-10 mb-4"
-                    disabled={loading}
+                    disabled={isLoading}
                   >
-                    {loading ? <Spinner className="size-6" /> : "Create Store"}
+                    {isLoading ? (
+                      <>
+                        <Spinner className="size-6" />
+                        Creating...
+                      </>
+                    ) : (
+                      "Create"
+                    )}
                   </Button>
                 </div>
               </form>

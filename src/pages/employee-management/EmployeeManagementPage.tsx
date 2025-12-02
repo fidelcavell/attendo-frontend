@@ -67,7 +67,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import type { Profile, Schedule, User } from "@/data/dataTypes";
+import type { Profile, Schedule, User } from "@/types/dataTypes";
 import { months } from "@/data/monthData";
 import UpdateEmployeeRole from "./dialogs/UpdateEmployeeRole";
 import AddNewEmployee from "./dialogs/AddNewEmployee";
@@ -105,17 +105,17 @@ export const columns = (
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Nama",
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
     accessorKey: "phoneNumber",
-    header: "Phone Number",
+    header: "Nomor Telepon",
     cell: ({ row }) => <div>{row.getValue("phoneNumber")}</div>,
   },
   {
     accessorKey: "idSchedule",
-    header: "Schedule",
+    header: "Jadwal Kerja",
     cell: ({ row }) => (
       <div>
         {row.getValue("idSchedule") != null ? (
@@ -168,37 +168,37 @@ export const columns = (
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleViewDetailProfile(employee)}>
               <UserSearch className="mr-2" />
-              View profile
+              Detail profile
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleUpdateSchedule(employee)}>
               <CalendarSync className="mr-2" />
-              Update work schedule
+              Update jadwal kerja
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleUpdateSalary(employee)}>
               <BadgeDollarSign className="mr-2" />
-              Update salary
+              Update gaji
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleNewLoan(employee)}>
               <HandCoins className="mr-2" />
-              Add new loan
+              Tambah peminjaman uang baru
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleViewLoanList(employee)}>
               <PiggyBank className="mr-2" />
-              View {monthName}'s loan
+              Tampil peminjaman uang pada {monthName}
             </DropdownMenuItem>
             {currentUser?.role == "ROLE_OWNER" ? (
               <>
                 <DropdownMenuItem onClick={() => handlePromoteDemote(employee)}>
                   <ArrowDownUp className="mr-2" />
                   {employee.roleName === "ROLE_ADMIN"
-                    ? "Demote as employee"
-                    : "Promote as admin"}
+                    ? "Update ke role employee"
+                    : "Update ke role admin"}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => handleRemoveEmployee(employee)}
                 >
                   <UserRoundX className="mr-2" />
-                  Remove employee
+                  Hapus karyawan
                 </DropdownMenuItem>
               </>
             ) : null}
@@ -427,16 +427,12 @@ export function EmployeeManagementTable() {
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
           Employee Management
         </h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Manage and monitor employee data, roles, work status and salary
-          records efficiently.
-        </p>
       </div>
       <Card className="p-6 shadow-md">
         {/* Search Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           <Input
-            placeholder="Search username..."
+            placeholder="Cari berdasarkan username..."
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             className="w-full sm:max-w-sm"
@@ -446,7 +442,7 @@ export function EmployeeManagementTable() {
             onClick={() => setIsAddEmployee(true)}
           >
             <Plus />
-            Add new employee
+            Tambah karyawan baru
           </Button>
         </div>
 
@@ -492,7 +488,7 @@ export function EmployeeManagementTable() {
                     colSpan={table.getAllColumns().length}
                     className="h-24 text-center"
                   >
-                    No results found.
+                    Tidak ada data yang tersedia
                   </TableCell>
                 </TableRow>
               )}
@@ -506,7 +502,7 @@ export function EmployeeManagementTable() {
           totalPages={totalPages}
           dataLength={data.length}
           totalElements={totalElements}
-          dataName="requests"
+          dataName="employees"
           pageSize={table.getState().pagination.pageSize}
           setPageSize={table.setPageSize}
           onPreviousPage={table.previousPage}
@@ -568,14 +564,11 @@ export function EmployeeManagementTable() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Update {selectedProfile?.username}'s work schedule
+              Update jadwal kerja {selectedProfile?.username}
             </AlertDialogTitle>
-            <AlertDialogDescription>
-              Select on available schedule below
-            </AlertDialogDescription>
           </AlertDialogHeader>
-          <div>
-            <Label className="my-4">Available work schedule</Label>
+          <div className="mb-4">
+            <Label className="my-4">Jadwal kerja yang tersedia</Label>
             <Select
               value={selectedScheduleId}
               onValueChange={(value) => setSelectedScheduleId(value)}
@@ -611,7 +604,10 @@ export function EmployeeManagementTable() {
             <AlertDialogCancel onClick={() => setSelectedScheduleId("")}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction onClick={onUpdateSchedule} disabled={isLoading || selectedScheduleId.length == 0}>
+            <AlertDialogAction
+              onClick={onUpdateSchedule}
+              disabled={isLoading || selectedScheduleId.length == 0}
+            >
               {isLoading ? (
                 <>
                   <Spinner className="size-4 mr-2" />

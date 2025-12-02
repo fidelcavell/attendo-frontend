@@ -20,7 +20,7 @@ export default function NoInternetConnection() {
 
   return (
     <div className="fixed bottom-0 left-0 z w-full bg-red-600 text-white text-center p-2 text-sm font-medium z-50 shadow-lg">
-      ⚠️ You are offline — some features may not work until you reconnect
+      ⚠️ Anda offline — beberapa fitur tidak dapat digunakan hingga Anda terhubung kembali.
     </div>
   );
 }

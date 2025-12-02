@@ -42,7 +42,7 @@ export function StoreSwitcher() {
                 <Home className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="text-xs">Current Selected :</span>
+                <span className="text-xs">Toko terpilih saat ini :</span>
                 <span className="truncate font-medium">
                   {currentStore?.name ?? "NONE"}
                 </span>
@@ -64,7 +64,7 @@ export function StoreSwitcher() {
               sideOffset={4}
             >
               <DropdownMenuLabel className="text-muted-foreground text-xs">
-                Your Toko
+                Daftar Toko
               </DropdownMenuLabel>
 
               {ownedStoreData.map((currentStore) => (
@@ -94,7 +94,7 @@ export function StoreSwitcher() {
                   <Plus className="size-4" />
                 </div>
                 <div className="text-muted-foreground font-medium">
-                  Add New Store
+                  Tambah toko baru
                 </div>
               </DropdownMenuItem>
             </DropdownMenuContent>

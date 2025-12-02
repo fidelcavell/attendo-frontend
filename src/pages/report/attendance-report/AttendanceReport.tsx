@@ -19,7 +19,7 @@ import type {
   Loan,
   Profile,
   SalarySummary,
-} from "@/data/dataTypes";
+} from "@/types/dataTypes";
 import api from "@/api/api-config";
 import { useLoginContext } from "@/hooks/useLogin";
 import {
@@ -57,35 +57,35 @@ export default function AttendanceReportPage() {
       bgColor: "bg-green-50",
       borderColor: "border-green-200",
       icon: <CircleCheck className="size-4" />,
-      label: "Present",
+      label: "Hadir",
     },
     absent: {
       color: "text-red-700",
       bgColor: "bg-red-50",
       borderColor: "border-red-200",
       icon: <CircleX className="size-4" />,
-      label: "Absent",
+      label: "Absen",
     },
     leave: {
       color: "text-blue-700",
       bgColor: "bg-blue-50",
       borderColor: "border-blue-200",
       icon: <ClockFading className="size-4" />,
-      label: "Leave",
+      label: "Izin",
     },
     late: {
       color: "text-amber-700",
       bgColor: "bg-amber-50",
       borderColor: "border-amber-200",
       icon: <CircleAlert className="size-4" />,
-      label: "Late",
+      label: "Telat",
     },
     overtime: {
       color: "text-purple-700",
       bgColor: "bg-purple-50",
       borderColor: "border-purple-200",
       icon: <ClockPlus className="size-4" />,
-      label: "Overtime",
+      label: "Lembur",
     },
     "no-data": {
       color: "text-muted-500",
@@ -344,7 +344,7 @@ export default function AttendanceReportPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
-            {targetedName}'s Attendance Report
+            Laporan Presensi {targetedName}
           </h1>
           <div className="flex gap-3 mt-3">
             <div>
@@ -393,7 +393,7 @@ export default function AttendanceReportPage() {
           onClick={onDownloadReport}
           className="no-print w-full sm:w-auto flex justify-center"
         >
-          <FileDown className="mr-2 h-4 w-4" /> Download Report
+          <FileDown className="mr-2 h-4 w-4" /> Download Laporan
         </Button>
       </div>
 
@@ -559,7 +559,7 @@ export default function AttendanceReportPage() {
                 onClick={(event) => event.stopPropagation()}
               >
                 <div className="text-center font-semibold mb-2">
-                  Attendances
+                  Daftar data presensi
                 </div>
 
                 {mobileAttendances.map((attendance) => (
@@ -607,7 +607,7 @@ export default function AttendanceReportPage() {
             <div className="flex items-center gap-3">
               <Wallet className="w-5 h-5" />
               <div>
-                <p className="text-gray-600 text-sm">Total Base Salary</p>
+                <p className="text-gray-600 text-sm">Total Gaji Kotor</p>
                 <p className="font-semibold text-gray-800">
                   {formatIDR(salarySummary?.baseSalary ?? 0)}
                 </p>
@@ -615,7 +615,7 @@ export default function AttendanceReportPage() {
             </div>
             <span className="text-xs text-gray-500">
               ({(statusCounts["present"] || 0) + (statusCounts["late"] || 0)}{" "}
-              days)
+              hari)
             </span>
           </div>
 
@@ -624,7 +624,7 @@ export default function AttendanceReportPage() {
             <div className="flex items-center gap-3">
               <MinusCircle className="w-5 h-5" />
               <div>
-                <p className="text-gray-600 text-sm">Total Deduction</p>
+                <p className="text-gray-600 text-sm">Total Potongan</p>
                 <p className="font-semibold text-gray-800">
                   {formatIDR(salarySummary?.totalDeduction ?? 0)}
                 </p>
@@ -637,7 +637,7 @@ export default function AttendanceReportPage() {
             <div className="flex items-center gap-3">
               <CreditCard className="w-5 h-5" />
               <div>
-                <p className="text-gray-600 text-sm">Total Loan</p>
+                <p className="text-gray-600 text-sm">Total Peminjaman Uang</p>
                 <p className="font-semibold text-gray-800">
                   {formatIDR(salarySummary?.totalLoan ?? 0)}
                 </p>
@@ -650,14 +650,14 @@ export default function AttendanceReportPage() {
             <div className="flex items-center gap-3">
               <Clock className="w-5 h-5" />
               <div>
-                <p className="text-gray-600 text-sm">Overtime Pay</p>
+                <p className="text-gray-600 text-sm">Bayaran Lembur</p>
                 <p className="font-semibold text-gray-800">
                   {formatIDR(salarySummary?.totalOvertimePay ?? 0)}
                 </p>
               </div>
             </div>
             <span className="text-xs text-gray-500">
-              ({statusCounts["overtime"] || 0} days)
+              ({statusCounts["overtime"] || 0} hari)
             </span>
           </div>
 
@@ -667,7 +667,7 @@ export default function AttendanceReportPage() {
               <Calculator className="w-5 h-5" />
               <div>
                 <p className="text-gray-600 text-sm">
-                  Total Salary (include overtime)
+                  Total Gaji Bersih (termasuk lembur)
                 </p>
                 <p className="font-semibold text-gray-800">
                   {formatIDR(salarySummary?.totalSalary ?? 0)}
@@ -683,11 +683,11 @@ export default function AttendanceReportPage() {
         {/* Loan List */}
         <Card className="w-full min-h-80 flex flex-col justify-start px-8 avoid-break">
           <div className="flex gap-3 font-semibold text-md">
-            <PiggyBank /> Your loan amount list
+            <PiggyBank /> Daftar peminjaman uang
           </div>
           {!loanHistory || loanHistory.length === 0 ? (
             <div className="text-gray-500 text-sm mt-8 border border-dashed p-8 rounded-lg text-center">
-              No data recorded!
+              Tidak ada data yang tersedia!
             </div>
           ) : (
             <div className="flex flex-col items-center w-full space-y-3">
@@ -701,7 +701,7 @@ export default function AttendanceReportPage() {
                   </div>
 
                   <div className="text-right font-semibold text-gray-800">
-                    Rp. {formatIDR(loan.amount)}
+                    {formatIDR(loan.amount)}
                   </div>
                 </Card>
               ))}
@@ -712,7 +712,7 @@ export default function AttendanceReportPage() {
         {/* Deduction List */}
         <Card className="w-full min-h-80 flex flex-col justify-start px-8 avoid-break">
           <div className="flex gap-3 font-semibold text-md">
-            <BanknoteArrowDown /> Your Deduction amount list
+            <BanknoteArrowDown /> Daftar potongan
           </div>
           {!attendanceList ||
           attendanceList.length === 0 ||
@@ -720,7 +720,7 @@ export default function AttendanceReportPage() {
             (attendance) => attendance.deductionAmount === 0
           ) ? (
             <div className="text-gray-500 text-sm mt-8 border border-dashed p-8 rounded-lg text-center">
-              No data recorded!
+              Tidak ada data yang tersedia!
             </div>
           ) : (
             <div className="flex flex-col items-center w-full space-y-3">

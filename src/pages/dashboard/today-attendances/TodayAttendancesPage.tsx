@@ -31,7 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { Attendance } from "@/data/dataTypes";
+import type { Attendance } from "@/types/dataTypes";
 import { useLoginContext } from "@/hooks/useLogin";
 import {
   flexRender,
@@ -70,7 +70,7 @@ export const columns = (
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Nama",
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
@@ -90,29 +90,29 @@ export const columns = (
   },
   {
     accessorKey: "status",
-    header: "Attendance Status",
+    header: "Status Presensi",
     cell: ({ row }) => (
       <div>
         {row.getValue("status") == "PRESENT" ? (
           <Badge className="bg-green-500 flex items-center gap-1 px-2 py-1 text-sm text-white rounded-md shadow-sm">
             <CircleCheck />
-            Present
+            Hadir
           </Badge>
         ) : row.getValue("status") == "LATE" ? (
           <Badge className="bg-amber-500 flex items-center gap-1 px-2 py-1 text-sm text-white rounded-md shadow-sm">
-            <CircleAlert /> Late
+            <CircleAlert /> Telat
           </Badge>
         ) : row.getValue("status") == "ABSENT" ? (
           <Badge
             variant={"destructive"}
             className="flex items-center gap-1 px-2 py-1 text-sm text-white rounded-md shadow-sm"
           >
-            <CircleX /> Absent
+            <CircleX /> Absen
           </Badge>
         ) : (
           <Badge className="bg-blue-500 flex items-center gap-1 px-2 py-1 text-sm text-white rounded-md shadow-sm">
             <ClockFading />
-            Leave
+            Izin
           </Badge>
         )}
       </div>
@@ -120,20 +120,20 @@ export const columns = (
   },
   {
     accessorKey: "type",
-    header: "Attendance Type",
+    header: "Tipe Presensi",
     cell: ({ row }) => (
       <div>
         {row.getValue("type") == "DAILY" ? (
           <Badge className="bg-green-500 px-2 py-1 text-sm rounded-md">
-            Daily
+            Harian
           </Badge>
         ) : row.getValue("type") == "OVERTIME" ? (
           <Badge className="bg-violet-500 px-2 py-1 text-sm rounded-md">
-            Overtime
+            Lembur
           </Badge>
         ) : (
           <Badge className="bg-blue-500 px-2 py-1 text-sm rounded-md">
-            Leave
+            Izin
           </Badge>
         )}
       </div>
@@ -141,7 +141,7 @@ export const columns = (
   },
   {
     accessorKey: "breakIn",
-    header: "Break Status",
+    header: "Status Istirahat",
     cell: ({ row }) => {
       const { breakIn, breakOut } = row.original;
 
@@ -149,18 +149,18 @@ export const columns = (
         <div>
           {breakIn && breakOut ? (
             <Badge className="px-2 py-1 text-sm rounded-md">
-              Already break
+              Sudah istirahat
             </Badge>
           ) : breakIn && !breakOut ? (
             <Badge
               variant="destructive"
               className="px-2 py-1 text-sm rounded-md"
             >
-              On break
+              Sedang istirahat
             </Badge>
           ) : (
             <Badge className="bg-amber-600 px-2 py-1 text-sm rounded-md">
-              Not break yet
+              Belum istirahat
             </Badge>
           )}
         </div>
@@ -188,7 +188,7 @@ export const columns = (
               onClick={() => handleViewDetailAttendance(attendance)}
             >
               <Image className="mr-2" />
-              View detail attendance
+              Detail presensi
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -313,7 +313,7 @@ export function BreakEmployeeListTable() {
   }, [debouncedSearch]);
 
   if (!data) {
-    return <Loading message="Today Attendances List" />;
+    return <Loading message="Daftar Presensi Hari Ini" />;
   }
 
   return (
@@ -322,7 +322,7 @@ export function BreakEmployeeListTable() {
         {/* Search Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
           <Input
-            placeholder="Search username..."
+            placeholder="Cari berdasarkan username..."
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             className="w-full sm:max-w-sm"
@@ -376,7 +376,7 @@ export function BreakEmployeeListTable() {
               ) : (
                 <TableRow>
                   <TableCell colSpan={6} className="h-24 text-center">
-                    No data available
+                    Tidak ada data yang tersedia
                   </TableCell>
                 </TableRow>
               )}
@@ -390,7 +390,7 @@ export function BreakEmployeeListTable() {
           totalPages={totalPages}
           dataLength={data.length}
           totalElements={totalElements}
-          dataName="employees"
+          dataName="attendances"
           pageSize={table.getState().pagination.pageSize}
           setPageSize={table.setPageSize}
           onPreviousPage={table.previousPage}

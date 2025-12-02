@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -74,7 +73,7 @@ export default function RegisterPage() {
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <a href="#" className="flex items-center gap-2 self-center font-medium">
+        <a href="/" className="flex items-center gap-2 self-center font-medium">
           <div className="size-7 rounded-md bg-primary/10 grid place-items-center">
             <img src="/logo.png" alt="Logo" />
           </div>
@@ -83,8 +82,7 @@ export default function RegisterPage() {
         <div className={cn("flex flex-col gap-6")}>
           <Card>
             <CardHeader className="text-center">
-              <CardTitle className="text-xl">Registration</CardTitle>
-              <CardDescription>Create your own Account!</CardDescription>
+              <CardTitle className="text-xl">Registrasi</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit}>
@@ -97,12 +95,12 @@ export default function RegisterPage() {
                           <Input
                             id="username"
                             type="text"
-                            placeholder="Enter username"
+                            placeholder="employee123"
                             required
                             ref={username}
                           />
                           <FieldDescription className="pl-1 text-xs">
-                            Choose a unique username for your account.
+                            Pilih username yang unik untuk akun Anda.
                           </FieldDescription>
                         </Field>
                         <Field>
@@ -110,12 +108,12 @@ export default function RegisterPage() {
                           <Input
                             id="email"
                             type="email"
-                            placeholder="Enter email"
+                            placeholder="employee123@example.com"
                             required
                             ref={email}
                           />
                           <FieldDescription className="pl-1 text-xs">
-                            Choose a unique email for your account.
+                            Pilih email yang unik untuk akun Anda.
                           </FieldDescription>
                         </Field>
                         <Field>
@@ -125,7 +123,7 @@ export default function RegisterPage() {
                               id="password"
                               className="pr-10"
                               type={showPassword ? "text" : "password"}
-                              placeholder="Enter password"
+                              placeholder="employee123"
                               required
                               ref={password}
                             />
@@ -142,7 +140,7 @@ export default function RegisterPage() {
                             </button>
                           </div>
                           <FieldDescription className="pl-1 text-xs">
-                            Must be at least 8 characters long.
+                            Password minimal memiliki 8 karakter.
                           </FieldDescription>
                         </Field>
                       </FieldGroup>

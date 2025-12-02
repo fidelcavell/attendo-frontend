@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Spinner } from "@/components/ui/spinner";
-import type { Schedule } from "@/data/dataTypes";
+import type { Schedule } from "@/types/dataTypes";
 import type { AxiosError } from "axios";
 import { useState } from "react";
 
@@ -60,20 +60,18 @@ export default function DeleteScheduleDialog({
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent className="max-w-[90%] sm:max-w-md">
         <AlertDialogHeader>
-          <AlertDialogTitle>Confirmation</AlertDialogTitle>
+          <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
           <AlertDialogDescription className="mb-4">
-            Are you sure to delete schedule:{" "}
-            <span className="font-bold">
-              {selectedSchedule.name} PERMANENTLY
-            </span>{" "}
-            ?<br />
+            Apakah Anda yakin untuk menghapus jadwal kerja ini secara
+            <span className="font-bold">PERMANENT</span> ?<br />
             <br />
-            Note: Employee with this schedule will be unassigned!
+            Catatan: Karyawan dengan jadwal ini akan tidak memiliki jadwal
+            (unassigned)!
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onDelete}>
+          <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={onDelete} disabled={isLoading}>
             {isLoading ? (
               <>
                 <Spinner className="size-4 mr-2" /> Deleting...

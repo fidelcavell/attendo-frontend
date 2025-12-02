@@ -35,7 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { OvertimeApplication, Schedule } from "@/data/dataTypes";
+import type { OvertimeApplication, Schedule } from "@/types/dataTypes";
 import { formatDate, formatIDR } from "@/helper/Formatter";
 import { useLoginContext } from "@/hooks/useLogin";
 import {
@@ -134,7 +134,7 @@ export const columns = (
               onClick={() => handleViewOvertimeApplication(overtimeApplication)}
             >
               <Info className="mr-2" />
-              View application detail
+              Detail pengajuan
             </DropdownMenuItem>
             {overtimeApplication.status == "PENDING" ? (
               <>
@@ -145,7 +145,7 @@ export const columns = (
                   }
                 >
                   <CircleX className="mr-2" />
-                  Delete application
+                  Delete pengajuan
                 </DropdownMenuItem>
               </>
             ) : (
@@ -327,15 +327,14 @@ export function OvertimeApplicationTable() {
     return (
       <UnavailableCard
         icon={Store}
-        title="No Store Assigned"
-        message="You are not added to any store yet. Please contact your
-                   administrator to be assigned to a store."
+        title="Belum Ada Toko yang Ditugaskan"
+        message="Anda belum ditambahkan ke toko mana pun. Silakan hubungi administrator untuk mendapatkan penugasan toko."
       />
     );
   }
 
   if (!data) {
-    return <Loading message="Overtime Application" />;
+    return <Loading message="Pengajuan Lembur" />;
   }
 
   return (
@@ -343,11 +342,8 @@ export function OvertimeApplicationTable() {
       <div>
         <div className="mb-6 px-2">
           <h1 className="text-2xl font-semibold tracking-tight">
-            Overtime Application
+            Pengajuan Lembur
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            View, request and manage your overtime applications.
-          </p>
         </div>
         <Card className="p-6 shadow-md">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -356,7 +352,6 @@ export function OvertimeApplicationTable() {
               <DateRangePicker
                 isOpen={isDateRangeOpen}
                 setIsOpen={setIsDateRangeOpen}
-                message="Select start and end dates to filter overtime application."
                 startDate={dateRange.startDate}
                 endDate={dateRange.endDate}
                 handleDateRangeChange={handleDateRangeChange}
@@ -386,7 +381,7 @@ export function OvertimeApplicationTable() {
             <div>
               <Button className="w-full" onClick={handleAddOvertimeApplication}>
                 <Plus />
-                Add Overtime Application
+                Tambah Pengajuan Lembur
               </Button>
             </div>
           </div>
@@ -430,7 +425,7 @@ export function OvertimeApplicationTable() {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={6} className="h-24 text-center">
-                      No data available
+                      Tidak ada data yang tersedia
                     </TableCell>
                   </TableRow>
                 )}

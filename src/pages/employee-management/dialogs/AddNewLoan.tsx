@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
-import type { Profile } from "@/data/dataTypes";
+import type { Profile } from "@/types/dataTypes";
 import { formatIDR } from "@/helper/Formatter";
 import { useLoginContext } from "@/hooks/useLogin";
 import type { AxiosError } from "axios";
@@ -105,14 +105,14 @@ export default function AddNewLoan({
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Add Loan</AlertDialogTitle>
+          <AlertDialogTitle>Tambah peminjaman uang</AlertDialogTitle>
           <AlertDialogDescription>
-            <div className="mb-2">
-              Current total salary:{" "}
+            <div className="mb-8">
+              Total gaji yang telah didapatkan:{" "}
               <strong>{formatIDR(currentTotalSalary)}</strong>
             </div>
             <Label className="my-4" htmlFor="loan-amount">
-              Loan amount
+              Jumlah peminjaman uang
             </Label>
             <Input
               className="mb-4"
@@ -126,12 +126,15 @@ export default function AddNewLoan({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setLoanAmount("")}>
+          <AlertDialogCancel
+            onClick={() => setLoanAmount("")}
+            disabled={isLoading}
+          >
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={onAddLoan}
-            disabled={loanAmount.trim().length == 0}
+            disabled={loanAmount.trim().length == 0 || isLoading}
           >
             {isLoading ? (
               <>

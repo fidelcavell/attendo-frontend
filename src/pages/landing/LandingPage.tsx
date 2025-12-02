@@ -28,7 +28,7 @@ export default function LandingPage() {
       {/* Nav */}
       <header className="sticky top-0 z-10 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-          <Link to="" className="inline-flex items-center gap-2">
+          <Link to="/" className="inline-flex items-center gap-2">
             <div className="size-7 rounded-md bg-primary/10 grid place-items-center">
               <img src="/logo.png" alt="Logo" />
             </div>
@@ -45,11 +45,11 @@ export default function LandingPage() {
           <div className="flex items-center gap-2">
             <Link to="/sign-in">
               <Button variant="ghost" className="h-8 text-xs">
-                Log in
+                Sign In
               </Button>
             </Link>
             <Link to="/sign-up">
-              <Button className="h-8 text-xs">Create account</Button>
+              <Button className="h-8 text-xs">Buat akun</Button>
             </Link>
           </div>
         </div>
@@ -63,18 +63,18 @@ export default function LandingPage() {
               CV. Centro Felix Utama's Employee Management
             </Badge>
             <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold leading-tight">
-              Streamlined attendance management for CV. Centro Felix Utama
+              Sederhanakan manajemen presensi untuk CV. Centro Felix Utama
             </h1>
             <p className="text-sm sm:text-base text-muted-foreground">
-              Our internal attendance system helps CV. Centro Felix Utama track
-              employee clock-in/out with photo verification, manage breaks, and
-              generate comprehensive attendance and expenses reports for our
-              team.
+              Sistem presensi internal kami membantu CV. Centro Felix Utama
+              melacak waktu masuk/keluar karyawan dengan dokumentasi foto,
+              mengelola jam istirahat, serta menghasilkan laporan presensi dan
+              pengeluaran yang lengkap untuk tim kami.
             </p>
             <div className="flex flex-col sm:flex-row gap-2">
               <Link to="/sign-up">
                 <Button className="h-9 text-sm sm:text-xs md:text-sm">
-                  Join CV. Centro Felix Utama
+                  Gabung CV. Centro Felix Utama
                 </Button>
               </Link>
               <Link to="">
@@ -82,7 +82,7 @@ export default function LandingPage() {
                   variant="outline"
                   className="h-9 text-sm sm:text-xs md:text-sm"
                 >
-                  Employee Login
+                  Employee Sign In
                 </Button>
               </Link>
             </div>
@@ -107,7 +107,9 @@ export default function LandingPage() {
             <CardContent>
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-lg border p-3">
-                  <p className="text-[11px] text-muted-foreground">Today</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Attendances
+                  </p>
                   <div className="mt-1 text-sm font-semibold flex items-center gap-2">
                     <Clock className="w-3.5 h-3.5" /> Clock-ins
                   </div>
@@ -159,18 +161,18 @@ export default function LandingPage() {
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
             {
-              title: "Photo clock-in",
-              desc: "Employees document their attendance with a selfie.",
+              title: "Presensi dengan foto",
+              desc: "Karyawan mencatat kehadiran dengan mengambil selfie.",
               icon: <Clock className="w-4 h-4" />,
             },
             {
-              title: "Break tracking",
-              desc: "Track employee breaks and work hours.",
+              title: "Pelacakan waktu istirahat",
+              desc: "Melacak waktu istirahat dan jam kerja karyawan.",
               icon: <Clock className="w-4 h-4" />,
             },
             {
-              title: "Work schedules",
-              desc: "Manage CV. Centro shift schedules and coverage.",
+              title: "Jadwal kerja",
+              desc: "Mengelola jadwal shift dan cakupan kerja.",
               icon: <CalendarClock className="w-4 h-4" />,
             },
             {
@@ -180,12 +182,12 @@ export default function LandingPage() {
             },
             {
               title: "Company analytics",
-              desc: "Provide attendance and expense insights.",
+              desc: "Menyediakan wawasan presensi dan pengeluaran.",
               icon: <LineChart className="w-4 h-4" />,
             },
             {
               title: "Secure access",
-              desc: "Protected CV. Centro employee data.",
+              desc: "Perlindungan data karyawan CV. Centro",
               icon: <ShieldCheck className="w-4 h-4" />,
             },
           ].map((f) => (
@@ -210,19 +212,19 @@ export default function LandingPage() {
           <CardContent className="p-4 sm:p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
               <h3 className="text-base sm:text-lg font-semibold">
-                Ready to join CV. Centro Felix Utama?
+                Siap bergabung dengan CV. Centro Felix Utama?
               </h3>
               <p className="text-sm text-muted-foreground">
-                Access your employee account and start tracking attendance.
+                Akses akun Anda dan mulai mencatat presensi.
               </p>
             </div>
             <div className="flex gap-2">
               <Link to="/sign-up">
-                <Button className="h-9">Join CV. Centro Felix Utama</Button>
+                <Button className="h-9">Gabung CV. Centro Felix Utama</Button>
               </Link>
               <Link to="/sign-in">
                 <Button variant="outline" className="h-9">
-                  Employee Login
+                  Employee Sign In
                 </Button>
               </Link>
             </div>

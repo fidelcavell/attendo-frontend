@@ -4,7 +4,6 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -12,10 +11,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
-import type { Schedule } from "@/data/dataTypes";
+import type { Schedule } from "@/types/dataTypes";
 import { useLoginContext } from "@/hooks/useLogin";
 import type { AxiosError } from "axios";
 import { useEffect, useState, type FormEvent } from "react";
+import { Button } from "@/components/ui/button";
 
 interface AddUpdateScheduleDialogProps {
   isOpen: boolean;
@@ -108,13 +108,8 @@ export default function AddUpdateScheduleDialog({
       <AlertDialogContent className="max-w-[90%] sm:max-w-lg">
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {selectedSchedule ? "Update Schedule" : "Add New Schedule"}
+            {selectedSchedule ? "Ubah Jadwal Kerja" : "Tambah Jadwal Kerja"}
           </AlertDialogTitle>
-          <AlertDialogDescription>
-            {selectedSchedule
-              ? "Modify the existing schedule below"
-              : "Fill in the details below to create a new schedule"}
-          </AlertDialogDescription>
         </AlertDialogHeader>
 
         <form
@@ -123,7 +118,7 @@ export default function AddUpdateScheduleDialog({
         >
           <div>
             <Label className="mt-4 mb-2" htmlFor="name">
-              Schedule name *
+              Nama Jadwal *
             </Label>
             <Input
               id="name"
@@ -131,13 +126,13 @@ export default function AddUpdateScheduleDialog({
               onChange={(event) =>
                 setForm({ ...form, name: event.target.value })
               }
-              placeholder="Enter schedule's name"
+              placeholder="Enter nama jadwal"
               required
             />
           </div>
           <div>
             <Label className="mt-4 mb-2" htmlFor="late-tolerance">
-              Late tolerance (minutes) *
+              Batas Keterlambatan (minutes) *
             </Label>
             <Input
               id="late-tolerance"
@@ -146,14 +141,14 @@ export default function AddUpdateScheduleDialog({
               onChange={(event) =>
                 setForm({ ...form, lateTolerance: event.target.value })
               }
-              placeholder="Enter late tolerate"
+              placeholder="Enter batas keterlambatan"
               required
             />
           </div>
 
           <div>
             <Label className="mt-4 mb-2" htmlFor="start-time">
-              Start time *
+              Jam Mulai *
             </Label>
             <Input
               id="start-time"
@@ -168,7 +163,7 @@ export default function AddUpdateScheduleDialog({
 
           <div>
             <Label className="mt-4 mb-2" htmlFor="end-time">
-              End time *
+              Jam Selesai *
             </Label>
             <Input
               id="end-time"
@@ -181,15 +176,16 @@ export default function AddUpdateScheduleDialog({
             />
           </div>
 
-          <AlertDialogFooter className="mt-6 col-span-full flex flex-col sm:flex-row gap-2 sm:justify-end">
+          <AlertDialogFooter className="sm:col-span-full sm:flex-row gap-2 sm:justify-end">
             <AlertDialogCancel
               className="w-full sm:w-auto"
               onClick={() => setIsOpen(false)}
+              disabled={isLoading}
             >
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction asChild>
-              <button type="submit" className="w-full sm:w-auto">
+            <AlertDialogAction asChild disabled={isLoading}>
+              <Button type="submit" className="w-full sm:w-auto">
                 {selectedSchedule ? (
                   <>
                     {isLoading ? (
@@ -211,7 +207,7 @@ export default function AddUpdateScheduleDialog({
                     )}
                   </>
                 )}
-              </button>
+              </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
         </form>

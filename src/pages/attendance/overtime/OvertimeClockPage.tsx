@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
-import type { Attendance } from "@/data/dataTypes";
+import type { Attendance } from "@/types/dataTypes";
 import { formatDate, getLocalISOTime } from "@/helper/Formatter";
 import URLtoFile from "@/helper/URLToFileConverter";
 import { useLoginContext } from "@/hooks/useLogin";
@@ -68,6 +68,7 @@ export default function OvertimeClockPage() {
   );
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
@@ -110,6 +111,7 @@ export default function OvertimeClockPage() {
 
   const handleClock = async (type: "IN" | "OUT") => {
     setResponse(null);
+    setIsLoading(true);
 
     try {
       const formData = new FormData();
@@ -151,6 +153,7 @@ export default function OvertimeClockPage() {
       setResponse(error.response?.data || null);
     } finally {
       setIsDialogOpen(true);
+      setIsLoading(false);
       setUrl(undefined);
     }
   };
@@ -188,14 +191,17 @@ export default function OvertimeClockPage() {
       setResponse({
         success: false,
         message:
-          "This feature requires your mobile device’s GPS to provide accurate location data!",
+          "Fitur ini memerlukan GPS dari perangkat mobile Anda untuk mendapatkan data lokasi yang akurat!",
       });
       setIsDialogOpen(true);
       return;
     }
 
     if (!navigator.geolocation) {
-      setResponse({ success: false, message: "Geolocation is not supported!" });
+      setResponse({
+        success: false,
+        message: "Fitur geolokasi tidak didukung pada perangkat Anda!",
+      });
       setIsDialogOpen(true);
       return;
     }
@@ -210,7 +216,7 @@ export default function OvertimeClockPage() {
       () => {
         setResponse({
           success: false,
-          message: `Failed to get current location: No Internet Connection or Turn on your GPS feature`,
+          message: `Gagal mendapatkan lokasi saat ini: Tidak ada koneksi internet atau GPS belum diaktifkan`,
         });
         setIsDialogOpen(true);
       }
@@ -221,13 +227,12 @@ export default function OvertimeClockPage() {
     onSetCurrentLocation();
   }, [onSetCurrentLocation]);
 
-  if (!currentStore && position?.lat && position.lng) {
+  if (!currentStore) {
     return (
       <UnavailableCard
         icon={Store}
-        title="No Store Assigned"
-        message="You are not added to any store yet. Please contact your
-               administrator to be assigned to a store."
+        title="Belum Ada Toko yang Ditugaskan"
+        message="Anda belum ditambahkan ke toko mana pun. Silakan hubungi administrator untuk mendapatkan penugasan toko."
       />
     );
   }
@@ -236,12 +241,12 @@ export default function OvertimeClockPage() {
     return (
       <UnavailableCard
         icon={Info}
-        title="No overtime available today"
+        title="Tidak ada lembur hari ini"
         message={
           <>
-            You are not requested any overtime application yet.
-            <br /> Please make a new application or contact your administrator
-            for approval.
+            Anda belum memiliki pengajuan lembur apa pun.
+            <br /> Silakan membuat pengajuan baru atau hubungi administrator
+            untuk persetujuan.
           </>
         }
       />
@@ -281,8 +286,8 @@ export default function OvertimeClockPage() {
                     <Camera className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
                   </div>
                   <p className="text-[11px] text-muted-foreground max-w-[14rem]">
-                    No photo captured yet. Click the button below to take a
-                    picture.
+                    Belum ada foto yang diambil. Klik tombol di bawah untuk
+                    mengambil foto.
                   </p>
                 </div>
               )}
@@ -292,9 +297,9 @@ export default function OvertimeClockPage() {
               <Button
                 className="w-full max-w-[16rem] sm:max-w-xs h-8 text-xs"
                 onClick={() => setCaptureEnable(true)}
-                disabled={position == null}
+                disabled={position == null || isLoading}
               >
-                Take a Picture
+                Ambil foto
               </Button>
             )}
           </div>
@@ -304,7 +309,7 @@ export default function OvertimeClockPage() {
             {/* Location Status */}
             <div className="rounded-lg border bg-muted/40 p-3">
               <div className="flex items-center justify-between">
-                <p className="text-xs text-muted-foreground">Location Status</p>
+                <p className="text-xs text-muted-foreground">Status Lokasi</p>
                 <Badge
                   variant={
                     areaStatus === "In the Area" ? "default" : "destructive"
@@ -313,8 +318,7 @@ export default function OvertimeClockPage() {
                 >
                   {areaStatus || (
                     <>
-                      <Spinner className="size-4" /> Getting Location
-                      information
+                      <Spinner className="size-4" /> Memuat informasi lokasi
                     </>
                   )}
                 </Badge>
@@ -325,36 +329,58 @@ export default function OvertimeClockPage() {
             <div className="rounded-lg border p-3 bg-background/60">
               <div className="flex flex-col sm:flex-row gap-2">
                 <Button
-                  disabled={!url || selectedOvertime.clockIn != null}
+                  disabled={
+                    !url || selectedOvertime.clockIn != null || isLoading
+                  }
                   onClick={() => handleClock("IN")}
                   className="w-full sm:flex-1 h-8 text-xs"
                 >
-                  <LogIn className="mr-2 h-3.5 w-3.5" /> Clock In
+                  {isLoading ? (
+                    <>
+                      <Spinner className="mr-2 h-3.5 w-3.5" />
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      <LogIn className="mr-2 h-3.5 w-3.5" /> Clock In
+                    </>
+                  )}
                 </Button>
                 <Button
                   disabled={
                     !url ||
                     selectedOvertime?.clockIn == null ||
-                    selectedOvertime.clockOut != null
+                    selectedOvertime.clockOut != null ||
+                    isLoading
                   }
                   onClick={() => handleClock("OUT")}
                   variant="destructive"
                   className="w-full sm:flex-1 h-8 text-xs"
                 >
-                  <LogOut className="mr-2 h-3.5 w-3.5" /> Clock Out
+                  {isLoading ? (
+                    <>
+                      <Spinner className="mr-2 h-3.5 w-3.5" />
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      <LogOut className="mr-2 h-3.5 w-3.5" /> Clock Out
+                    </>
+                  )}
                 </Button>
               </div>
               <p className="mt-1.5 text-[10px] text-muted-foreground text-center">
-                You must capture a photo before clocking in or out.
+                Anda harus mengambil foto sebelum melakukan clock in atau clock
+                out.
               </p>
             </div>
 
             {/* Attendance Log */}
             <div className="rounded-lg border bg-muted/30 p-3">
-              <h4 className="font-medium text-xs mb-1.5">Attendance Log</h4>
+              <h4 className="font-medium text-xs mb-1.5">Log Presensi</h4>
               {!selectedOvertime.clockIn && !selectedOvertime.clockOut ? (
                 <p className="text-[11px] text-muted-foreground">
-                  No activity yet.
+                  Belum ada aktivitas presensi yang dilakukan.
                 </p>
               ) : (
                 <div className="space-y-0.5 text-[11px]">
@@ -394,7 +420,7 @@ export default function OvertimeClockPage() {
               <div className="font-semibold text-sm flex items-center gap-2">
                 <TriangleAlert className="size-4" />
                 <div>
-                  Make sure your face is not blurred and clearly visible
+                  Pastikan wajah Anda tidak blur dan terlihat dengan jelas
                 </div>
               </div>
               <button

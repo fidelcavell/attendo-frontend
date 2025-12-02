@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import type { Profile } from "@/data/dataTypes";
+import type { Profile } from "@/types/dataTypes";
 import { formatDate } from "@/helper/Formatter";
 import { useCallback, useEffect, useState } from "react";
 
@@ -65,7 +65,7 @@ export default function DetailProfile({
             Detail Profile
           </AlertDialogTitle>
           <AlertDialogDescription>
-            <div className="mt-4 space-y-6">
+            <div className="my-4 space-y-6">
               {/* Profile Header */}
               <div className="flex items-center gap-4">
                 <img
@@ -88,27 +88,27 @@ export default function DetailProfile({
 
               {/* Profile Info Grid */}
               <div className="grid grid-cols-2 gap-y-3 text-sm">
-                <div className="text-gray-500">Name</div>
+                <div className="text-gray-500">Nama</div>
                 <div className="font-medium text-gray-800">
                   {selectedProfile.name}
                 </div>
 
-                <div className="text-gray-500">Position</div>
+                <div className="text-gray-500">Posisi</div>
                 <div className="font-medium text-gray-800">
                   {selectedProfile.roleName.replace("ROLE_", "")}
                 </div>
 
-                <div className="text-gray-500">Birth Date</div>
+                <div className="text-gray-500">Tanggal Lahir</div>
                 <div className="font-medium text-gray-800">
                   {formatDate(selectedProfile.birthDate ?? "")}
                 </div>
 
-                <div className="text-gray-500">Gender</div>
+                <div className="text-gray-500">Jenis Kelamin</div>
                 <div className="font-medium text-gray-800">
                   {selectedProfile.gender}
                 </div>
 
-                <div className="text-gray-500">Address</div>
+                <div className="text-gray-500">Alamat</div>
                 <div className="font-medium text-gray-800">
                   {selectedProfile.address}
                 </div>

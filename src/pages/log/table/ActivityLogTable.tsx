@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { ActivityLog } from "@/data/dataTypes";
+import type { ActivityLog } from "@/types/dataTypes";
 import { useLoginContext } from "@/hooks/useLogin";
 import {
   flexRender,
@@ -168,7 +168,7 @@ export default function ActivityLogTable() {
   };
 
   if (!data) {
-    return <Loading message="Admin's Activity Log" />;
+    return <Loading message="Aktivitas Log Admin" />;
   }
 
   return (
@@ -196,7 +196,6 @@ export default function ActivityLogTable() {
               <DateRangePicker
                 isOpen={isDateRangeOpen}
                 setIsOpen={setIsDateRangeOpen}
-                message="Select start and end dates to filter activity logs."
                 startDate={dateRange.startDate}
                 endDate={dateRange.endDate}
                 handleDateRangeChange={handleDateRangeChange}

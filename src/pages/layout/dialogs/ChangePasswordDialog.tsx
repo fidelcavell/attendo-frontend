@@ -8,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
@@ -79,41 +80,19 @@ export default function ChangePasswordDialog({
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Change Password</AlertDialogTitle>
+          <AlertDialogTitle>Ubah Password</AlertDialogTitle>
         </AlertDialogHeader>
         <form onSubmit={onChangePassword}>
           <div>
             <Label className="mt-4 mb-2" htmlFor="name">
-              Current password
-            </Label>
-            <div className="relative">
-              <Input
-                id="current-password"
-                className="pr-10"
-                type={showCurrentPassword ? "text" : "password"}
-                placeholder="Enter current password"
-                required
-                ref={currentPassword}
-              />
-              <button
-                type="button"
-                onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
-              >
-                {showCurrentPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-          </div>
-          <div>
-            <Label className="mt-4 mb-2" htmlFor="name">
-              New password
+              Password baru
             </Label>
             <div className="relative">
               <Input
                 id="new-password"
                 className="pr-10"
                 type={showNewPassword ? "text" : "password"}
-                placeholder="Enter new password"
+                placeholder="Enter password baru"
                 required
                 ref={newPassword}
               />
@@ -126,6 +105,28 @@ export default function ChangePasswordDialog({
               </button>
             </div>
           </div>
+          <div>
+            <Label className="mt-4 mb-2" htmlFor="name">
+              Password saat ini
+            </Label>
+            <div className="relative">
+              <Input
+                id="current-password"
+                className="pr-10"
+                type={showCurrentPassword ? "text" : "password"}
+                placeholder="Enter password saat ini"
+                required
+                ref={currentPassword}
+              />
+              <button
+                type="button"
+                onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showCurrentPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+          </div>
           <AlertDialogFooter className="mt-6">
             <AlertDialogCancel
               onClick={() => setIsOpen(false)}
@@ -133,16 +134,16 @@ export default function ChangePasswordDialog({
             >
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction asChild>
-              <button type="submit">
+            <AlertDialogAction asChild disabled={isLoading}>
+              <Button type="submit">
                 {isLoading ? (
                   <>
-                    <Spinner className="size-4 mr-2" /> Changing...
+                    <Spinner className="size-4 mr-2" /> Submitting...
                   </>
                 ) : (
-                  "Change"
+                  "Submit"
                 )}
-              </button>
+              </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
         </form>

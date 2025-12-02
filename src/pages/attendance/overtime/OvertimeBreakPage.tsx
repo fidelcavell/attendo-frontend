@@ -18,7 +18,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import type { Attendance } from "@/data/dataTypes";
+import { Spinner } from "@/components/ui/spinner";
+import type { Attendance } from "@/types/dataTypes";
 import { formatDate, getLocalISOTime } from "@/helper/Formatter";
 import { useLoginContext } from "@/hooks/useLogin";
 import type { AxiosError } from "axios";
@@ -31,12 +32,10 @@ export default function OvertimeBreakPage() {
   const [selectedOvertime, setSelectedOvertime] = useState<Attendance | null>(
     null
   );
-
   const [response, setResponse] = useState<{
     success: boolean;
     message: string;
   } | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const [currentTime, setCurrentTime] = useState<string>(
     new Date().toLocaleTimeString("id-ID", {
@@ -46,6 +45,9 @@ export default function OvertimeBreakPage() {
     })
   );
   const [currentDuration, setCurrentDuration] = useState<number>(0);
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getTodayOvertimeInfo = useCallback(async () => {
     try {
@@ -64,6 +66,7 @@ export default function OvertimeBreakPage() {
 
   const handleBreakIn = async () => {
     setResponse(null);
+    setIsLoading(true);
 
     try {
       const requestParams = new URLSearchParams();
@@ -85,12 +88,14 @@ export default function OvertimeBreakPage() {
       setResponse(error.response?.data || null);
     } finally {
       setIsDialogOpen(true);
+      setIsLoading(false);
       getTodayOvertimeInfo();
     }
   };
 
   const handleBreakOut = async () => {
     setResponse(null);
+    setIsLoading(true);
 
     try {
       const requestParams = new URLSearchParams();
@@ -112,6 +117,7 @@ export default function OvertimeBreakPage() {
       setResponse(error.response?.data || null);
     } finally {
       setIsDialogOpen(true);
+      setIsLoading(false);
       getTodayOvertimeInfo();
     }
   };
@@ -161,9 +167,8 @@ export default function OvertimeBreakPage() {
     return (
       <UnavailableCard
         icon={Store}
-        title="No Store Assigned"
-        message="You are not added to any store yet. Please contact your
-                 administrator to be assigned to a store."
+        title="Belum Ada Toko yang Ditugaskan"
+        message="Anda belum ditambahkan ke toko mana pun. Silakan hubungi administrator untuk mendapatkan penugasan toko."
       />
     );
   }
@@ -172,12 +177,12 @@ export default function OvertimeBreakPage() {
     return (
       <UnavailableCard
         icon={Info}
-        title="No overtime available today"
+        title="Tidak ada lembur hari ini"
         message={
           <>
-            You are not requested any overtime application yet.
-            <br /> Please make a new application or contact your administrator
-            for approval.
+            Anda belum memiliki pengajuan lembur apa pun.
+            <br /> Silakan membuat pengajuan baru atau hubungi administrator
+            untuk persetujuan.
           </>
         }
       />
@@ -202,36 +207,38 @@ export default function OvertimeBreakPage() {
         <CardContent className="space-y-3 sm:space-y-4 text-center">
           <div>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              Current Attendance Status
+              Status presensi saat ini
             </p>
             <p className="text-sm sm:text-base font-medium">
               {!selectedOvertime
-                ? "Not clocked in yet"
+                ? "Belum Clock In"
                 : selectedOvertime.clockOut
-                ? "Clocked Out"
+                ? "Sudah Clock Out"
                 : selectedOvertime.breakOut
-                ? "Break Out"
+                ? "Sudah Break Out"
                 : selectedOvertime.breakIn
-                ? "Break In"
-                : "Clocked In"}
+                ? "Sudah Break In"
+                : "Sudah Clock In"}
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-2.5 sm:gap-4">
             <div className="p-2.5 sm:p-3 rounded-lg border bg-muted/30">
               <p className="text-[11px] sm:text-xs text-muted-foreground">
-                Current Duration
+                Durasi istirahat yang dilakukan
               </p>
-              <p className="text-sm sm:text-base font-semibold">
+              <p className="text-sm sm:text-base font-semibold pt-2">
                 {currentDuration ? formatDuration(currentDuration) : "—"}
               </p>
             </div>
 
             <div className="p-2.5 sm:p-3 rounded-lg border bg-muted/30">
               <p className="text-[11px] sm:text-xs text-muted-foreground">
-                Allowed Duration
+                Durasi istirahat yang berlaku
               </p>
-              <p className="text-sm sm:text-base font-semibold">60m</p>
+              <p className="text-sm sm:text-base font-semibold pt-2">
+                {currentStore.breakDuration}m
+              </p>
             </div>
           </div>
         </CardContent>
@@ -242,12 +249,22 @@ export default function OvertimeBreakPage() {
             disabled={
               selectedOvertime.clockIn == null ||
               selectedOvertime.breakIn != null ||
-              selectedOvertime.clockOut != null
+              selectedOvertime.clockOut != null ||
+              isLoading
             }
             onClick={handleBreakIn}
           >
-            <PlayCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            Break In
+            {isLoading ? (
+              <>
+                <Spinner className="w-3.5 h-3.5" />
+                Processing...
+              </>
+            ) : (
+              <>
+                <PlayCircle className="w-3.5 h-3.5" />
+                Break In
+              </>
+            )}
           </Button>
 
           <Button
@@ -256,12 +273,22 @@ export default function OvertimeBreakPage() {
             disabled={
               selectedOvertime == null ||
               selectedOvertime.breakIn == null ||
-              selectedOvertime.breakOut != null
+              selectedOvertime.breakOut != null ||
+              isLoading
             }
             onClick={handleBreakOut}
           >
-            <PauseCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            Break Out
+            {isLoading ? (
+              <>
+                <Spinner className="w-3.5 h-3.5" />
+                Processing...
+              </>
+            ) : (
+              <>
+                <PauseCircle className="w-3.5 h-3.5" />
+                Break Out
+              </>
+            )}
           </Button>
         </CardFooter>
       </Card>

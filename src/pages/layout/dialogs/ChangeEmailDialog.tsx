@@ -26,7 +26,9 @@ interface ChangeEmailDialogProps {
     } | null>
   ) => void;
   setResponseDialog: React.Dispatch<React.SetStateAction<boolean>>;
-  setLastAction: React.Dispatch<React.SetStateAction<"email" | "password" | "logout" | "delete" | null>>
+  setLastAction: React.Dispatch<
+    React.SetStateAction<"email" | "password" | "logout" | "delete" | null>
+  >;
 }
 
 export default function ChangeEmailDialog({
@@ -34,7 +36,7 @@ export default function ChangeEmailDialog({
   setIsOpen,
   setResponse,
   setResponseDialog,
-  setLastAction
+  setLastAction,
 }: ChangeEmailDialogProps) {
   const { currentUser } = useLoginContext();
 
@@ -59,7 +61,6 @@ export default function ChangeEmailDialog({
       );
       setResponse(response.data);
       setLastAction("email");
-      
     } catch (exception) {
       const error = exception as AxiosError<{
         success: boolean;
@@ -77,19 +78,19 @@ export default function ChangeEmailDialog({
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Change Email</AlertDialogTitle>
+          <AlertDialogTitle>Ubah Email</AlertDialogTitle>
         </AlertDialogHeader>
         <form onSubmit={onChangeEmail}>
           <div>
             <Label className="mt-4 mb-2" htmlFor="new-email">
-              New Email
+              Email baru
             </Label>
             <div className="relative">
               <Input
                 id="new-email"
                 className="pr-10"
                 type="text"
-                placeholder="Enter new email"
+                placeholder="Enter email baru"
                 required
                 ref={newEmail}
               />
@@ -97,14 +98,14 @@ export default function ChangeEmailDialog({
           </div>
           <div>
             <Label className="mt-4 mb-2" htmlFor="name">
-              Current password
+              Password saat ini
             </Label>
             <div className="relative">
               <Input
                 id="current-password"
                 className="pr-10"
                 type={showCurrentPassword ? "text" : "password"}
-                placeholder="Enter current password"
+                placeholder="Enter password saat ini"
                 required
                 ref={currentPassword}
               />

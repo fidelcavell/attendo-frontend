@@ -83,10 +83,9 @@ export default function ExpensesReportPage() {
       <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
         {/* title */}
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Expenses Report</h1>
-          <p className="text-gray-600 mt-1">
-            Store expenses paid to employees, aggregated per month
-          </p>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Laporan Pengeluaran Toko
+          </h1>
         </div>
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
           {/* Period selection */}
@@ -101,9 +100,9 @@ export default function ExpensesReportPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="3">3 Months</SelectItem>
-                  <SelectItem value="6">6 Months</SelectItem>
-                  <SelectItem value="12">12 Months</SelectItem>
+                  <SelectItem value="3">3 Bulan</SelectItem>
+                  <SelectItem value="6">6 Bulan</SelectItem>
+                  <SelectItem value="12">12 Bulan</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -114,7 +113,7 @@ export default function ExpensesReportPage() {
             onClick={handleDownloadReport}
             className="no-print w-full sm:w-auto flex justify-center"
           >
-            <FileDown className="mr-2 h-4 w-4" /> Download Report
+            <FileDown className="mr-2 h-4 w-4" /> Download Laporan
           </Button>
         </div>
       </div>
@@ -124,7 +123,7 @@ export default function ExpensesReportPage() {
         <Card className="avoid-break">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Total Expenses
+              Total Pengeluaran
             </CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -132,14 +131,16 @@ export default function ExpensesReportPage() {
             <div className="text-2xl font-bold mb-2">
               {formatIDR(expensesReport?.totalExpenses ?? 0)}
             </div>
-            <p className="text-xs text-muted-foreground">In {period} months</p>
+            <p className="text-xs text-muted-foreground">
+              Dalam {period} bulan
+            </p>
           </CardContent>
         </Card>
 
         <Card className="avoid-break">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Average / Month
+              Average per Bulan
             </CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -147,13 +148,15 @@ export default function ExpensesReportPage() {
             <div className="text-2xl font-bold mb-2">
               {formatIDR(expensesReport?.averageExpenses ?? 0)}
             </div>
-            <p className="text-xs text-muted-foreground">Monthly average</p>
+            <p className="text-xs text-muted-foreground">Rerata bulanan</p>
           </CardContent>
         </Card>
 
         <Card className="avoid-break">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Highest Month</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Pengeluaran Tertinggi
+            </CardTitle>
             <BarChart3 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -168,7 +171,9 @@ export default function ExpensesReportPage() {
 
         <Card className="avoid-break">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Lowest Month</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Pengeluaran Terendah
+            </CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -185,7 +190,7 @@ export default function ExpensesReportPage() {
       {/* Monthly Expenses Chart */}
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Expenses Distribution</CardTitle>
+          <CardTitle>Dsitribusi Pengeluaran</CardTitle>
           <CardDescription>
             {expensesReport?.monthlyTotals.at(0)?.month} -{" "}
             {expensesReport?.monthlyTotals.at(-1)?.month}
@@ -221,7 +226,7 @@ export default function ExpensesReportPage() {
         </CardContent>
         <CardFooter className="flex-col items-start gap-2 text-sm">
           <div className="flex gap-2 leading-none font-medium">
-            Showing expenses distribution for the last {period} months{" "}
+            Menampilkan distribusi pengeluaran pada {period} bulan terakhir
             <TrendingUp className="h-4 w-4" />
           </div>
         </CardFooter>
@@ -230,9 +235,9 @@ export default function ExpensesReportPage() {
       {/* Monthly Breakdown */}
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Monthly Breakdown</CardTitle>
+          <CardTitle>Rincian Bulanan</CardTitle>
           <CardDescription>
-            Detailed monthly expense data with individual amounts
+            Ringkasan pengeluaran bulanan beserta detail nominal tiap bulan
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -262,9 +267,9 @@ export default function ExpensesReportPage() {
       {/* Additional Statistics */}
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Expense Analysis</CardTitle>
+          <CardTitle>Analisis Pengeluaran</CardTitle>
           <CardDescription>
-            Key insights and trends from the expense data
+            Menyajikan berbagai insight dan tren berdasarkan data pengeluaran
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -281,9 +286,9 @@ export default function ExpensesReportPage() {
                   : 0}
                 %
               </div>
-              <div className="text-sm text-gray-600">Variation Range</div>
+              <div className="text-sm text-gray-600">Rentang Variasi</div>
               <div className="text-xs text-gray-500 mt-1">
-                Between highest and lowest month
+                Antara bulan tertinggi dan terendah
               </div>
             </div>
 
@@ -291,9 +296,9 @@ export default function ExpensesReportPage() {
               <div className="text-2xl font-bold text-green-600">
                 {formatIDR(expensesReport?.averageExpenses ?? 0 * 12)}
               </div>
-              <div className="text-sm text-gray-600">Annual Projection</div>
+              <div className="text-sm text-gray-600">Proyeksi Tahunan</div>
               <div className="text-xs text-gray-500 mt-1">
-                Based on current average
+                Berdasarkan rata-rata saat ini
               </div>
             </div>
 
@@ -301,9 +306,9 @@ export default function ExpensesReportPage() {
               <div className="text-2xl font-bold text-purple-600">
                 {expensesReport?.monthlyTotals.length}
               </div>
-              <div className="text-sm text-gray-600">Months Tracked</div>
+              <div className="text-sm text-gray-600">Jumlah Bulan Tercatat</div>
               <div className="text-xs text-gray-500 mt-1">
-                In current period
+                Dalam periode ini
               </div>
             </div>
           </div>

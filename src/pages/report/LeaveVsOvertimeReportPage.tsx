@@ -111,12 +111,12 @@ export default function LeaveVsOvertimeReportPage() {
 
   const comparisonDistribution = [
     {
-      type: "Leave Day",
+      type: "Hari Izin",
       total: leaveVsOvertimeReport?.totalLeaveDaysInPeriod ?? 0,
       color: "var(--color-amber-500)",
     },
     {
-      type: "Overtime Day",
+      type: "Hari Lembur",
       total: leaveVsOvertimeReport?.totalOvertimeDaysInPeriod ?? 0,
       color: "var(--color-green-500)",
     },
@@ -128,11 +128,8 @@ export default function LeaveVsOvertimeReportPage() {
       <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">
-            Leave vs Overtime Report
+            Laporan Perizinan vs Lembur
           </h1>
-          <p className="text-gray-600 mt-1">
-            Analysis of employee leave types and overtime patterns
-          </p>
         </div>
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
           {/* Period selection */}
@@ -149,9 +146,9 @@ export default function LeaveVsOvertimeReportPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="3">3 Months</SelectItem>
-                  <SelectItem value="6">6 Months</SelectItem>
-                  <SelectItem value="12">12 Months</SelectItem>
+                  <SelectItem value="3">3 bulan</SelectItem>
+                  <SelectItem value="6">6 bulan</SelectItem>
+                  <SelectItem value="12">12 bulan</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -161,7 +158,7 @@ export default function LeaveVsOvertimeReportPage() {
             onClick={handleDownloadReport}
             className="no-print w-full sm:w-auto flex justify-center"
           >
-            <FileDown className="mr-2 h-4 w-4" /> Download Report
+            <FileDown className="mr-2 h-4 w-4" /> Download Laporan
           </Button>
         </div>
       </div>
@@ -171,7 +168,7 @@ export default function LeaveVsOvertimeReportPage() {
         <Card className="avoid break">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Total Leave Days
+              Total Hari Izin
             </CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -180,7 +177,8 @@ export default function LeaveVsOvertimeReportPage() {
               {leaveVsOvertimeReport?.totalLeaveDaysInPeriod}
             </div>
             <p className="text-xs text-muted-foreground">
-              {leaveVsOvertimeReport?.totalLeaveRequestInPeriod} leave requests
+              {leaveVsOvertimeReport?.totalLeaveRequestInPeriod} pengajuan
+              perizinan
             </p>
           </CardContent>
         </Card>
@@ -188,7 +186,7 @@ export default function LeaveVsOvertimeReportPage() {
         <Card className="avoid-break">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Total Overtime Days
+              Total Hari Lembur
             </CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -197,8 +195,8 @@ export default function LeaveVsOvertimeReportPage() {
               {leaveVsOvertimeReport?.totalOvertimeDaysInPeriod}
             </div>
             <p className="text-xs text-muted-foreground">
-              {leaveVsOvertimeReport?.totalOvertimeDaysInPeriod} overtime
-              requests
+              {leaveVsOvertimeReport?.totalOvertimeDaysInPeriod} pengajuan
+              lembur
             </p>
           </CardContent>
         </Card>
@@ -207,7 +205,7 @@ export default function LeaveVsOvertimeReportPage() {
       {/* Leave Type Distribution by month */}
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Leave Days Distribution</CardTitle>
+          <CardTitle>Distribusi Hari Izin</CardTitle>
           <CardDescription>
             {leaveVsOvertimeReport?.leaveDistributionByMonth.at(0)?.month} -{" "}
             {leaveVsOvertimeReport?.leaveDistributionByMonth.at(-1)?.month}
@@ -231,19 +229,19 @@ export default function LeaveVsOvertimeReportPage() {
               />
               <Bar
                 dataKey="SICK"
-                name="Sick Leave"
+                name="Sick"
                 fill="var(--color-sick)"
                 radius={4}
               />
               <Bar
                 dataKey="PERSONAL"
-                name="Personal Leave"
+                name="Personal"
                 fill="var(--color-personal)"
                 radius={4}
               />
               <Bar
                 dataKey="OTHER"
-                name="Other Leave"
+                name="Other"
                 fill="var(--color-other)"
                 radius={4}
               />
@@ -252,8 +250,8 @@ export default function LeaveVsOvertimeReportPage() {
         </CardContent>
         <CardFooter className="flex-col items-start gap-2 text-sm">
           <div className="flex gap-2 leading-none font-medium">
-            Showing leave application's type distribution for the last{" "}
-            {selectedPeriod} months <TrendingUp className="h-4 w-4" />
+            Menampilkan distribusi tipe pengajuan perizinan pada{" "}
+            {selectedPeriod} bulan terakhir <TrendingUp className="h-4 w-4" />
           </div>
         </CardFooter>
       </Card>
@@ -261,9 +259,9 @@ export default function LeaveVsOvertimeReportPage() {
       {/* Pie Chart Distribution */}
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Leave Types Distribution</CardTitle>
+          <CardTitle>Distribusi Tipe Perizinan</CardTitle>
           <CardDescription>
-            Breakdown of different types of leave taken by employees
+            Rincian berbagai jenis perizinan yang diambil oleh karyawan
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -300,7 +298,7 @@ export default function LeaveVsOvertimeReportPage() {
                 </ChartContainer>
               ) : (
                 <div className="border border-dashed text-center text-sm rounded-lg p-8 md:py-12">
-                  No data recorded!
+                  Tidak ada data yang tersedia!
                 </div>
               )}
             </div>
@@ -319,22 +317,20 @@ export default function LeaveVsOvertimeReportPage() {
                             backgroundColor: leavePieChartConfig[type]?.color,
                           }}
                         />
-                        <h3 className="font-semibold capitalize">
-                          {type} Leave
-                        </h3>
+                        <h3 className="font-semibold capitalize">{type}</h3>
                       </div>
-                      <Badge variant="outline">{totalRequests} requests</Badge>
+                      <Badge variant="outline">{totalRequests} pengajuan</Badge>
                     </div>
                     <div className="grid grid-cols-3 gap-4 text-sm">
                       <div className="text-center">
                         <div className="font-bold text-lg">{leaveDays}</div>
-                        <div className="text-gray-600">Total Days</div>
+                        <div className="text-gray-600">Total Hari</div>
                       </div>
                       <div className="text-center">
                         <div className="font-bold text-lg">
                           {totalRequests > 0 ? leaveDays / totalRequests : 0}
                         </div>
-                        <div className="text-gray-600">Avg Days</div>
+                        <div className="text-gray-600">Avg Hari</div>
                       </div>
                       <div className="text-center">
                         <div className="font-bold text-lg">{percentage}%</div>
@@ -352,7 +348,7 @@ export default function LeaveVsOvertimeReportPage() {
       {/* Overtime Distribution by month */}
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Overtime Days Distribution</CardTitle>
+          <CardTitle>Distribusi Hari Lembur</CardTitle>
           <CardDescription>
             {leaveVsOvertimeReport?.leaveDistributionByMonth.at(0)?.month} -{" "}
             {leaveVsOvertimeReport?.leaveDistributionByMonth.at(-1)?.month}
@@ -391,8 +387,8 @@ export default function LeaveVsOvertimeReportPage() {
         </CardContent>
         <CardFooter className="flex-col items-start gap-2 text-sm">
           <div className="flex gap-2 leading-none font-medium">
-            Showing overtime days distribution for the last {selectedPeriod}{" "}
-            months <TrendingUp className="h-4 w-4" />
+            Menampilkan distribusi hari lembur pada {selectedPeriod} bulan
+            terakhir <TrendingUp className="h-4 w-4" />
           </div>
         </CardFooter>
       </Card>
@@ -400,10 +396,9 @@ export default function LeaveVsOvertimeReportPage() {
       {/* Comparison Chart Distribution */}
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Leave and Overtime Comparison</CardTitle>
+          <CardTitle>Perbandingan Izin dan Lembur</CardTitle>
           <CardDescription>
-            Breakdown of different distribution of leave and overtime taken by
-            employees
+            Rincian distribusi izin dan lembur yang digunakan oleh karyawan
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -433,7 +428,7 @@ export default function LeaveVsOvertimeReportPage() {
                 </ChartContainer>
               ) : (
                 <div className="border border-dashed text-center text-sm rounded-lg p-8 md:py-12">
-                  No data recorded!
+                  Tidak ada data yang tersedia!
                 </div>
               )}
             </div>
@@ -448,12 +443,12 @@ export default function LeaveVsOvertimeReportPage() {
                       <div className="w-4 h-4 rounded-full" />
                       <h3 className="font-semibold capitalize">{type}</h3>
                     </div>
-                    <Badge variant="outline">{total} requests</Badge>
+                    <Badge variant="outline">{total} pengajuan</Badge>
                   </div>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div className="text-center">
                       <div className="font-bold text-lg">{total}</div>
-                      <div className="text-gray-600">Total Days</div>
+                      <div className="text-gray-600">Total Hari</div>
                     </div>
                     <div className="text-center">
                       <div className="font-bold text-lg">

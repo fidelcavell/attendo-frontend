@@ -35,7 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { LeaveApplication } from "@/data/dataTypes";
+import type { LeaveApplication } from "@/types/dataTypes";
 import { formatDate } from "@/helper/Formatter";
 import { useLoginContext } from "@/hooks/useLogin";
 import {
@@ -70,17 +70,17 @@ export const columns = (
 ): ColumnDef<LeaveApplication>[] => [
   {
     accessorKey: "startDate",
-    header: "Start Date",
+    header: "Tanggal mulai",
     cell: ({ row }) => <div>{formatDate(row.getValue("startDate"))}</div>,
   },
   {
     accessorKey: "endDate",
-    header: "End Date",
+    header: "Tanggal selesai",
     cell: ({ row }) => <div>{formatDate(row.getValue("endDate"))}</div>,
   },
   {
     accessorKey: "type",
-    header: "Type",
+    header: "Tipe",
     cell: ({ row }) => (
       <div>
         {row.getValue("type") === "SICK" ? (
@@ -101,7 +101,7 @@ export const columns = (
   },
   {
     accessorKey: "approvedBy",
-    header: "Approved by",
+    header: "Disetujui oleh",
     cell: ({ row }) => <div>{row.getValue("approvedBy")}</div>,
   },
   {
@@ -146,14 +146,14 @@ export const columns = (
               onClick={() => handleViewLeaveApplication(leaveApplication)}
             >
               <Info className="mr-2" />
-              View application detail
+              Detail pengajuan
             </DropdownMenuItem>
             {leaveApplication.status == "PENDING" ? (
               <DropdownMenuItem
                 onClick={() => handleDeleteLeaveApplication(leaveApplication)}
               >
                 <CircleX className="mr-2" />
-                Delete application
+                Delete pengajuan
               </DropdownMenuItem>
             ) : null}
           </DropdownMenuContent>
@@ -312,15 +312,14 @@ export function LeaveApplicationTable() {
     return (
       <UnavailableCard
         icon={Store}
-        title="No Store Assigned"
-        message="You are not added to any store yet. Please contact your
-                   administrator to be assigned to a store."
+        title="Belum Ada Toko yang Ditugaskan"
+        message="Anda belum ditambahkan ke toko mana pun. Silakan hubungi administrator untuk mendapatkan penugasan toko."
       />
     );
   }
 
   if (!data) {
-    return <Loading message="Leave Application" />;
+    return <Loading message="Pengajuan Perizinan" />;
   }
 
   return (
@@ -328,11 +327,8 @@ export function LeaveApplicationTable() {
       <div>
         <div className="mb-6 px-2">
           <h1 className="text-2xl font-semibold tracking-tight">
-            Leave Application
+            Pengajuan Perizinan
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            View, request and manage your leave applications.
-          </p>
         </div>
         <Card className="p-6 shadow-md">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
@@ -341,7 +337,6 @@ export function LeaveApplicationTable() {
               <DateRangePicker
                 isOpen={isDateRangeOpen}
                 setIsOpen={setIsDateRangeOpen}
-                message="Select start and end dates to filter leave application."
                 startDate={dateRange.startDate}
                 endDate={dateRange.endDate}
                 handleDateRangeChange={handleDateRangeChange}
@@ -383,7 +378,7 @@ export function LeaveApplicationTable() {
             </div>
             {/* Add new Leave Application's button */}
             <Button onClick={handleAddLeaveApplication}>
-              <Plus /> Add Leave Application
+              <Plus /> Tambah pengajuan perizinan
             </Button>
           </div>
 
@@ -426,7 +421,7 @@ export function LeaveApplicationTable() {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={6} className="h-24 text-center">
-                      No data available
+                      Tidak ada data yang tersedia
                     </TableCell>
                   </TableRow>
                 )}

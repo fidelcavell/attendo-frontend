@@ -7,7 +7,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import type { OvertimeApplication } from "@/data/dataTypes";
+import type { OvertimeApplication } from "@/types/dataTypes";
 import { formatDate } from "@/helper/Formatter";
 
 interface OvertimeRequestDetailDialogProps {
@@ -27,29 +27,29 @@ export default function OvertimeRequestDetailDialog({
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Overtime Request Detail</AlertDialogTitle>
+          <AlertDialogTitle>Detail pengajuan lembur</AlertDialogTitle>
           <AlertDialogDescription>
             <div className="flex flex-col gap-3 mt-2 mb-4">
               <div className="flex gap-3">
-                <div>Overtime Date :</div>
+                <div>Tanggal lembur :</div>
                 <div>{formatDate(selectedOvertimeRequest.overtimeDate)}</div>
               </div>
               <div className="flex gap-3">
-                <div>Schedule :</div>
+                <div>Jadwal Kerja :</div>
                 <div>{selectedOvertimeRequest.assignedTime}</div>
               </div>
-              <div className="flex gap-3">
-                <div>Description :</div>
+              <div className="flex flex-col gap-3 items-start">
+                <div>Deskripsi :</div>
                 <div>{selectedOvertimeRequest.description}</div>
               </div>
-              <div className="col-span-2 flex justify-end">
+              <div className="col-span-2 flex justify-end mt-4">
                 <div className="flex flex-col gap-3">
-                  <div>Issued by : {selectedOvertimeRequest.issuedBy}</div>
+                  <div>Diajukan oleh : {selectedOvertimeRequest.issuedBy}</div>
                   <div>
                     {selectedOvertimeRequest.status == "REJECTED"
-                      ? "Rejected"
-                      : "Approved"}{" "}
-                    by : {selectedOvertimeRequest.approvedBy}
+                      ? "Ditolak"
+                      : "Disetujui"}{" "}
+                    oleh : {selectedOvertimeRequest.approvedBy}
                   </div>
                 </div>
               </div>

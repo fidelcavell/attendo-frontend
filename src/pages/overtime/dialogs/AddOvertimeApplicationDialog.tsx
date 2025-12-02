@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
-import type { Schedule } from "@/data/dataTypes";
+import type { Schedule } from "@/types/dataTypes";
 import { useLoginContext } from "@/hooks/useLogin";
 import type { AxiosError } from "axios";
 import { useState } from "react";
@@ -75,7 +75,7 @@ export default function AddOvertimeApplicationDialog({
     ) {
       setResponse({
         success: false,
-        message: "Please fill in all required fields.",
+        message: "Harap isi semua field yang wajib diisi.",
       });
       setResponseDialog(true);
       return;
@@ -121,16 +121,16 @@ export default function AddOvertimeApplicationDialog({
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Add Overtime Application</AlertDialogTitle>
+          <AlertDialogTitle>Tambah Pengajuan Lembur</AlertDialogTitle>
           <AlertDialogDescription>
-            Fill in the details below to create new overtime application
+            Isi detail di bawah ini untuk membuat pengajuan lembur baru
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <div className="space-y-4 py-4">
           {/* Overtime Date */}
           <div className="space-y-2">
-            <Label htmlFor="startDate">Overtime Date *</Label>
+            <Label htmlFor="startDate">Tanggal Lembur *</Label>
             <Input
               id="overtimeDate"
               type="date"
@@ -148,7 +148,7 @@ export default function AddOvertimeApplicationDialog({
           </div>
           {/* Schedule */}
           <div>
-            <Label className="my-4">Available work schedule *</Label>
+            <Label className="my-4">Jadwal kerja *</Label>
             <Select
               value={selectedScheduleId}
               onValueChange={(value) => setSelectedScheduleId(value)}
@@ -181,10 +181,10 @@ export default function AddOvertimeApplicationDialog({
           </div>
           {/* Overtime Application Description */}
           <div className="space-y-2">
-            <Label htmlFor="description">Description *</Label>
+            <Label htmlFor="description">Deskripsi *</Label>
             <Textarea
               id="description"
-              placeholder="Enter reason for overtime..."
+              placeholder="Enter alasan melakukan lembur..."
               value={formData.description}
               onChange={(event) =>
                 handleFormChange("description", event.target.value)
@@ -220,7 +220,7 @@ export default function AddOvertimeApplicationDialog({
                 Submitting...
               </>
             ) : (
-              "Submit Application"
+              "Submit"
             )}
           </AlertDialogAction>
         </AlertDialogFooter>

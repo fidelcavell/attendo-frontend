@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
-import type { ProfileForm } from "@/data/dataTypes";
+import type { ProfileForm } from "@/types/dataTypes";
 import URLtoFile from "@/helper/URLToFileConverter";
 import { useLoginContext } from "@/hooks/useLogin";
 import type { AxiosError } from "axios";
@@ -185,18 +185,18 @@ export default function DetailProfilePage() {
               disabled={!isUpdate}
               onClick={() => setCaptureEnable(true)}
             >
-              Update Profile Picture
+              Update Foto
             </Button>
           )}
         </div>
 
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">Nama</Label>
             <Input
               id="name"
               type="text"
-              placeholder="Enter name"
+              placeholder="Enter nama"
               value={profile.name}
               onChange={(event) =>
                 setProfile({ ...profile, name: event.target.value })
@@ -206,11 +206,11 @@ export default function DetailProfilePage() {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Phone Number</Label>
+            <Label htmlFor="name">Nomor Telepon</Label>
             <Input
               id="phone"
               type="tel"
-              placeholder="Enter phone number"
+              placeholder="Enter nomor telepon"
               value={profile.phoneNumber}
               onChange={(event) =>
                 setProfile({ ...profile, phoneNumber: event.target.value })
@@ -220,9 +220,9 @@ export default function DetailProfilePage() {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="address">Address</Label>
+            <Label htmlFor="address">Alamat</Label>
             <Textarea
-              placeholder="Enter address"
+              placeholder="Enter alamat"
               value={profile.address}
               onChange={(event) =>
                 setProfile({ ...profile, address: event.target.value })
@@ -239,7 +239,7 @@ export default function DetailProfilePage() {
             <Input
               id="birthDate"
               type="date"
-              placeholder="Enter birth date"
+              placeholder="Enter tanggal lahir"
               value={profile.birthDate}
               onChange={(event) =>
                 setProfile({ ...profile, birthDate: event.target.value })
@@ -250,7 +250,7 @@ export default function DetailProfilePage() {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="gender">Gender</Label>
+            <Label htmlFor="gender">Jenis Kelamin</Label>
             <Select
               value={profile.gender}
               onValueChange={(value) =>
@@ -260,7 +260,7 @@ export default function DetailProfilePage() {
               required
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select gender" />
+                <SelectValue placeholder="Pilih jenis kelamin" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -287,6 +287,7 @@ export default function DetailProfilePage() {
                 type="button"
                 variant={"outline"}
                 onClick={() => setIsUpdate(false)}
+                disabled={isLoading}
               >
                 Cancel
               </Button>
@@ -296,7 +297,7 @@ export default function DetailProfilePage() {
                     <Spinner className="size-4 mr-2" /> Saving...
                   </>
                 ) : (
-                  "Save Changes"
+                  "Save"
                 )}
               </Button>
             </div>
@@ -311,7 +312,7 @@ export default function DetailProfilePage() {
               <div className="font-semibold text-sm flex items-center gap-2">
                 <TriangleAlert className="size-4" />
                 <div>
-                  Make sure your face is not blurred and clearly visible
+                  Pastikan wajah Anda tidak blur dan terlihat dengan jelas
                 </div>
               </div>
               <button

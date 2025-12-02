@@ -29,7 +29,7 @@ import {
 import api from "@/api/api-config";
 import URLtoFile from "@/helper/URLToFileConverter";
 import type { AxiosError } from "axios";
-import type { Attendance } from "@/data/dataTypes";
+import type { Attendance } from "@/types/dataTypes";
 import { formatDate, getLocalISOTime } from "@/helper/Formatter";
 import UnavailableCard from "@/components/shared/UnavailableCard";
 import { Spinner } from "@/components/ui/spinner";
@@ -67,6 +67,7 @@ export default function DailyClockPage() {
   );
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
@@ -109,6 +110,7 @@ export default function DailyClockPage() {
 
   const handleClock = async (type: "IN" | "OUT") => {
     setResponse(null);
+    setIsLoading(true);
 
     try {
       const formData = new FormData();
@@ -150,6 +152,7 @@ export default function DailyClockPage() {
       setResponse(error.response?.data || null);
     } finally {
       setIsDialogOpen(true);
+      setIsLoading(false);
       setUrl(undefined);
     }
   };
@@ -189,14 +192,17 @@ export default function DailyClockPage() {
       setResponse({
         success: false,
         message:
-          "This feature requires your mobile device’s GPS to provide accurate location data!",
+          "Fitur ini memerlukan GPS dari perangkat mobile Anda untuk mendapatkan data lokasi yang akurat!",
       });
       setIsDialogOpen(true);
       return;
     }
 
     if (!navigator.geolocation) {
-      setResponse({ success: false, message: "Geolocation is not supported!" });
+      setResponse({
+        success: false,
+        message: "Fitur geolokasi tidak didukung pada perangkat Anda!",
+      });
       setIsDialogOpen(true);
       return;
     }
@@ -211,7 +217,7 @@ export default function DailyClockPage() {
       () => {
         setResponse({
           success: false,
-          message: `Failed to get current location: No Internet Connection or Turn on your GPS feature`,
+          message: `Gagal mendapatkan lokasi saat ini: Tidak ada koneksi internet atau GPS belum diaktifkan`,
         });
         setIsDialogOpen(true);
       }
@@ -222,13 +228,12 @@ export default function DailyClockPage() {
     onSetCurrentLocation();
   }, [onSetCurrentLocation]);
 
-  if (!currentStore && position?.lat && position?.lng) {
+  if (!currentStore) {
     return (
       <UnavailableCard
         icon={Store}
-        title="No Store Assigned"
-        message="You are not added to any store yet. Please contact your
-                 administrator to be assigned to a store."
+        title="Belum Ada Toko yang Ditugaskan"
+        message="Anda belum ditambahkan ke toko mana pun. Silakan hubungi administrator untuk mendapatkan penugasan toko."
       />
     );
   }
@@ -237,9 +242,8 @@ export default function DailyClockPage() {
     return (
       <UnavailableCard
         icon={CalendarX2}
-        title="No Schedule Assigned"
-        message="Your work schedule hasn't been set yet. Please contact your
-                administrator to be assigned to a schedule."
+        title="Belum Ada Jadwal"
+        message="Jadwal kerja Anda belum ditetapkan. Silakan hubungi administrator untuk mendapatkan penugasan jadwal."
       />
     );
   }
@@ -248,9 +252,8 @@ export default function DailyClockPage() {
     return (
       <UnavailableCard
         icon={ClockFading}
-        title="You're on Leave"
-        message="You are currently on leave. Access to store features will be
-                available once your leave period ends."
+        title="Anda sedang izin"
+        message="Anda sedang dalam masa izin. Akses ke fitur ini akan tersedia kembali setelah masa izin berakhir."
       />
     );
   }
@@ -288,8 +291,8 @@ export default function DailyClockPage() {
                     <Camera className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
                   </div>
                   <p className="text-[11px] text-muted-foreground max-w-[14rem]">
-                    No photo captured yet. Click the button below to take a
-                    picture.
+                    Belum ada foto yang diambil. Klik tombol di bawah untuk
+                    mengambil foto.
                   </p>
                 </div>
               )}
@@ -299,9 +302,9 @@ export default function DailyClockPage() {
               <Button
                 className="w-full max-w-[16rem] sm:max-w-xs h-8 text-xs"
                 onClick={() => setCaptureEnable(true)}
-                disabled={position == null}
+                disabled={position == null || isLoading}
               >
-                Take a Picture
+                Ambil foto
               </Button>
             )}
           </div>
@@ -311,7 +314,7 @@ export default function DailyClockPage() {
             {/* Location Status */}
             <div className="rounded-lg border bg-muted/40 p-3">
               <div className="flex items-center justify-between">
-                <p className="text-xs text-muted-foreground">Location Status</p>
+                <p className="text-xs text-muted-foreground">Status Lokasi</p>
                 <Badge
                   variant={
                     areaStatus === "In the Area" ? "default" : "destructive"
@@ -320,8 +323,7 @@ export default function DailyClockPage() {
                 >
                   {areaStatus || (
                     <>
-                      <Spinner className="size-4" /> Getting Location
-                      information
+                      <Spinner className="size-4" /> Memuat informasi lokasi
                     </>
                   )}
                 </Badge>
@@ -332,36 +334,55 @@ export default function DailyClockPage() {
             <div className="rounded-lg border p-3 bg-background/60">
               <div className="flex flex-col sm:flex-row gap-2">
                 <Button
-                  disabled={!url || selectedAttendance != null}
+                  disabled={!url || selectedAttendance != null || isLoading}
                   onClick={() => handleClock("IN")}
                   className="w-full sm:flex-1 h-8 text-xs"
                 >
-                  <LogIn className="mr-2 h-3.5 w-3.5" /> Clock In
+                  {isLoading ? (
+                    <>
+                      <Spinner className="h-3.5 w-3.5" />
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      <LogIn className="h-3.5 w-3.5" /> Clock In
+                    </>
+                  )}
                 </Button>
                 <Button
                   disabled={
                     !url ||
                     selectedAttendance == null ||
-                    selectedAttendance.clockOut != null
+                    selectedAttendance.clockOut != null ||
+                    isLoading
                   }
                   onClick={() => handleClock("OUT")}
                   variant="destructive"
                   className="w-full sm:flex-1 h-8 text-xs"
                 >
-                  <LogOut className="mr-2 h-3.5 w-3.5" /> Clock Out
+                  {isLoading ? (
+                    <>
+                      <Spinner className="h-3.5 w-3.5" /> Processing...
+                    </>
+                  ) : (
+                    <>
+                      <LogOut className="h-3.5 w-3.5" /> Clock Out
+                    </>
+                  )}
                 </Button>
               </div>
               <p className="mt-1.5 text-[10px] text-muted-foreground text-center">
-                You must capture a photo before clocking in or out.
+                Anda harus mengambil foto sebelum melakukan clock in atau clock
+                out.
               </p>
             </div>
 
             {/* Attendance Log */}
             <div className="rounded-lg border bg-muted/30 p-3">
-              <h4 className="font-medium text-xs mb-1.5">Attendance Log</h4>
+              <h4 className="font-medium text-xs mb-1.5">Log Presensi</h4>
               {!selectedAttendance ? (
                 <p className="text-[11px] text-muted-foreground">
-                  No activity yet.
+                  Belum ada aktivitas presensi yang dilakukan.
                 </p>
               ) : (
                 <div className="space-y-0.5 text-[11px]">
@@ -401,7 +422,7 @@ export default function DailyClockPage() {
               <div className="font-semibold text-sm flex items-center gap-2">
                 <TriangleAlert className="size-4" />
                 <div>
-                  Make sure your face is not blurred and clearly visible
+                  Pastikan wajah Anda tidak blur dan terlihat dengan jelas
                 </div>
               </div>
               <button

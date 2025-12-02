@@ -9,9 +9,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import type { LeaveApplication } from "@/data/dataTypes";
+import type { LeaveApplication } from "@/types/dataTypes";
 import { useLoginContext } from "@/hooks/useLogin";
 import type { AxiosError } from "axios";
+import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 interface LeaveApprovalDialogProps {
   isOpen: boolean;
@@ -38,10 +40,12 @@ export default function LeaveApprovalDialog({
   getAllLeaveRequest,
 }: LeaveApprovalDialogProps) {
   const { currentUser } = useLoginContext();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmitApprovalRequest = async () => {
     setResponse(null);
     setIsOpen(false);
+    setIsLoading(true);
 
     try {
       const requestParams = new URLSearchParams();
@@ -64,6 +68,7 @@ export default function LeaveApprovalDialog({
       setResponse(error.response?.data || null);
     } finally {
       setIsResponseDialogOpen(true);
+      setIsLoading(false);
       getAllLeaveRequest();
     }
   };
@@ -73,21 +78,34 @@ export default function LeaveApprovalDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {selectedAction == "APPROVED" ? "Approve" : "Reject"} a leave
-            request
+            {selectedAction == "APPROVED" ? "Menyetujui" : "Menolak"} pengajuan
+            perizinan
           </AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure to{" "}
-            {selectedAction == "APPROVED" ? "approve" : "reject"} a leave
-            request, issued by {selectedLeaveRequest?.issuedBy} ?
+            Apakah Anda yakin ingin{" "}
+            {selectedAction == "APPROVED" ? "menyetujui" : "menolak"} pengajuan
+            perizinan yang diajukan oleh {selectedLeaveRequest?.issuedBy} ?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setIsOpen(false)}>
+          <AlertDialogCancel
+            onClick={() => setIsOpen(false)}
+            disabled={isLoading}
+          >
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={onSubmitApprovalRequest}>
-            Submit
+          <AlertDialogAction
+            onClick={onSubmitApprovalRequest}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <Spinner />
+                Submitting...
+              </>
+            ) : (
+              "Submit"
+            )}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

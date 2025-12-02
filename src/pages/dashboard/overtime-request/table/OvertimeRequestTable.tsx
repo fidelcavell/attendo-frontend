@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { OvertimeApplication } from "@/data/dataTypes";
+import type { OvertimeApplication } from "@/types/dataTypes";
 import { useLoginContext } from "@/hooks/useLogin";
 import {
   flexRender,
@@ -201,7 +201,7 @@ export default function OvertimeRequestTable() {
   }, [debouncedSearch]);
 
   if (!data) {
-    return <Loading message="Overtime Request List" />;
+    return <Loading message="Daftar Pengajuan Lembur" />;
   }
 
   return (
@@ -210,7 +210,7 @@ export default function OvertimeRequestTable() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           {/* Search Bar */}
           <Input
-            placeholder="Search username..."
+            placeholder="Cari berdasarkan username..."
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             className="w-full sm:max-w-sm"
@@ -220,7 +220,6 @@ export default function OvertimeRequestTable() {
             <DateRangePicker
               isOpen={isDateRangeOpen}
               setIsOpen={setIsDateRangeOpen}
-              message="Select start and end dates to filter leave application."
               startDate={dateRange.startDate}
               endDate={dateRange.endDate}
               handleDateRangeChange={handleDateRangeChange}
@@ -282,7 +281,7 @@ export default function OvertimeRequestTable() {
               ) : (
                 <TableRow>
                   <TableCell colSpan={6} className="h-24 text-center">
-                    No data available
+                    Tidak ada data yang tersedia
                   </TableCell>
                 </TableRow>
               )}
@@ -296,7 +295,7 @@ export default function OvertimeRequestTable() {
           totalPages={totalPages}
           dataLength={data.length}
           totalElements={totalElements}
-          dataName="requests"
+          dataName="applications"
           pageSize={table.getState().pagination.pageSize}
           setPageSize={table.setPageSize}
           onPreviousPage={table.previousPage}

@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { OvertimeApplication } from "@/data/dataTypes";
+import type { OvertimeApplication } from "@/types/dataTypes";
 import { formatDate, formatIDR } from "@/helper/Formatter";
 import type { ColumnDef } from "@tanstack/react-table";
 import { CircleCheck, CircleX, Info, MoreHorizontal } from "lucide-react";
@@ -22,27 +22,27 @@ export const OvertimeRequestColumns = (
 ): ColumnDef<OvertimeApplication>[] => [
   {
     accessorKey: "overtimeDate",
-    header: "Overtime Date",
+    header: "Tanggal Lembur",
     cell: ({ row }) => <div>{formatDate(row.getValue("overtimeDate"))}</div>,
   },
   {
     accessorKey: "assignedTime",
-    header: "Assigned Time",
+    header: "Jadwal Lembur",
     cell: ({ row }) => <div>{row.getValue("assignedTime")}</div>,
   },
   {
     accessorKey: "overtimePay",
-    header: "Overtime Pay",
+    header: "Bayaran Lembur",
     cell: ({ row }) => <div>{formatIDR(row.getValue("overtimePay"))}</div>,
   },
   {
     accessorKey: "issuedBy",
-    header: "Issued by",
+    header: "Dibuat Oleh",
     cell: ({ row }) => <div>{row.getValue("issuedBy")}</div>,
   },
   {
     accessorKey: "approvedBy",
-    header: "Approved by",
+    header: "Disetujui Oleh",
     cell: ({ row }) => <div>{row.getValue("approvedBy")}</div>,
   },
   {
@@ -87,7 +87,7 @@ export const OvertimeRequestColumns = (
               onClick={() => handleViewRequestDetail(overtimeRequest)}
             >
               <Info className="mr-2" />
-              View request detail
+              Detail pengajuan
             </DropdownMenuItem>
             {overtimeRequest.status == "PENDING" ? (
               <>
@@ -97,7 +97,7 @@ export const OvertimeRequestColumns = (
                   }
                 >
                   <CircleCheck className="mr-2" />
-                  Approve request
+                  Menyetujui pengajuan
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() =>
@@ -105,7 +105,7 @@ export const OvertimeRequestColumns = (
                   }
                 >
                   <CircleX className="mr-2" />
-                  Reject request
+                  Menolak pengajuan
                 </DropdownMenuItem>
               </>
             ) : (

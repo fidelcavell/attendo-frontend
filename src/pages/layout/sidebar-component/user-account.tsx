@@ -42,8 +42,13 @@ import DeleteAccountDialog from "../dialogs/DeleteAccountDialog";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const { currentUser, setToken, setCurrentUser, setCurrentStore,setStoreLoaded } =
-    useLoginContext();
+  const {
+    currentUser,
+    setToken,
+    setCurrentUser,
+    setCurrentStore,
+    setStoreLoaded,
+  } = useLoginContext();
 
   const navigate = useNavigate();
   const [lastAction, setLastAction] = useState<
@@ -130,19 +135,19 @@ export function NavUser() {
               <DropdownMenuGroup>
                 <DropdownMenuItem onClick={() => setIsChangeEmail(true)}>
                   <MailCheck />
-                  Change email
+                  Ubah email
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setIsChangePassword(true)}>
                   <RotateCcwKey />
-                  Change password
+                  Ubah password
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => navigate("/app/profile")}>
                   <UserPen />
-                  Profile setting
+                  Pengaturan profile
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setIsDeleteAccount(true)}>
                   <UserRoundX />
-                  Delete account
+                  Delete akun
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
@@ -177,9 +182,9 @@ export function NavUser() {
       <AlertDialog open={isLogOut} onOpenChange={setIsLogOut}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirmation</AlertDialogTitle>
+            <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure to log out now?
+              Apakah Anda yakin untuk log out sekarang?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

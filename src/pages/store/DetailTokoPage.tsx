@@ -95,14 +95,17 @@ export default function DetailTokoPage() {
       setResponse({
         success: false,
         message:
-          "This feature requires your mobile device’s GPS to provide accurate location data!",
+          "Fitur ini memerlukan GPS dari perangkat mobile Anda untuk mendapatkan data lokasi yang akurat!",
       });
       setOpenDialog(true);
       return;
     }
 
     if (!navigator.geolocation) {
-      setResponse({ success: false, message: "Geolocation is not supported!" });
+      setResponse({
+        success: false,
+        message: "Fitur geolokasi tidak didukung pada perangkat Anda!",
+      });
       setOpenDialog(true);
       return;
     }
@@ -122,7 +125,7 @@ export default function DetailTokoPage() {
       () => {
         setResponse({
           success: false,
-          message: `Failed to get current location: No Internet Connection! Please turn on your GPS feature`,
+          message: `Gagal mendapatkan lokasi saat ini: Tidak ada koneksi internet atau GPS belum diaktifkan`,
         });
         setOpenDialog(true);
       }
@@ -184,7 +187,7 @@ export default function DetailTokoPage() {
   }, [getTokoById]);
 
   if (!store) {
-    return <Loading message="Detail Store" />;
+    return <Loading message="Detail Toko" />;
   }
 
   return (
@@ -192,12 +195,7 @@ export default function DetailTokoPage() {
       <div className="space-y-6 px-4 md:px-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Store Details</h1>
-            <p className="text-gray-600">
-              Manage store information and settings
-            </p>
-          </div>
+          <h1 className="text-2xl font-bold text-gray-900">Detail Toko</h1>
         </div>
 
         <form onSubmit={onSubmit}>
@@ -209,19 +207,19 @@ export default function DetailTokoPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Store className="size-5 text-gray-700" />
-                    Store Information
+                    Informasi Toko
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
                     <Label htmlFor="name" className="text-sm font-medium">
-                      Store Name
+                      Nama Toko
                     </Label>
                     <Input
                       className="mt-2"
                       id="name"
                       type="text"
-                      placeholder="Enter store name"
+                      placeholder="Enter nama toko"
                       value={store.name}
                       onChange={(event) =>
                         setStore({ ...store, name: event.target.value })
@@ -237,12 +235,12 @@ export default function DetailTokoPage() {
                       className="text-sm font-medium flex items-center gap-2"
                     >
                       <MapPin className="size-4" />
-                      Address
+                      Alamat
                     </Label>
                     <Textarea
                       className="mt-2"
                       id="address"
-                      placeholder="Enter store address"
+                      placeholder="Enter alamat toko"
                       value={store.address}
                       onChange={(event) =>
                         setStore({ ...store, address: event.target.value })
@@ -260,7 +258,7 @@ export default function DetailTokoPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Clock className="size-5 text-gray-700" />
-                    Break Settings
+                    Pengaturan Jam Istirahat
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -270,7 +268,7 @@ export default function DetailTokoPage() {
                         htmlFor="break-duration"
                         className="text-sm font-medium"
                       >
-                        Break Duration (minutes)
+                        Durasi Istirahat (minutes)
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <button
@@ -281,9 +279,7 @@ export default function DetailTokoPage() {
                             </button>
                           </TooltipTrigger>
                           <TooltipContent>
-                            <p>
-                              Individual rest and meal duration per employee
-                            </p>
+                            <p>Durasi istirahat dan makan per karyawan</p>
                           </TooltipContent>
                         </Tooltip>
                       </Label>
@@ -307,7 +303,7 @@ export default function DetailTokoPage() {
                         htmlFor="max-break-count"
                         className="text-sm font-medium"
                       >
-                        Max Break Count
+                        Jumlah Maksimal Istirahat
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <button
@@ -319,8 +315,8 @@ export default function DetailTokoPage() {
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>
-                              Maximum number of employees allowed to rest at the
-                              same time
+                              Jumlah maksimal karyawan yang diperbolehkan
+                              istirahat pada waktu yang sama
                             </p>
                           </TooltipContent>
                         </Tooltip>
@@ -349,7 +345,7 @@ export default function DetailTokoPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <DollarSign className="size-5 text-gray-700" />
-                    Penalty & Overtime Settings
+                    Pengaturan Penalti dan Lembur{" "}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -359,7 +355,7 @@ export default function DetailTokoPage() {
                         htmlFor="clock-in-penalty"
                         className="text-sm font-medium"
                       >
-                        Late Clock In Penalty (Rupiah)
+                        Penalti telat clock-in (Rupiah)
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <button
@@ -371,8 +367,8 @@ export default function DetailTokoPage() {
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>
-                              Salary deduction applied when an employee arrives
-                              after the scheduled time
+                              Potongan gaji yang diterapkan ketika karyawan
+                              datang melewati waktu yang dijadwalkan
                             </p>
                           </TooltipContent>
                         </Tooltip>
@@ -397,7 +393,7 @@ export default function DetailTokoPage() {
                         htmlFor="break-out-penalty"
                         className="text-sm font-medium"
                       >
-                        Late Break Out Penalty (Rupiah)
+                        Penalti telat break-out (Rupiah)
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <button
@@ -409,8 +405,9 @@ export default function DetailTokoPage() {
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>
-                              Salary deduction applied when an employee rests
-                              beyond the allocated break time
+                              Potongan gaji yang diterapkan ketika karyawan
+                              beristirahat melebihi waktu istirahat yang
+                              dialokasikan
                             </p>
                           </TooltipContent>
                         </Tooltip>
@@ -437,7 +434,7 @@ export default function DetailTokoPage() {
                         htmlFor="overtime-multiplier"
                         className="text-sm font-medium"
                       >
-                        Overtime Multiplier
+                        Koefisien Lembur
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <button
@@ -449,8 +446,8 @@ export default function DetailTokoPage() {
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>
-                              Multiplier applied to base salary for overtime
-                              date
+                              Pengali yang diterapkan pada gaji pokok untuk
+                              tanggal lembur
                             </p>
                           </TooltipContent>
                         </Tooltip>
@@ -458,7 +455,7 @@ export default function DetailTokoPage() {
                       <Input
                         className="mt-2"
                         id="overtime-multiplier"
-                        placeholder="e.g. 1.2 (120%)"
+                        placeholder="Enter koefisien (eg. 1.2 = 120%)"
                         value={store.multiplierOvertime}
                         onChange={(event) =>
                           setStore({
@@ -501,7 +498,7 @@ export default function DetailTokoPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Navigation className="size-5 text-gray-700" />
-                    Store Location
+                    Lokasi Toko
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -520,7 +517,7 @@ export default function DetailTokoPage() {
                       <div className="flex items-center justify-center h-full text-gray-500">
                         <div className="text-center space-y-2">
                           <Spinner className="size-6 mx-auto" />
-                          <p className="text-sm">Loading map...</p>
+                          <p className="text-sm">Memuat map...</p>
                         </div>
                       </div>
                     )}
@@ -533,7 +530,7 @@ export default function DetailTokoPage() {
                     onClick={() => onSetCurrentLocation()}
                   >
                     <Navigation className="size-4 mr-2" />
-                    Use Current Location
+                    Gunakan Lokasi Saat Ini
                   </Button>
                 </CardContent>
               </Card>
@@ -560,18 +557,19 @@ export default function DetailTokoPage() {
                   }}
                   className="min-w-[120px]"
                 >
-                  Edit Store
+                  Edit Toko
                 </Button>
               </>
             ) : (
               <>
                 <Button
+                  className="min-w-[120px]"
                   type="button"
                   variant="outline"
                   onClick={() => {
                     setIsUpdate(false);
                   }}
-                  className="min-w-[120px]"
+                  disabled={isLoading}
                 >
                   Cancel
                 </Button>
@@ -586,7 +584,7 @@ export default function DetailTokoPage() {
                       Saving...
                     </>
                   ) : (
-                    "Save Changes"
+                    "Save"
                   )}
                 </Button>
               </>
@@ -618,15 +616,14 @@ export default function DetailTokoPage() {
       <AlertDialog open={isActivation} onOpenChange={setIsActivation}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirmation</AlertDialogTitle>
+            <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure want to{" "}
-              {currentStore?.active ? "deactivate" : "activate"} store:{" "}
-              <span className="font-semibold">{currentStore?.name}</span> ?
+              Apakah Anda yakin untuk{" "}
+              {currentStore?.active ? "deaktivasi" : "aktivasi"} toko ini ?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={onActivation}>
               {isLoading ? (
                 <>

@@ -11,7 +11,7 @@ export default function Loading({ message }: LoadingProps) {
           Loading {message}
         </h3>
         <p className="text-sm text-gray-500">
-          Please wait while we fetch the latest data...
+          Mohon menunggu, kami sedang mengambil data terbaru..
         </p>
       </div>
     </div>

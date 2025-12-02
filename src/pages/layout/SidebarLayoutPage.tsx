@@ -17,16 +17,6 @@ import { useLoginContext } from "@/hooks/useLogin";
 import { menuData } from "@/data/menuData";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { breadcrumbMapping } from "@/helper/BreadCrumbMapping";
-import useJwtExpiryWatcher from "@/hooks/useJwtExpiry";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 
 export default function SidebarLayoutPage() {
   const { currentUser } = useLoginContext();
@@ -37,9 +27,6 @@ export default function SidebarLayoutPage() {
   const crumbs = breadcrumbMapping[location.pathname] || [
     { label: "Attendance Report", path: "#" },
   ];
-
-  // JWT token expiry watcher
-  const { expired, acknowledgeExpiry } = useJwtExpiryWatcher();
 
   return (
     <>
@@ -79,23 +66,6 @@ export default function SidebarLayoutPage() {
           </div>
         </SidebarInset>
       </SidebarProvider>
-
-      {/* JWT token expire alert dialog  */}
-      <AlertDialog open={expired}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Session expired</AlertDialogTitle>
-            <AlertDialogDescription>
-              Your login session has expired. Please sign in again.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction onClick={acknowledgeExpiry}>
-              Go to login
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   );
 }

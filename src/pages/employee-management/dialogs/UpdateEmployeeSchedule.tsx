@@ -4,7 +4,6 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -19,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
-import type { Profile, Schedule } from "@/data/dataTypes";
+import type { Profile, Schedule } from "@/types/dataTypes";
 import { useLoginContext } from "@/hooks/useLogin";
 import type { AxiosError } from "axios";
 import { useCallback, useEffect, useState } from "react";
@@ -108,14 +107,11 @@ export default function UpdateEmployeeSchedule({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Update {selectedProfile.username}'s work schedule
+            Update jadwal kerja {selectedProfile.username}
           </AlertDialogTitle>
-          <AlertDialogDescription>
-            Select on available schedule below
-          </AlertDialogDescription>
         </AlertDialogHeader>
         <div>
-          <Label className="my-4">Available work schedule</Label>
+          <Label className="my-4">Jadwal kerja yang tersedia</Label>
           <Select
             value={selectedSchedule}
             onValueChange={(value) => setSelectedSchedule(value)}
@@ -148,10 +144,13 @@ export default function UpdateEmployeeSchedule({
           </Select>
         </div>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setSelectedSchedule("")}>
+          <AlertDialogCancel
+            onClick={() => setSelectedSchedule("")}
+            disabled={isLoading}
+          >
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={onUpdateSchedule}>
+          <AlertDialogAction onClick={onUpdateSchedule} disabled={isLoading}>
             {isLoading ? (
               <>
                 <Spinner className="size-4 mr-2" /> Updating...

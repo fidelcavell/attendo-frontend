@@ -1,3 +1,13 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import useJwtExpiryWatcher from "@/hooks/useJwtExpiry";
 import { useLoginContext } from "@/hooks/useLogin";
 import type { ReactNode } from "react";
 import { Navigate, useParams } from "react-router-dom";
@@ -12,7 +22,28 @@ export default function ProtectedRoleRoute({
   allowedRoles,
 }: RoleRouteProps) {
   const { token, currentUser, currentStore } = useLoginContext();
+  const { expired, acknowledgeExpiry } = useJwtExpiryWatcher();
   const { storeId } = useParams();
+
+  if (expired) {
+    return (
+      <AlertDialog open={expired}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Sesi berakhir</AlertDialogTitle>
+            <AlertDialogDescription>
+              Sesi login Anda telah berakhir. Silakan masuk kembali.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={acknowledgeExpiry}>
+              Sign in
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+  }
 
   if (!token) {
     return <Navigate to="/sign-in" replace />;

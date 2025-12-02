@@ -7,7 +7,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import type { LeaveApplication } from "@/data/dataTypes";
+import type { LeaveApplication } from "@/types/dataTypes";
 import { formatDate } from "@/helper/Formatter";
 
 interface LeaveRequestDetailDialogProps {
@@ -27,29 +27,29 @@ export default function LeaveRequestDetailDialog({
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Leave Request Detail</AlertDialogTitle>
+          <AlertDialogTitle>Detail pengajuan perizinan</AlertDialogTitle>
           <AlertDialogDescription>
             <div className="flex flex-col gap-3 mt-2 mb-4">
               <div className="flex gap-3">
-                <div>Start Date :</div>
+                <div>Tanggal Mulai :</div>
                 <div>{formatDate(selectedLeaveRequest.startDate)}</div>
               </div>
               <div className="flex gap-3">
-                <div>End Date :</div>
+                <div>Tanggal Selesai :</div>
                 <div>{formatDate(selectedLeaveRequest.endDate)}</div>
               </div>
-              <div className="flex gap-3">
-                <div>Description :</div>
+              <div className="flex flex-col gap-3 items-start">
+                <div>Deskripsi :</div>
                 <div>{selectedLeaveRequest.description}</div>
               </div>
-              <div className="col-span-2 flex justify-end">
+              <div className="col-span-2 flex justify-end mt-4">
                 <div className="flex flex-col gap-3">
-                  <div>Issued by : {selectedLeaveRequest?.issuedBy}</div>
+                  <div>Diajukan oleh : {selectedLeaveRequest?.issuedBy}</div>
                   <div>
                     {selectedLeaveRequest.status == "REJECTED"
-                      ? "Rejected"
-                      : "Approved"}{" "}
-                    by : {selectedLeaveRequest.approvedBy}
+                      ? "Ditolak"
+                      : "Disetujui"}{" "}
+                    oleh : {selectedLeaveRequest.approvedBy}
                   </div>
                 </div>
               </div>

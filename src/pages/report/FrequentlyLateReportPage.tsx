@@ -75,11 +75,8 @@ export default function FrequentlyLateReportPage() {
       <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">
-            Frequently Late Report
+            Laporan Karyawan yang Sering Telat
           </h1>
-          <p className="text-gray-600 mt-1">
-            Analysis of employee late attendance patterns
-          </p>
         </div>
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
           {/* Period selection */}
@@ -96,9 +93,9 @@ export default function FrequentlyLateReportPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="1">1 Months</SelectItem>
-                  <SelectItem value="3">3 Months</SelectItem>
-                  <SelectItem value="6">6 Months</SelectItem>
+                  <SelectItem value="1">1 Bulan</SelectItem>
+                  <SelectItem value="3">3 Bulan</SelectItem>
+                  <SelectItem value="6">6 Bulan</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -108,7 +105,7 @@ export default function FrequentlyLateReportPage() {
             onClick={handleDownloadReport}
             className="no-print w-full sm:w-auto flex justify-center"
           >
-            <FileDown className="mr-2 h-4 w-4" /> Download Report
+            <FileDown className="mr-2 h-4 w-4" /> Download Laporan
           </Button>
         </div>
       </div>
@@ -118,7 +115,7 @@ export default function FrequentlyLateReportPage() {
         <Card className="avoid-break">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Total Late Count
+              Total Jumlah Telat
             </CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -127,7 +124,7 @@ export default function FrequentlyLateReportPage() {
               {lateReport?.totalLateCount}
             </div>
             <p className="text-xs text-muted-foreground">
-              In {selectedPeriod} months
+              Dalam {selectedPeriod} bulan
             </p>
           </CardContent>
         </Card>
@@ -135,7 +132,7 @@ export default function FrequentlyLateReportPage() {
         <Card className="avoid-break">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Total Hours Late
+              Total Jam Telat
             </CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -144,7 +141,7 @@ export default function FrequentlyLateReportPage() {
               {lateReport?.totalLateHours}h
             </div>
             <p className="text-xs text-muted-foreground">
-              In {selectedPeriod} month{selectedPeriod !== "1" ? "s" : ""}
+              Dalam {selectedPeriod} bulan
             </p>
           </CardContent>
         </Card>
@@ -152,7 +149,7 @@ export default function FrequentlyLateReportPage() {
         <Card className="avoid-break">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Average Hours Late
+              Rata-rata Jam Telat
             </CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -160,14 +157,14 @@ export default function FrequentlyLateReportPage() {
             <div className="text-2xl font-bold">
               {lateReport?.totalLateHours}h
             </div>
-            <p className="text-xs text-muted-foreground">Per late occurrence</p>
+            <p className="text-xs text-muted-foreground">Per kejadian telat</p>
           </CardContent>
         </Card>
 
         <Card className="avoid-break">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Monthly Average
+              Rata-rata Bulanan
             </CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -176,7 +173,7 @@ export default function FrequentlyLateReportPage() {
               {lateReport?.totalLateHours}
             </div>
             <p className="text-xs text-muted-foreground">
-              Late occurrences per month
+              Frekuensi telat per bulan
             </p>
           </CardContent>
         </Card>
@@ -184,7 +181,7 @@ export default function FrequentlyLateReportPage() {
 
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Late Count Distribution</CardTitle>
+          <CardTitle>Distribusi Jumlah Telat</CardTitle>
           <CardDescription>
             {lateReport?.monthlyLateDistribution.at(0)?.month} -{" "}
             {lateReport?.monthlyLateDistribution.at(-1)?.month}
@@ -225,12 +222,13 @@ export default function FrequentlyLateReportPage() {
               </BarChart>
             </ChartContainer>
           ) : (
-            <div className="py-16">Data is empty</div>
+            <div className="py-16">Data tidak tersedia</div>
           )}
         </CardContent>
         <CardFooter className="text-sm">
           <div className="flex gap-2 leading-none font-medium">
-            Showing late count distribution for the last {selectedPeriod} months{" "}
+            Menampilkan distribusi jumlah telat pada {selectedPeriod} bulan
+            terakhir
             <TrendingUp className="h-4 w-4" />
           </div>
         </CardFooter>
@@ -239,7 +237,7 @@ export default function FrequentlyLateReportPage() {
       {/* Top 5 Late Employees Chart */}
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Top 5 Late Employees</CardTitle>
+          <CardTitle>Top 5 Karyawan yang Telat</CardTitle>
           <CardDescription>
             {lateReport?.monthlyLateDistribution.at(0)?.month} -{" "}
             {lateReport?.monthlyLateDistribution.at(-1)?.month}
@@ -284,15 +282,15 @@ export default function FrequentlyLateReportPage() {
               </BarChart>
             </ChartContainer>
           ) : (
-            <div className="border border-dashed text-center text-sm rounded-lg px-24 py-8 my-8">
-              No data recorded!
+            <div className="border border-dashed text-center text-sm rounded-lg px-12 sm:px-24 py-8 my-8">
+              Tidak ada data yang tersedia!
             </div>
           )}
         </CardContent>
         <CardFooter className="text-sm">
           <div className="flex gap-2 leading-none font-medium">
-            Showing top 5 late employee distribution for the last{" "}
-            {selectedPeriod} months <TrendingUp className="h-4 w-4" />
+            Menampilkan top 5 karyawan yang sering telat pada {selectedPeriod}{" "}
+            bulan terakhir <TrendingUp className="h-4 w-4" />
           </div>
         </CardFooter>
       </Card>

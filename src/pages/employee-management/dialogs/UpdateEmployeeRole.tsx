@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Spinner } from "@/components/ui/spinner";
-import type { Profile } from "@/data/dataTypes";
+import type { Profile } from "@/types/dataTypes";
 import type { AxiosError } from "axios";
 import { useState } from "react";
 
@@ -65,11 +65,10 @@ export default function UpdateEmployeeRole({
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Confirmation</AlertDialogTitle>
+          <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure to update{" "}
-            <span className="font-bold">{selectedProfile.username}</span>'s role
-            to{" "}
+            Apakah Anda yakin ingin mengubah role{" "}
+            <span className="font-bold">{selectedProfile.username}</span> ke{" "}
             <span className="font-bold">
               {selectedProfile.roleName === "ROLE_EMPLOYEE"
                 ? "Admin"
@@ -79,8 +78,8 @@ export default function UpdateEmployeeRole({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onUpdateRole}>
+          <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={onUpdateRole} disabled={isLoading}>
             {isLoading ? (
               <>
                 <Spinner className="size-4 mr-2" /> Updating...
