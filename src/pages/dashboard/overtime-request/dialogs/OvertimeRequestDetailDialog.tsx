@@ -27,11 +27,11 @@ export default function OvertimeRequestDetailDialog({
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Detail pengajuan lembur</AlertDialogTitle>
+          <AlertDialogTitle>Detail Pengajuan Lembur</AlertDialogTitle>
           <AlertDialogDescription>
             <div className="flex flex-col gap-3 mt-2 mb-4">
               <div className="flex gap-3">
-                <div>Tanggal lembur :</div>
+                <div>Tanggal Lembur :</div>
                 <div>{formatDate(selectedOvertimeRequest.overtimeDate)}</div>
               </div>
               <div className="flex gap-3">

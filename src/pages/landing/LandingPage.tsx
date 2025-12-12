@@ -36,7 +36,7 @@ export default function LandingPage() {
           </Link>
           <nav className="hidden sm:flex items-center gap-6 text-sm text-muted-foreground">
             <a className="hover:text-foreground" href="#features">
-              Features
+              Fitur
             </a>
             <a className="hover:text-foreground" href="#cta">
               Get started
@@ -60,16 +60,17 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="space-y-4">
             <Badge className="text-[10px]">
-              CV. Centro Felix Utama's Employee Management
+              Sistem Manajemen Presensi CV. Centro Felix Utama
             </Badge>
             <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold leading-tight">
-              Sederhanakan manajemen presensi untuk CV. Centro Felix Utama
+              Menyederhanakan manajemen presensi pada CV. Centro Felix Utama
             </h1>
             <p className="text-sm sm:text-base text-muted-foreground">
-              Sistem presensi internal kami membantu CV. Centro Felix Utama
-              melacak waktu masuk/keluar karyawan dengan dokumentasi foto,
-              mengelola jam istirahat, serta menghasilkan laporan presensi dan
-              pengeluaran yang lengkap untuk tim kami.
+              Sistem presensi ini dirancang untuk mencatat waktu masuk dan
+              keluar karyawan secara otomatis melalui foto dan lokasi, mengelola
+              durasi jam istirahat, serta menyusun laporan presensi dan
+              pengeluaran yang dapat diakses untuk kebutuhan evaluasi dan
+              pengambilan keputusan
             </p>
             <div className="flex flex-col sm:flex-row gap-2">
               <Link to="/sign-up">
@@ -107,41 +108,39 @@ export default function LandingPage() {
             <CardContent>
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-lg border p-3">
-                  <p className="text-[11px] text-muted-foreground">
-                    Attendances
-                  </p>
+                  <p className="text-[11px] text-muted-foreground">Presensi</p>
                   <div className="mt-1 text-sm font-semibold flex items-center gap-2">
-                    <Clock className="w-3.5 h-3.5" /> Clock-ins
+                    <Clock className="w-3.5 h-3.5" /> Presensi Masuk
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    With photo and location
+                    Dengan foto dan lokasi
                   </p>
                 </div>
                 <div className="rounded-lg border p-3">
-                  <p className="text-[11px] text-muted-foreground">Schedule</p>
+                  <p className="text-[11px] text-muted-foreground">Jadwal</p>
                   <div className="mt-1 text-sm font-semibold flex items-center gap-2">
-                    <CalendarClock className="w-3.5 h-3.5" /> Work shifts
+                    <CalendarClock className="w-3.5 h-3.5" /> Jam Kerja
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Plan weekly rosters
+                    Pengaturan jadwal lebih cepat
                   </p>
                 </div>
                 <div className="rounded-lg border p-3">
-                  <p className="text-[11px] text-muted-foreground">People</p>
+                  <p className="text-[11px] text-muted-foreground">Karyawan</p>
                   <div className="mt-1 text-sm font-semibold flex items-center gap-2">
-                    <Users2 className="w-3.5 h-3.5" /> Employees
+                    <Users2 className="w-3.5 h-3.5" /> Data Karyawan
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Roles and stores
+                    Pengaturan role dan toko
                   </p>
                 </div>
                 <div className="rounded-lg border p-3">
-                  <p className="text-[11px] text-muted-foreground">Reports</p>
+                  <p className="text-[11px] text-muted-foreground">Laporan</p>
                   <div className="mt-1 text-sm font-semibold flex items-center gap-2">
                     <FileChartColumn className="w-3.5 h-3.5" /> Insights
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Attendance and expenses
+                    Presensi dan pengeluaran
                   </p>
                 </div>
               </div>
@@ -153,10 +152,11 @@ export default function LandingPage() {
       {/* Features */}
       <section id="features" className="mx-auto max-w-6xl px-4 pb-10 sm:pb-16">
         <h2 className="text-lg sm:text-xl font-semibold">
-          Why attendo attendance system
+          Mengapa memilih sistem presensi Attendo
         </h2>
         <p className="text-sm text-muted-foreground">
-          Everything attendo needs to manage employee attendance efficiently.
+          Semua yang dibutuhkan untuk mengelola presensi karyawan secara
+          efisien.
         </p>
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
@@ -177,17 +177,17 @@ export default function LandingPage() {
             },
             {
               title: "Multiple roles",
-              desc: "Owner, admin, and employee hierarchy.",
+              desc: "Owner, admin, dan employee secara bertingkat.",
               icon: <Users2 className="w-4 h-4" />,
             },
             {
-              title: "Company analytics",
+              title: "Analitik perusahaan",
               desc: "Menyediakan wawasan presensi dan pengeluaran.",
               icon: <LineChart className="w-4 h-4" />,
             },
             {
               title: "Secure access",
-              desc: "Perlindungan data karyawan CV. Centro",
+              desc: "Perlindungan data karyawan CV. Centro Felix Utama",
               icon: <ShieldCheck className="w-4 h-4" />,
             },
           ].map((f) => (
@@ -215,7 +215,7 @@ export default function LandingPage() {
                 Siap bergabung dengan CV. Centro Felix Utama?
               </h3>
               <p className="text-sm text-muted-foreground">
-                Akses akun Anda dan mulai mencatat presensi.
+                Akses akun Anda dan mulai presensi.
               </p>
             </div>
             <div className="flex gap-2">
@@ -237,7 +237,7 @@ export default function LandingPage() {
           <span>© {new Date().getFullYear()} Attendo.</span>
           <div className="flex items-center gap-4">
             <a href="#features" className="hover:text-foreground">
-              Features
+              Fitur
             </a>
             <a href="#cta" className="hover:text-foreground">
               Get started

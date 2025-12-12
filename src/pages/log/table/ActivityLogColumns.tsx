@@ -5,7 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 export const ActivityLogColumns = (): ColumnDef<ActivityLog>[] => [
   {
     accessorKey: "createdOn",
-    header: "Tanggal pembuatan",
+    header: "Tanggal Pembuatan",
     cell: ({ row }) => (
       <div className="text-xs">{formatDate(row.getValue("createdOn"))}</div>
     ),
@@ -24,7 +24,7 @@ export const ActivityLogColumns = (): ColumnDef<ActivityLog>[] => [
   },
   {
     accessorKey: "actionName",
-    header: "Nama aksi",
+    header: "Nama Aksi",
     cell: ({ row }) => (
       <div className="text-xs">{row.getValue("actionName")}</div>
     ),
@@ -40,7 +40,7 @@ export const ActivityLogColumns = (): ColumnDef<ActivityLog>[] => [
   },
   {
     accessorKey: "createdBy",
-    header: "Dibuat oleh",
+    header: "Dibuat Oleh",
     cell: ({ row }) => (
       <div className="text-xs">{row.getValue("createdBy")}</div>
     ),

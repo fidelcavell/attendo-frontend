@@ -496,11 +496,11 @@ export default function AttendanceReportPage() {
                           <div className="text-[9px] text-purple-600 font-medium truncate">
                             OT:
                             {item.overtimeAttendance?.status === "PRESENT"
-                              ? "Present"
+                              ? "Hadir"
                               : item.overtimeAttendance?.status === "LATE"
-                              ? "Late"
+                              ? "Telat"
                               : item.overtimeAttendance?.status === "ABSENT"
-                              ? "Absent"
+                              ? "Absen"
                               : "Unknown"}
                           </div>
                         )}

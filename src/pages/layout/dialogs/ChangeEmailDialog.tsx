@@ -81,7 +81,7 @@ export default function ChangeEmailDialog({
           <AlertDialogTitle>Ubah Email</AlertDialogTitle>
         </AlertDialogHeader>
         <form onSubmit={onChangeEmail}>
-          <div>
+          <div className="mb-6">
             <Label className="mt-4 mb-2" htmlFor="new-email">
               Email baru
             </Label>
@@ -118,7 +118,7 @@ export default function ChangeEmailDialog({
               </button>
             </div>
           </div>
-          <AlertDialogFooter className="mt-6">
+          <AlertDialogFooter className="mt-8">
             <AlertDialogCancel
               onClick={() => setIsOpen(false)}
               disabled={isLoading}

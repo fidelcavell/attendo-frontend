@@ -134,7 +134,7 @@ export default function AddLeaveApplicationDialog({
 
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="startDate">Tanggal mulai *</Label>
+            <Label htmlFor="startDate">Tanggal Mulai *</Label>
             <Input
               id="startDate"
               type="date"
@@ -142,12 +142,13 @@ export default function AddLeaveApplicationDialog({
               onChange={(event) =>
                 handleFormChange("startDate", event.target.value)
               }
+              min={new Date(Date.now()).toISOString().split("T")[0]}
               required
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="endDate">Tanggal selesai *</Label>
+            <Label htmlFor="endDate">Tanggal Selesai *</Label>
             <Input
               id="endDate"
               type="date"
@@ -155,12 +156,13 @@ export default function AddLeaveApplicationDialog({
               onChange={(event) =>
                 handleFormChange("endDate", event.target.value)
               }
+              min={new Date(Date.now()).toISOString().split("T")[0]}
               required
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="type">Tipe perizinan *</Label>
+            <Label htmlFor="type">Tipe Perizinan *</Label>
             <Select
               value={formData.type}
               onValueChange={(value) => handleFormChange("type", value)}

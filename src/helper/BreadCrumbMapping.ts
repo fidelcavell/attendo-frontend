@@ -3,12 +3,12 @@ export const breadcrumbMapping: Record<
   { label: string; path: string }[]
 > = {
   // Authenthicated path
-  "/app/profile": [{ label: "Detail profile", path: "/app/profile" }],
+  "/app/profile": [{ label: "Pengaturan Profile", path: "/app/profile" }],
 
   // Owner's path
   "/app/dashboard": [{ label: "Dashboard", path: "/app/dashboard" }],
   "/app/employee-management": [
-    { label: "Employee management", path: "/app/employee-management" },
+    { label: "Employee Management", path: "/app/employee-management" },
   ],
   "/app/work-schedule": [{ label: "Jadwal Kerja", path: "/app/work-schedule" }],
   "/app/store-setting": [

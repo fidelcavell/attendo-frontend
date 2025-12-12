@@ -30,7 +30,6 @@ import {
   MapPin,
   Settings,
   DollarSign,
-  Clock,
   Navigation,
 } from "lucide-react";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
@@ -50,6 +49,7 @@ export default function DetailTokoPage() {
     radius: "",
     breakDuration: "",
     maxBreakCount: "",
+    currentBreakCount: "",
     lateClockInPenaltyAmount: "",
     lateBreakOutPenaltyAmount: "",
     multiplierOvertime: "",
@@ -90,7 +90,6 @@ export default function DetailTokoPage() {
   };
 
   const onSetCurrentLocation = () => {
-    // Need mobile device's GPS for more accurate coordinates
     if (!isMobileDevice()) {
       setResponse({
         success: false,
@@ -137,6 +136,16 @@ export default function DetailTokoPage() {
     setIsLoading(true);
     setResponse(null);
 
+    if (Number(store.currentBreakCount) < 0) {
+      setIsLoading(false);
+      setResponse({
+        success: false,
+        message: "Jumlah istirahat tidak boleh negatif!",
+      });
+      setOpenDialog(true);
+      return;
+    }
+
     try {
       const response = await api.put(`/store/${currentStore?.id}`, store, {
         headers: {
@@ -152,6 +161,9 @@ export default function DetailTokoPage() {
       setResponse(error.response?.data || null);
     } finally {
       setOpenDialog(true);
+      if (currentUser) {
+        getAllOwnedStore(currentUser.username);
+      }
       setIsLoading(false);
       setIsUpdate(false);
     }
@@ -195,14 +207,16 @@ export default function DetailTokoPage() {
       <div className="space-y-6 px-4 md:px-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <h1 className="text-2xl font-bold text-gray-900">Detail Toko</h1>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Detail Toko "{currentStore?.name}"
+          </h1>
         </div>
 
         <form onSubmit={onSubmit}>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Column - Store Info & Settings */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Store Basic Information */}
+              {/* Store Information */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -211,64 +225,30 @@ export default function DetailTokoPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="name" className="text-sm font-medium">
-                      Nama Toko
-                    </Label>
-                    <Input
-                      className="mt-2"
-                      id="name"
-                      type="text"
-                      placeholder="Enter nama toko"
-                      value={store.name}
-                      onChange={(event) =>
-                        setStore({ ...store, name: event.target.value })
-                      }
-                      readOnly={!isUpdate}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <Label
-                      htmlFor="address"
-                      className="text-sm font-medium flex items-center gap-2"
-                    >
-                      <MapPin className="size-4" />
-                      Alamat
-                    </Label>
-                    <Textarea
-                      className="mt-2"
-                      id="address"
-                      placeholder="Enter alamat toko"
-                      value={store.address}
-                      onChange={(event) =>
-                        setStore({ ...store, address: event.target.value })
-                      }
-                      readOnly={!isUpdate}
-                      rows={3}
-                      required
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Break Settings */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Clock className="size-5 text-gray-700" />
-                    Pengaturan Jam Istirahat
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="name" className="text-sm font-medium">
+                        Nama Toko
+                      </Label>
+                      <Input
+                        className="mt-2"
+                        id="name"
+                        type="text"
+                        placeholder="Enter nama toko"
+                        value={store.name}
+                        onChange={(event) =>
+                          setStore({ ...store, name: event.target.value })
+                        }
+                        readOnly={!isUpdate}
+                        required
+                      />
+                    </div>
                     <div>
                       <Label
                         htmlFor="break-duration"
                         className="text-sm font-medium"
                       >
-                        Durasi Istirahat (minutes)
+                        Durasi Istirahat (in minute)
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <button
@@ -292,6 +272,45 @@ export default function DetailTokoPage() {
                           setStore({
                             ...store,
                             breakDuration: event.target.value,
+                          })
+                        }
+                        readOnly={!isUpdate}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label
+                        htmlFor="current-break"
+                        className="text-sm font-medium"
+                      >
+                        Jumlah Karyawan yang Istirahat Saat Ini
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              type="button"
+                              className="inline-flex items-center ml-1 text-gray-400 hover:text-gray-600"
+                            >
+                              <Info className="size-3" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>
+                              Override jika terdapat jumlah data istirahat tidak
+                              sesuai (default: 0)
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </Label>
+                      <Input
+                        className="mt-2"
+                        id="current-break"
+                        type="number"
+                        placeholder="Enter jumlah istirahat saat ini"
+                        value={store.currentBreakCount}
+                        onChange={(event) =>
+                          setStore({
+                            ...store,
+                            currentBreakCount: event.target.value,
                           })
                         }
                         readOnly={!isUpdate}
@@ -337,6 +356,27 @@ export default function DetailTokoPage() {
                       />
                     </div>
                   </div>
+                  <div>
+                    <Label
+                      htmlFor="address"
+                      className="text-sm font-medium flex items-center gap-2"
+                    >
+                      <MapPin className="size-4" />
+                      Alamat Toko
+                    </Label>
+                    <Textarea
+                      className="mt-2"
+                      id="address"
+                      placeholder="Enter alamat toko"
+                      value={store.address}
+                      onChange={(event) =>
+                        setStore({ ...store, address: event.target.value })
+                      }
+                      readOnly={!isUpdate}
+                      rows={3}
+                      required
+                    />
+                  </div>
                 </CardContent>
               </Card>
 
@@ -355,7 +395,7 @@ export default function DetailTokoPage() {
                         htmlFor="clock-in-penalty"
                         className="text-sm font-medium"
                       >
-                        Penalti telat clock-in (Rupiah)
+                        Penalti telat clock-in (in rupiah)
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <button
@@ -393,7 +433,7 @@ export default function DetailTokoPage() {
                         htmlFor="break-out-penalty"
                         className="text-sm font-medium"
                       >
-                        Penalti telat break-out (Rupiah)
+                        Penalti telat break-out (in rupiah)
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <button
@@ -473,7 +513,7 @@ export default function DetailTokoPage() {
                         className="text-sm font-medium flex items-center gap-2"
                       >
                         <Settings className="size-4" />
-                        Radius (meters)
+                        Radius Presensi (in meter)
                       </Label>
                       <Input
                         className="mt-2"
@@ -568,6 +608,7 @@ export default function DetailTokoPage() {
                   variant="outline"
                   onClick={() => {
                     setIsUpdate(false);
+                    getTokoById();
                   }}
                   disabled={isLoading}
                 >

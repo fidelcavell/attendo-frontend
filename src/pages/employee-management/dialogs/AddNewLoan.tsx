@@ -112,7 +112,7 @@ export default function AddNewLoan({
               <strong>{formatIDR(currentTotalSalary)}</strong>
             </div>
             <Label className="my-4" htmlFor="loan-amount">
-              Jumlah peminjaman uang
+              Jumlah peminjaman uang yang diinginkan
             </Label>
             <Input
               className="mb-4"
@@ -120,7 +120,7 @@ export default function AddNewLoan({
               type="text"
               value={loanAmount}
               onChange={(event) => setLoanAmount(event.target.value)}
-              placeholder="Enter loan amount"
+              placeholder="Enter jumlah peminjaman uang yang diinginkan"
               required
             />
           </AlertDialogDescription>

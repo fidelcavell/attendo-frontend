@@ -70,17 +70,17 @@ export const columns = (
 ): ColumnDef<LeaveApplication>[] => [
   {
     accessorKey: "startDate",
-    header: "Tanggal mulai",
+    header: "Tanggal Mulai",
     cell: ({ row }) => <div>{formatDate(row.getValue("startDate"))}</div>,
   },
   {
     accessorKey: "endDate",
-    header: "Tanggal selesai",
+    header: "Tanggal Selesai",
     cell: ({ row }) => <div>{formatDate(row.getValue("endDate"))}</div>,
   },
   {
     accessorKey: "type",
-    header: "Tipe",
+    header: "Tipe Izin",
     cell: ({ row }) => (
       <div>
         {row.getValue("type") === "SICK" ? (
@@ -101,7 +101,7 @@ export const columns = (
   },
   {
     accessorKey: "approvedBy",
-    header: "Disetujui oleh",
+    header: "Ditangani Oleh",
     cell: ({ row }) => <div>{row.getValue("approvedBy")}</div>,
   },
   {
@@ -127,6 +127,7 @@ export const columns = (
   },
   {
     id: "actions",
+    header: "Aksi",
     cell: ({ row }) => {
       const leaveApplication = row.original;
       return (
@@ -140,7 +141,7 @@ export const columns = (
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Aksi</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => handleViewLeaveApplication(leaveApplication)}
@@ -378,7 +379,7 @@ export function LeaveApplicationTable() {
             </div>
             {/* Add new Leave Application's button */}
             <Button onClick={handleAddLeaveApplication}>
-              <Plus /> Tambah pengajuan perizinan
+              <Plus /> Tambah Pengajuan Perizinan
             </Button>
           </div>
 
@@ -435,7 +436,7 @@ export function LeaveApplicationTable() {
             totalPages={totalPages}
             dataLength={data.length}
             totalElements={totalElements}
-            dataName="applications"
+            dataName="pengajuan"
             pageSize={table.getState().pagination.pageSize}
             setPageSize={table.setPageSize}
             onPreviousPage={table.previousPage}

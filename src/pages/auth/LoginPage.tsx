@@ -179,7 +179,7 @@ export default function LoginPage() {
                     </Button>
                   </div>
                   <div className="text-center text-sm">
-                    Belum punya akun?{" "}
+                    Belum memiliki akun?{" "}
                     <Link
                       to="/sign-up"
                       className="underline underline-offset-4"

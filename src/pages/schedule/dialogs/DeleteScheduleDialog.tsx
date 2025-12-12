@@ -62,7 +62,7 @@ export default function DeleteScheduleDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
           <AlertDialogDescription className="mb-4">
-            Apakah Anda yakin untuk menghapus jadwal kerja ini secara
+            Apakah Anda yakin untuk menghapus jadwal kerja ini secara{" "}
             <span className="font-bold">PERMANENT</span> ?<br />
             <br />
             Catatan: Karyawan dengan jadwal ini akan tidak memiliki jadwal

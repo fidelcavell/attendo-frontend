@@ -51,7 +51,9 @@ export default function DateRangePicker({
       <PopoverContent className="w-80 p-4" align={position}>
         <div className="space-y-4">
           <div>
-            <h4 className="font-medium text-sm mb-2">Filter dengan rentang tanggal</h4>
+            <h4 className="font-medium text-sm mb-2">
+              Filter dengan rentang tanggal
+            </h4>
           </div>
 
           <div className="grid grid-cols-2 gap-3">

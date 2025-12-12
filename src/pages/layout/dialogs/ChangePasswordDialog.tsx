@@ -83,7 +83,7 @@ export default function ChangePasswordDialog({
           <AlertDialogTitle>Ubah Password</AlertDialogTitle>
         </AlertDialogHeader>
         <form onSubmit={onChangePassword}>
-          <div>
+          <div className="mb-6">
             <Label className="mt-4 mb-2" htmlFor="name">
               Password baru
             </Label>
@@ -127,7 +127,7 @@ export default function ChangePasswordDialog({
               </button>
             </div>
           </div>
-          <AlertDialogFooter className="mt-6">
+          <AlertDialogFooter className="mt-8">
             <AlertDialogCancel
               onClick={() => setIsOpen(false)}
               disabled={isLoading}

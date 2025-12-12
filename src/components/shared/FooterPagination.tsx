@@ -38,7 +38,7 @@ export default function FooterPagination({
   return (
     <div className="flex flex-wrap items-center justify-center md:justify-between py-4 gap-4 px-2">
       <div className="text-xs sm:text-sm text-muted-foreground">
-        Page {pageIndex + 1} of {totalPages || 1} | Showing {dataLength} of{" "}
+        Page {pageIndex + 1} of {totalPages || 1} | Showing {dataLength} dari{" "}
         {totalElements} {dataName}
       </div>
 

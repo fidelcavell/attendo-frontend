@@ -265,7 +265,7 @@ export default function DailyClockPage() {
         <CardHeader className="text-center space-y-1">
           <CardTitle className="text-base sm:text-lg font-semibold flex items-center justify-center gap-2">
             <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-            Daily Clock
+            Presensi Harian
           </CardTitle>
           <p className="text-[11px] sm:text-xs text-muted-foreground">
             {currentTime}, {formatDate(new Date().toLocaleString())}

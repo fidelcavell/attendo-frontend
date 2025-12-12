@@ -77,7 +77,7 @@ export default function AddEmployeeDialog({
     <AlertDialog open={open} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Tambah karyawan baru</AlertDialogTitle>
+          <AlertDialogTitle>Tambah Karyawan Baru</AlertDialogTitle>
           <AlertDialogDescription>
             <div>
               <Label className="my-4" htmlFor="username">
@@ -94,12 +94,12 @@ export default function AddEmployeeDialog({
               />
             </div>
             <div>
-              <Label className="my-4" htmlFor="username">
-                Salary
+              <Label className="my-4" htmlFor="salary">
+                Gaji
               </Label>
               <Input
                 className="mb-4"
-                id="username"
+                id="salary"
                 type="number"
                 placeholder="Enter gaji karyawan"
                 value={salaryAmount}

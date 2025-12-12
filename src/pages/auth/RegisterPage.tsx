@@ -4,12 +4,7 @@ import { useRef, useState, type FormEvent } from "react";
 import type { AxiosError } from "axios";
 import api from "@/api/api-config";
 import { cn } from "@/lib/utils";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   AlertDialog,
@@ -178,11 +173,17 @@ export default function RegisterPage() {
                       className="w-full h-10"
                       disabled={loading}
                     >
-                      {loading ? <Spinner className="size-6" /> : "Register"}
+                      {loading ? (
+                        <>
+                          <Spinner className="size-6" /> Processing...
+                        </>
+                      ) : (
+                        "Register"
+                      )}
                     </Button>
                   </div>
                   <div className="text-center text-sm">
-                    Already have an account?{" "}
+                    Sudah memiliki akun?{" "}
                     <Link
                       to="/sign-in"
                       className="underline underline-offset-4"

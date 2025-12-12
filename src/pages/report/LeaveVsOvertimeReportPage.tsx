@@ -123,7 +123,7 @@ export default function LeaveVsOvertimeReportPage() {
   ];
 
   return (
-    <div className="container mx-auto px-6 space-y-6">
+    <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
       <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
         <div>
@@ -146,9 +146,9 @@ export default function LeaveVsOvertimeReportPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="3">3 bulan</SelectItem>
-                  <SelectItem value="6">6 bulan</SelectItem>
-                  <SelectItem value="12">12 bulan</SelectItem>
+                  <SelectItem value="3">3 Bulan Terakhir</SelectItem>
+                  <SelectItem value="6">6 Bulan Terakhir</SelectItem>
+                  <SelectItem value="12">12 Bulan Terakhir</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>

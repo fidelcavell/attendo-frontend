@@ -74,22 +74,22 @@ export const columns = (
 ): ColumnDef<OvertimeApplication>[] => [
   {
     accessorKey: "overtimeDate",
-    header: "Overtime Date",
+    header: "Tanggal Lembur",
     cell: ({ row }) => <div>{formatDate(row.getValue("overtimeDate"))}</div>,
   },
   {
     accessorKey: "assignedTime",
-    header: "Assigned Time",
+    header: "Jadwal Lembur",
     cell: ({ row }) => <div>{row.getValue("assignedTime")}</div>,
   },
   {
     accessorKey: "overtimePay",
-    header: "Overtime Pay",
+    header: "Bayaran Lembur",
     cell: ({ row }) => <div>{formatIDR(row.getValue("overtimePay"))}</div>,
   },
   {
     accessorKey: "approvedBy",
-    header: "Approved by",
+    header: "Ditangani Oleh",
     cell: ({ row }) => <div>{row.getValue("approvedBy")}</div>,
   },
   {
@@ -115,6 +115,7 @@ export const columns = (
   },
   {
     id: "actions",
+    header: "Aksi",
     cell: ({ row }) => {
       const overtimeApplication = row.original;
       return (
@@ -128,7 +129,7 @@ export const columns = (
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Aksi</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => handleViewOvertimeApplication(overtimeApplication)}
@@ -439,7 +440,7 @@ export function OvertimeApplicationTable() {
             totalPages={totalPages}
             dataLength={data.length}
             totalElements={totalElements}
-            dataName="applications"
+            dataName="pengajuan"
             pageSize={table.getState().pagination.pageSize}
             setPageSize={table.setPageSize}
             onPreviousPage={table.previousPage}

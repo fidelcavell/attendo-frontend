@@ -117,7 +117,7 @@ export default function DetailProfile({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction>OK</AlertDialogAction>
+          <AlertDialogAction>Ok</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

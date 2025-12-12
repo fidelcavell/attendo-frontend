@@ -168,7 +168,7 @@ export default function AddStorePage() {
                         <div className="flex flex-row gap-3">
                           <div className="w-1/2">
                             <Label htmlFor="break-duration">
-                              Durasi Istirahat (minutes)
+                              Durasi Istirahat (in minute)
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <span>
@@ -235,7 +235,7 @@ export default function AddStorePage() {
                         <div className="flex flex-row gap-3">
                           <div className="w-1/2">
                             <Label htmlFor="clock-in-penalty">
-                              Penalti telat clock-in (Rupiah)
+                              Penalti telat clock-in (in rupiah)
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <span>
@@ -339,12 +339,12 @@ export default function AddStorePage() {
                             />
                           </div>
                           <div className="w-1/2">
-                            <Label htmlFor="radius">Radius (meters)</Label>
+                            <Label htmlFor="radius">Radius Presensi (in meter)</Label>
                             <Input
                               className="mt-2"
                               id="radius"
                               type="number"
-                              placeholder="Enter radius"
+                              placeholder="Enter radius presensi"
                               value={store.radius}
                               onChange={(event) =>
                                 setStore({
@@ -360,7 +360,7 @@ export default function AddStorePage() {
 
                       {/* Address */}
                       <div className="grid gap-3">
-                        <Label htmlFor="address">Alamat</Label>
+                        <Label htmlFor="address">Alamat Toko</Label>
                         <Textarea
                           id="address"
                           placeholder="Enter alamat toko"

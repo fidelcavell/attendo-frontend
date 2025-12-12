@@ -77,14 +77,14 @@ export default function OvertimeApprovalDialog({
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {selectedAction == "APPROVED" ? "Menyetujui" : "Menolak"} pengajuan
-            lembur
-          </AlertDialogTitle>
+          <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
           <AlertDialogDescription>
             Apakah Anda yakin ingin{" "}
-            {selectedAction == "APPROVED" ? "menyetujui" : "menolak"} pengajuan
-            lembur yang diajukan oleh {selectedOvertimeRequest.issuedBy} ?
+            <span className="font-bold">
+              {selectedAction == "APPROVED" ? "MENYETUJUI" : "MENOLAK"}
+            </span>{" "}
+            pengajuan lembur yang diajukan oleh{" "}
+            {selectedOvertimeRequest.issuedBy} ?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

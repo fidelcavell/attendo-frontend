@@ -461,7 +461,7 @@ export default function DetailAttendancePage() {
                   <div className="flex-col justify-center items-center w-full h-72 border border-dashed rounded-sm flex">
                     <CameraOff className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground" />
                     <p className="mt-2 text-sm text-gray-500">
-                      Tidak ada data yag tersedia!
+                      Tidak ada data yang tersedia!
                     </p>
                   </div>
                 )}
@@ -502,7 +502,7 @@ export default function DetailAttendancePage() {
                   <div className="flex-col justify-center items-center w-full h-72 border border-dashed rounded-sm flex">
                     <CameraOff className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground" />
                     <p className="mt-2 text-sm text-gray-500">
-                      Tidak ada data yag tersedia!
+                      Tidak ada data yang tersedia!
                     </p>
                   </div>
                 )}
@@ -527,7 +527,7 @@ export default function DetailAttendancePage() {
                 <p className="text-md font-semibold text-green-700">
                   {selectedAttendance.attendanceData.clockIn
                     ? selectedAttendance.attendanceData.clockIn?.slice(11)
-                    : "No data recorded"}
+                    : "Tidak ada data yang tersedia"}
                 </p>
               </div>
               <div className="text-center p-4 bg-red-50 rounded-lg border border-red-200">
@@ -536,7 +536,7 @@ export default function DetailAttendancePage() {
                 <p className="text-md font-semibold text-red-700">
                   {selectedAttendance.attendanceData.clockOut
                     ? selectedAttendance.attendanceData.clockOut?.slice(11)
-                    : "No data recorded"}
+                    : "Tidak ada data yang tersedia"}
                 </p>
               </div>
               <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
@@ -545,7 +545,7 @@ export default function DetailAttendancePage() {
                 <p className="text-md font-semibold text-blue-700">
                   {selectedAttendance.attendanceData.breakIn
                     ? selectedAttendance.attendanceData.breakIn?.slice(11)
-                    : "No data recorded"}
+                    : "Tidak ada data yang tersedia"}
                 </p>
               </div>
               <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
@@ -554,7 +554,7 @@ export default function DetailAttendancePage() {
                 <p className="text-md font-semibold text-orange-700">
                   {selectedAttendance.attendanceData.breakOut
                     ? selectedAttendance.attendanceData.breakOut?.slice(11)
-                    : "No data recorded"}
+                    : "Tidak ada data yang tersedia"}
                 </p>
               </div>
             </div>
@@ -631,7 +631,7 @@ export default function DetailAttendancePage() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Update presensi</AlertDialogTitle>
+            <AlertDialogTitle>Update Presensi</AlertDialogTitle>
             <AlertDialogDescription>
               <div className="flex flex-col gap-4 mt-4">
                 <div className="flex flex-row gap-4">

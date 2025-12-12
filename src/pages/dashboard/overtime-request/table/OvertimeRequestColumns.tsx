@@ -68,6 +68,7 @@ export const OvertimeRequestColumns = (
   },
   {
     id: "actions",
+    header: "Aksi",
     cell: ({ row }) => {
       const overtimeRequest = row.original;
       return (
@@ -81,7 +82,7 @@ export const OvertimeRequestColumns = (
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Aksi</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => handleViewRequestDetail(overtimeRequest)}

@@ -149,6 +149,7 @@ export const columns = (
   },
   {
     id: "actions",
+    header: "Aksi",
     cell: ({ row }) => {
       const employee = row.original;
       const monthName = months[new Date().getMonth()].toLowerCase();
@@ -164,7 +165,7 @@ export const columns = (
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Aksi</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleViewDetailProfile(employee)}>
               <UserSearch className="mr-2" />
@@ -442,7 +443,7 @@ export function EmployeeManagementTable() {
             onClick={() => setIsAddEmployee(true)}
           >
             <Plus />
-            Tambah karyawan baru
+            Tambah Karyawan Baru
           </Button>
         </div>
 
@@ -502,7 +503,7 @@ export function EmployeeManagementTable() {
           totalPages={totalPages}
           dataLength={data.length}
           totalElements={totalElements}
-          dataName="employees"
+          dataName="karyawan"
           pageSize={table.getState().pagination.pageSize}
           setPageSize={table.setPageSize}
           onPreviousPage={table.previousPage}

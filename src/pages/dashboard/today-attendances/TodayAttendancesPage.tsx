@@ -169,6 +169,7 @@ export const columns = (
   },
   {
     id: "actions",
+    header: "Aksi",
     cell: ({ row }) => {
       const attendance = row.original;
       return (
@@ -182,7 +183,7 @@ export const columns = (
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Aksi</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => handleViewDetailAttendance(attendance)}
@@ -390,7 +391,7 @@ export function BreakEmployeeListTable() {
           totalPages={totalPages}
           dataLength={data.length}
           totalElements={totalElements}
-          dataName="attendances"
+          dataName="presensi"
           pageSize={table.getState().pagination.pageSize}
           setPageSize={table.setPageSize}
           onPreviousPage={table.previousPage}

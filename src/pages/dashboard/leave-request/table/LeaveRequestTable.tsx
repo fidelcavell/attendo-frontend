@@ -315,7 +315,7 @@ export default function LeaveRequestTable() {
           totalPages={totalPages}
           dataLength={data.length}
           totalElements={totalElements}
-          dataName="applications"
+          dataName="pengajuan"
           pageSize={table.getState().pagination.pageSize}
           setPageSize={table.setPageSize}
           onPreviousPage={table.previousPage}

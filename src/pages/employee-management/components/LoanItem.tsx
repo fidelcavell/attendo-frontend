@@ -59,8 +59,6 @@ export default function LoanItem({
     }
   };
 
-  console.log(response);
-
   return (
     <>
       <Card
@@ -112,7 +110,7 @@ export default function LoanItem({
 
       {response && (
         <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <AlertDialogContent className="w-4/5 md:w-1/3">
+          <AlertDialogContent className="w-4/5 md:w-1/4">
             <AlertDialogHeader>
               <AlertDialogTitle>
                 {response.success ? "Success" : "Error"}

@@ -123,7 +123,7 @@ export default function UpdateEmployeeSalary({
           <AlertDialogTitle>Update Gaji</AlertDialogTitle>
           <AlertDialogDescription>
             <div className="mb-2">
-              Data gaji yang berlaku saat ini:{" "}
+              Jumlah gaji yang berlaku saat ini:{" "}
               <strong>{formatIDR(currentBaseSalary)}</strong>
             </div>
           </AlertDialogDescription>

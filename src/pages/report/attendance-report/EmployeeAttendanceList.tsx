@@ -53,7 +53,7 @@ export const columns = (
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Nama",
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
@@ -80,6 +80,7 @@ export const columns = (
   },
   {
     id: "actions",
+    header: "Aksi",
     cell: ({ row }) => {
       const employee = row.original;
       return (
@@ -206,10 +207,15 @@ export function EmployeeAttendanceListTable() {
 
   return (
     <Card className="p-6 shadow-md">
+      <div className="px-2">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Daftar Laporan Presensi Karyawan
+        </h1>
+      </div>
       {/* Search Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
         <Input
-          placeholder="Search username..."
+          placeholder="Cari berdasarkan username..."
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           className="w-full sm:max-w-sm"
@@ -269,7 +275,7 @@ export function EmployeeAttendanceListTable() {
         totalPages={totalPages}
         dataLength={data.length}
         totalElements={totalElements}
-        dataName="employees"
+        dataName="karyawan"
         pageSize={table.getState().pagination.pageSize}
         setPageSize={table.setPageSize}
         onPreviousPage={table.previousPage}

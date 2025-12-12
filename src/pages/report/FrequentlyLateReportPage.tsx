@@ -93,9 +93,9 @@ export default function FrequentlyLateReportPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="1">1 Bulan</SelectItem>
-                  <SelectItem value="3">3 Bulan</SelectItem>
-                  <SelectItem value="6">6 Bulan</SelectItem>
+                  <SelectItem value="1">1 Bulan Terakhir</SelectItem>
+                  <SelectItem value="3">3 Bulan Terakhir</SelectItem>
+                  <SelectItem value="6">6 Bulan Terakhir</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>

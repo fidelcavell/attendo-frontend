@@ -108,7 +108,7 @@ export default function AddUpdateScheduleDialog({
       <AlertDialogContent className="max-w-[90%] sm:max-w-lg">
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {selectedSchedule ? "Ubah Jadwal Kerja" : "Tambah Jadwal Kerja"}
+            {selectedSchedule ? "Update Jadwal Kerja" : "Tambah Jadwal Kerja"}
           </AlertDialogTitle>
         </AlertDialogHeader>
 

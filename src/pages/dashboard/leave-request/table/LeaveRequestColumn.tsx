@@ -84,6 +84,7 @@ export const LeaveRequestColumns = (
   },
   {
     id: "actions",
+    header: "Aksi",
     cell: ({ row }) => {
       const leaveRequest = row.original;
       return (
@@ -97,7 +98,7 @@ export const LeaveRequestColumns = (
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Aksi</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => handleViewRequestDetail(leaveRequest)}

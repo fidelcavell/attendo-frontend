@@ -32,7 +32,7 @@ export default function ProtectedRoleRoute({
           <AlertDialogHeader>
             <AlertDialogTitle>Sesi berakhir</AlertDialogTitle>
             <AlertDialogDescription>
-              Sesi login Anda telah berakhir. Silakan masuk kembali.
+              Sesi login Anda telah berakhir. Silakan sign in kembali.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

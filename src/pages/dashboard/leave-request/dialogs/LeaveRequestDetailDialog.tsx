@@ -27,7 +27,7 @@ export default function LeaveRequestDetailDialog({
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Detail pengajuan perizinan</AlertDialogTitle>
+          <AlertDialogTitle>Detail Pengajuan Perizinan</AlertDialogTitle>
           <AlertDialogDescription>
             <div className="flex flex-col gap-3 mt-2 mb-4">
               <div className="flex gap-3">

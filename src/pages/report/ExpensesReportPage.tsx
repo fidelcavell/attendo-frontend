@@ -100,9 +100,9 @@ export default function ExpensesReportPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="3">3 Bulan</SelectItem>
-                  <SelectItem value="6">6 Bulan</SelectItem>
-                  <SelectItem value="12">12 Bulan</SelectItem>
+                  <SelectItem value="3">3 Bulan Terakhir</SelectItem>
+                  <SelectItem value="6">6 Bulan Terakhir</SelectItem>
+                  <SelectItem value="12">12 Bulan Terakhir</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -236,9 +236,7 @@ export default function ExpensesReportPage() {
       <Card className="avoid-break">
         <CardHeader>
           <CardTitle>Rincian Bulanan</CardTitle>
-          <CardDescription>
-            Ringkasan pengeluaran bulanan beserta detail nominal tiap bulan
-          </CardDescription>
+          <CardDescription>Detail jumlah pengeluaran tiap bulan</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -255,7 +253,7 @@ export default function ExpensesReportPage() {
                     {item.month}
                   </p>
                   <p className="text-md font-bold text-gray-800 mt-1">
-                    {(item.amount / 1000000).toFixed(2)}M IDR
+                    Rp {(item.amount / 1000000).toFixed(2)} jt
                   </p>
                 </div>
               </div>
@@ -269,7 +267,7 @@ export default function ExpensesReportPage() {
         <CardHeader>
           <CardTitle>Analisis Pengeluaran</CardTitle>
           <CardDescription>
-            Menyajikan berbagai insight dan tren berdasarkan data pengeluaran
+            Menyajikan berbagai insight dan tren berdasarkan data pengeluaran toko
           </CardDescription>
         </CardHeader>
         <CardContent>

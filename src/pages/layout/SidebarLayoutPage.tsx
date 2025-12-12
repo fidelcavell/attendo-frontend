@@ -25,7 +25,7 @@ export default function SidebarLayoutPage() {
 
   const location = useLocation();
   const crumbs = breadcrumbMapping[location.pathname] || [
-    { label: "Attendance Report", path: "#" },
+    { label: "Presensi", path: "#" },
   ];
 
   return (

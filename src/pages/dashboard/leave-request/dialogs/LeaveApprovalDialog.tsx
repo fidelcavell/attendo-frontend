@@ -77,14 +77,14 @@ export default function LeaveApprovalDialog({
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {selectedAction == "APPROVED" ? "Menyetujui" : "Menolak"} pengajuan
-            perizinan
-          </AlertDialogTitle>
+          <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
           <AlertDialogDescription>
             Apakah Anda yakin ingin{" "}
-            {selectedAction == "APPROVED" ? "menyetujui" : "menolak"} pengajuan
-            perizinan yang diajukan oleh {selectedLeaveRequest?.issuedBy} ?
+            <span className="font-bold">
+              {selectedAction == "APPROVED" ? "MENYETUJUI" : "MENOLAK"}
+            </span>{" "}
+            pengajuan perizinan yang diajukan oleh{" "}
+            {selectedLeaveRequest?.issuedBy} ?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

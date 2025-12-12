@@ -94,7 +94,7 @@ export function StoreSwitcher() {
                   <Plus className="size-4" />
                 </div>
                 <div className="text-muted-foreground font-medium">
-                  Tambah toko baru
+                  Tambah Toko Baru
                 </div>
               </DropdownMenuItem>
             </DropdownMenuContent>

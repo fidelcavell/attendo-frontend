@@ -122,7 +122,7 @@ export default function ForgotPasswordPage() {
                     </Button>
                   </div>
                   <div className="text-center text-sm">
-                    Ingat akun Anda?{" "}
+                    Sudah memiliki akun?{" "}
                     <Link
                       to="/sign-in"
                       className="underline underline-offset-4"

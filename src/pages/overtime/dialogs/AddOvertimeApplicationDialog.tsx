@@ -138,17 +138,13 @@ export default function AddOvertimeApplicationDialog({
               onChange={(event) =>
                 handleFormChange("overtimeDate", event.target.value)
               }
-              min={
-                new Date(Date.now() + 24 * 60 * 60 * 1000)
-                  .toISOString()
-                  .split("T")[0]
-              }
+              min={new Date(Date.now()).toISOString().split("T")[0]}
               required
             />
           </div>
           {/* Schedule */}
           <div>
-            <Label className="my-4">Jadwal kerja *</Label>
+            <Label className="my-4">Jadwal Lembur *</Label>
             <Select
               value={selectedScheduleId}
               onValueChange={(value) => setSelectedScheduleId(value)}

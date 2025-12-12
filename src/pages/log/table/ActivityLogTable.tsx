@@ -176,17 +176,14 @@ export default function ActivityLogTable() {
       <div>
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Admin's Activity Log
+            Aktivitas Log Admin
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Monitoring your admin's activity.
-          </p>
         </div>
         <Card className="p-6 shadow-md">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
             {/* Search Bar */}
             <Input
-              placeholder="Search username..."
+              placeholder="Cari berdasarkan username..."
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               className="w-full sm:max-w-sm"
@@ -260,7 +257,7 @@ export default function ActivityLogTable() {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={6} className="h-24 text-center">
-                      No data available
+                      Tidak ada data yang tersedia
                     </TableCell>
                   </TableRow>
                 )}
@@ -274,7 +271,7 @@ export default function ActivityLogTable() {
             totalPages={totalPages}
             dataLength={data.length}
             totalElements={totalElements}
-            dataName="logs"
+            dataName="aktivitas"
             pageSize={table.getState().pagination.pageSize}
             setPageSize={table.setPageSize}
             onPreviousPage={table.previousPage}
