@@ -31,7 +31,7 @@ function parseJwt(token: string): Record<string, unknown> | null {
   }
 }
 
-function isTokenExpired(token: string | null): boolean {
+export function isTokenExpired(token: string | null): boolean {
   if (!token) return true;
   const decoded = parseJwt(token);
   const exp = typeof decoded?.exp === "number" ? (decoded.exp as number) : null;
@@ -81,7 +81,7 @@ export default function useJwtExpiryWatcher() {
 
   const acknowledgeExpiry = () => {
     setExpired(false);
-    navigate("/", { replace: true });
+    navigate("/sign-in", { replace: true });
   };
 
   return { expired, acknowledgeExpiry };

@@ -210,7 +210,7 @@ export default function OvertimeBreakPage() {
               Status presensi saat ini
             </p>
             <p className="text-sm sm:text-base font-medium">
-              {!selectedOvertime
+              {!selectedOvertime.clockIn
                 ? "Belum Clock In"
                 : selectedOvertime.clockOut
                 ? "Sudah Clock Out"

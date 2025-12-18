@@ -7,7 +7,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import useJwtExpiryWatcher from "@/hooks/useJwtExpiry";
+import useJwtExpiryWatcher, { isTokenExpired } from "@/hooks/useJwtExpiry";
 import { useLoginContext } from "@/hooks/useLogin";
 import type { ReactNode } from "react";
 import { Navigate, useParams } from "react-router-dom";
@@ -25,7 +25,12 @@ export default function ProtectedRoleRoute({
   const { expired, acknowledgeExpiry } = useJwtExpiryWatcher();
   const { storeId } = useParams();
 
-  if (expired) {
+  // Expired -> To check JWT Token expired based on timer when user dont close the browser tab
+  // isTokenExpired -> To check JWT Token expired when user try to enter specific route
+  if (expired || isTokenExpired(token)) {
+    localStorage.removeItem("JWT_TOKEN");
+    localStorage.removeItem("USERNAME");
+
     return (
       <AlertDialog open={expired}>
         <AlertDialogContent>
@@ -45,7 +50,10 @@ export default function ProtectedRoleRoute({
     );
   }
 
-  if (!token) {
+  // Check JWT Token expire date and clear the local storage!
+  if (isTokenExpired(token)) {
+    localStorage.removeItem("JWT_TOKEN");
+    localStorage.removeItem("USERNAME");
     return <Navigate to="/sign-in" replace />;
   }
 

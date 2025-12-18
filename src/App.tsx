@@ -31,8 +31,18 @@ import DetailAttendancePage from "./pages/report/attendance-report/DetailAttenda
 import AccountEmailVerificationPage from "./pages/auth/AccountEmailVerificationPage";
 import AccountEmailChangePage from "./pages/auth/AccoutEmailChangePage";
 import NoInternetConnection from "./pages/error/NoInternetConnection";
+import { isTokenExpired } from "./hooks/useJwtExpiry";
+import { useLoginContext } from "./hooks/useLogin";
 
 function App() {
+  const { token } = useLoginContext();
+
+  // To clear localStorage when JWT Token expired but user is try to access "/" instead of another specific route
+  if (isTokenExpired(token)) {
+    localStorage.removeItem("JWT_TOKEN");
+    localStorage.removeItem("USERNAME");
+  }
+
   return (
     <BrowserRouter>
       <NoInternetConnection />
