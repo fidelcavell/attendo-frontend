@@ -155,7 +155,12 @@ export default function FrequentlyLateReportPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {lateReport?.totalLateHours}h
+              {lateReport && lateReport?.totalLateCount > 0
+                ? (
+                    lateReport.totalLateHours / lateReport.totalLateHours
+                  ).toFixed(2)
+                : 0}
+              h
             </div>
             <p className="text-xs text-muted-foreground">Per kejadian telat</p>
           </CardContent>
@@ -170,7 +175,11 @@ export default function FrequentlyLateReportPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {lateReport?.totalLateHours}
+              {lateReport && Number(selectedPeriod) > 0
+                ? (lateReport.totalLateCount / Number(selectedPeriod)).toFixed(
+                    1
+                  )
+                : 0}
             </div>
             <p className="text-xs text-muted-foreground">
               Frekuensi telat per bulan
