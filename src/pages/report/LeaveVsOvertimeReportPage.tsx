@@ -177,7 +177,7 @@ export default function LeaveVsOvertimeReportPage() {
               {leaveVsOvertimeReport?.totalLeaveDaysInPeriod}
             </div>
             <p className="text-xs text-muted-foreground">
-              {leaveVsOvertimeReport?.totalLeaveRequestInPeriod} pengajuan
+              Dalam {leaveVsOvertimeReport?.totalLeaveRequestInPeriod} pengajuan
               perizinan
             </p>
           </CardContent>
@@ -195,7 +195,7 @@ export default function LeaveVsOvertimeReportPage() {
               {leaveVsOvertimeReport?.totalOvertimeDaysInPeriod}
             </div>
             <p className="text-xs text-muted-foreground">
-              {leaveVsOvertimeReport?.totalOvertimeDaysInPeriod} pengajuan
+              Dalam {leaveVsOvertimeReport?.totalOvertimeDaysInPeriod} pengajuan
               lembur
             </p>
           </CardContent>

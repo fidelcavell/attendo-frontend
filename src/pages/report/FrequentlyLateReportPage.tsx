@@ -31,7 +31,7 @@ import { Button } from "@/components/ui/button";
 export default function FrequentlyLateReportPage() {
   const chartConfig = {
     lateCount: {
-      label: "Late Count",
+      label: "Jumlah Telat",
       color: "var(--color-sky-500)",
     },
   } satisfies ChartConfig;
@@ -53,7 +53,6 @@ export default function FrequentlyLateReportPage() {
         }
       );
       setLateReport(response.data);
-      console.log(response.data);
     } catch (exception) {
       console.error(exception);
     }
@@ -149,7 +148,7 @@ export default function FrequentlyLateReportPage() {
         <Card className="avoid-break">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Rata-rata Jam Telat
+              Rerata Jam Telat
             </CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -158,18 +157,18 @@ export default function FrequentlyLateReportPage() {
               {lateReport && lateReport?.totalLateCount > 0
                 ? (
                     lateReport.totalLateHours / lateReport.totalLateHours
-                  ).toFixed(2)
+                  ).toFixed(1)
                 : 0}
               h
             </div>
-            <p className="text-xs text-muted-foreground">Per kejadian telat</p>
+            <p className="text-xs text-muted-foreground">Per kejadian</p>
           </CardContent>
         </Card>
 
         <Card className="avoid-break">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Rata-rata Bulanan
+              Rerata per Bulan
             </CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -182,7 +181,7 @@ export default function FrequentlyLateReportPage() {
                 : 0}
             </div>
             <p className="text-xs text-muted-foreground">
-              Frekuensi telat per bulan
+              Kejadian per bulan
             </p>
           </CardContent>
         </Card>
