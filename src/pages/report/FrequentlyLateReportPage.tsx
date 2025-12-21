@@ -156,7 +156,7 @@ export default function FrequentlyLateReportPage() {
             <div className="text-2xl font-bold">
               {lateReport && lateReport?.totalLateCount > 0
                 ? (
-                    lateReport.totalLateHours / lateReport.totalLateHours
+                    lateReport.totalLateHours / lateReport.totalLateCount
                   ).toFixed(1)
                 : 0}
               h

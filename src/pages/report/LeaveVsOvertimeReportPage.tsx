@@ -205,7 +205,7 @@ export default function LeaveVsOvertimeReportPage() {
       {/* Leave Type Distribution by month */}
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Distribusi Hari Izin</CardTitle>
+          <CardTitle>Distribusi Perizinan per Bulan</CardTitle>
           <CardDescription>
             {leaveVsOvertimeReport?.leaveDistributionByMonth.at(0)?.month} -{" "}
             {leaveVsOvertimeReport?.leaveDistributionByMonth.at(-1)?.month}
@@ -250,7 +250,7 @@ export default function LeaveVsOvertimeReportPage() {
         </CardContent>
         <CardFooter className="flex-col items-start gap-2 text-sm">
           <div className="flex gap-2 leading-none font-medium">
-            Menampilkan distribusi tipe pengajuan perizinan pada{" "}
+            Menampilkan distribusi perizinan per bulan pada{" "}
             {selectedPeriod} bulan terakhir <TrendingUp className="h-4 w-4" />
           </div>
         </CardFooter>
@@ -259,7 +259,7 @@ export default function LeaveVsOvertimeReportPage() {
       {/* Pie Chart Distribution */}
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Distribusi Tipe Perizinan</CardTitle>
+          <CardTitle>Distribusi Perizinan per Tipe</CardTitle>
           <CardDescription>
             Rincian berbagai jenis perizinan yang diambil oleh karyawan
           </CardDescription>
@@ -328,7 +328,7 @@ export default function LeaveVsOvertimeReportPage() {
                       </div>
                       <div className="text-center">
                         <div className="font-bold text-lg">
-                          {totalRequests > 0 ? leaveDays / totalRequests : 0}
+                          {totalRequests > 0 ? (leaveDays / totalRequests).toFixed(1) : 0}
                         </div>
                         <div className="text-gray-600">Avg Hari</div>
                       </div>
@@ -348,7 +348,7 @@ export default function LeaveVsOvertimeReportPage() {
       {/* Overtime Distribution by month */}
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Distribusi Hari Lembur</CardTitle>
+          <CardTitle>Distribusi Lembur per Bulan</CardTitle>
           <CardDescription>
             {leaveVsOvertimeReport?.leaveDistributionByMonth.at(0)?.month} -{" "}
             {leaveVsOvertimeReport?.leaveDistributionByMonth.at(-1)?.month}
@@ -387,7 +387,7 @@ export default function LeaveVsOvertimeReportPage() {
         </CardContent>
         <CardFooter className="flex-col items-start gap-2 text-sm">
           <div className="flex gap-2 leading-none font-medium">
-            Menampilkan distribusi hari lembur pada {selectedPeriod} bulan
+            Menampilkan distribusi lembur per bulan pada {selectedPeriod} bulan
             terakhir <TrendingUp className="h-4 w-4" />
           </div>
         </CardFooter>
@@ -396,9 +396,9 @@ export default function LeaveVsOvertimeReportPage() {
       {/* Comparison Chart Distribution */}
       <Card className="avoid-break">
         <CardHeader>
-          <CardTitle>Perbandingan Izin dan Lembur</CardTitle>
+          <CardTitle>Distribusi Perbandingan Antara Perizinan dan Lembur</CardTitle>
           <CardDescription>
-            Rincian distribusi izin dan lembur yang digunakan oleh karyawan
+            Rincian distribusi perizinan dan lembur yang dilakukan oleh karyawan
           </CardDescription>
         </CardHeader>
         <CardContent>
