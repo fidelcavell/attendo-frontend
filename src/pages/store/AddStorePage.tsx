@@ -1,0 +1,523 @@
+import api from "@/api/api-config";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useLoginContext } from "@/hooks/useLogin";
+import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import type { AxiosError } from "axios";
+import { Info, MapPin, Navigation } from "lucide-react";
+import { useState, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function AddStorePage() {
+  const { currentUser, getUserData } = useLoginContext();
+  const navigate = useNavigate();
+
+  const [position, setPosition] = useState<{ lat: number; lng: number } | null>(
+    null
+  );
+
+  const [store, setStore] = useState({
+    name: "",
+    address: "",
+    lat: "",
+    lng: "",
+    radius: "",
+    breakDuration: "",
+    maxBreakCount: "",
+    lateClockInPenaltyAmount: "",
+    lateBreakOutPenaltyAmount: "",
+    multiplierOvertime: "",
+    maxLateMinutePerMonth: "",
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [response, setResponse] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
+
+  // Checking user's current used device
+  const isMobileDevice = () => {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  };
+
+  const onSetCurrentLocation = () => {
+    // Need mobile device's GPS for more accurate coordinates
+    if (!isMobileDevice()) {
+      setResponse({
+        success: false,
+        message:
+          "This feature requires your mobile device’s GPS to provide accurate location data!",
+      });
+      setOpenDialog(true);
+      return;
+    }
+
+    if (!navigator.geolocation) {
+      setResponse({ success: false, message: "Geolocation is not supported!" });
+      setOpenDialog(true);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setPosition({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+        setStore({
+          ...store,
+          lat: position.coords.latitude.toString(),
+          lng: position.coords.longitude.toString(),
+        });
+      },
+      () => {
+        setResponse({
+          success: false,
+          message: `Failed to get current location: No Internet Connection! Please turn on your GPS feature`,
+        });
+        setOpenDialog(true);
+      }
+    );
+  };
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setResponse(null);
+    setOpenDialog(false);
+
+    try {
+      const response = await api.post(
+        `/store/${currentUser?.username}`,
+        store,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setResponse(response.data);
+      await getUserData();
+    } catch (exception: unknown) {
+      const error = exception as AxiosError<{
+        success: boolean;
+        message: string;
+      }>;
+      setResponse(error.response?.data || null);
+    } finally {
+      setOpenDialog(true);
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="bg-muted flex min-h-svh items-center justify-center gap-6 p-6 md:p-10">
+      <div className="flex w-full max-w-6xl flex-col gap-6">
+        <div className="grid gap-2">
+          <div className="text-xl font-semibold">
+            Hi, Welcome {currentUser?.username}
+          </div>
+          <div className="text-[14px]">
+            Silakan lengkapi informasi toko Anda!
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-6">
+          <Card>
+            <CardContent>
+              <form onSubmit={handleSubmit}>
+                <div className="grid gap-6">
+                  <div className="grid lg:grid-cols-2 gap-8">
+                    <div className="flex flex-col gap-6 w-full">
+                      {/* Store Name and Min Late Minute per Month */}
+                      <div className="flex flex-col gap-3">
+                        <div className="flex flex-row gap-3">
+                          <div className="w-1/2">
+                            <Label
+                              htmlFor="nama-toko"
+                              className="text-sm font-medium"
+                            >
+                              Nama Toko
+                            </Label>
+                            <Input
+                              className="mt-2"
+                              id="nama-toko"
+                              placeholder="Enter nama toko"
+                              value={store.name}
+                              onChange={(event) =>
+                                setStore({
+                                  ...store,
+                                  name: event.target.value,
+                                })
+                              }
+                              required
+                            />
+                          </div>
+                          <div className="w-1/2">
+                            <Label
+                              htmlFor="min-late-per-month"
+                              className="text-sm font-medium"
+                            >
+                              Maksimal telat per bulan (in minute)
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <span>
+                                    <Info className="size-4" />
+                                  </span>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>
+                                    Akumulasi jumlah maksimal telat dalam menit
+                                    per bulan untuk dikategorikan sebagai Top 5
+                                    Karyawan Telat
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </Label>
+                            <Input
+                              className="mt-2"
+                              id="min-late-per-month"
+                              placeholder="Enter jumlah maksimal telat (minute)"
+                              value={store.maxLateMinutePerMonth}
+                              onChange={(event) =>
+                                setStore({
+                                  ...store,
+                                  maxLateMinutePerMonth: event.target.value,
+                                })
+                              }
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Break Settings */}
+                      <div className="flex flex-col gap-3">
+                        <div className="flex flex-row gap-3">
+                          <div className="w-1/2">
+                            <Label htmlFor="break-duration">
+                              Durasi Istirahat (in minute)
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <span>
+                                    <Info className="size-4" />
+                                  </span>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>Durasi istirahat dan makan per karyawan</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </Label>
+                            <Input
+                              className="mt-2"
+                              id="break-duration"
+                              type="number"
+                              placeholder="Enter durasi istirahat"
+                              value={store.breakDuration}
+                              onChange={(event) =>
+                                setStore({
+                                  ...store,
+                                  breakDuration: event.target.value,
+                                })
+                              }
+                              required
+                            />
+                          </div>
+                          <div className="w-1/2">
+                            <Label htmlFor="max-break-count">
+                              Jumlah Maksimal Istirahat
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <span>
+                                    <Info className="size-4" />
+                                  </span>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>
+                                    Jumlah maksimal karyawan yang diperbolehkan
+                                    istirahat pada waktu yang sama
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </Label>
+                            <Input
+                              className="mt-2"
+                              id="max-break-count"
+                              type="number"
+                              placeholder="Enter jumlah maksimal istirahat"
+                              value={store.maxBreakCount}
+                              onChange={(event) =>
+                                setStore({
+                                  ...store,
+                                  maxBreakCount: event.target.value,
+                                })
+                              }
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Penalty Settings */}
+                      <div className="flex flex-col gap-3">
+                        <div className="flex flex-row gap-3">
+                          <div className="w-1/2">
+                            <Label htmlFor="clock-in-penalty">
+                              Penalti telat clock-in (in rupiah)
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <span>
+                                    <Info className="size-4" />
+                                  </span>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>
+                                    Potongan gaji yang diterapkan ketika
+                                    karyawan datang melewati waktu yang
+                                    dijadwalkan
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </Label>
+                            <Input
+                              className="mt-2"
+                              id="clock-in-penalty"
+                              type="number"
+                              placeholder="Enter jumlah pinalti (eg. 10000)"
+                              value={store.lateClockInPenaltyAmount}
+                              onChange={(event) =>
+                                setStore({
+                                  ...store,
+                                  lateClockInPenaltyAmount: event.target.value,
+                                })
+                              }
+                              required
+                            />
+                          </div>
+                          <div className="w-1/2">
+                            <Label htmlFor="break-out-penalty">
+                              Penalti telat break-out (in rupiah)
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <span>
+                                    <Info className="size-4" />
+                                  </span>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>
+                                    Potongan gaji yang diterapkan ketika
+                                    karyawan beristirahat melebihi waktu
+                                    istirahat yang dialokasikan
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </Label>
+                            <Input
+                              className="mt-2"
+                              id="break-out-penalty"
+                              type="number"
+                              placeholder="Enter jumlah pinalti (eg. 10000)"
+                              value={store.lateBreakOutPenaltyAmount}
+                              onChange={(event) =>
+                                setStore({
+                                  ...store,
+                                  lateBreakOutPenaltyAmount: event.target.value,
+                                })
+                              }
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Overtime and Radius */}
+                      <div className="flex flex-col gap-3">
+                        <div className="flex flex-row gap-3">
+                          <div className="w-1/2">
+                            <Label htmlFor="overtime-multiplier">
+                              Koefisien Lembur
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <span>
+                                    <Info className="size-4" />
+                                  </span>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>
+                                    Pengali yang diterapkan pada gaji pokok
+                                    untuk tanggal lembur
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </Label>
+                            <Input
+                              className="mt-2"
+                              id="overtime-multiplier"
+                              type="number"
+                              step="0.1"
+                              placeholder="Enter koefisien (eg. 1.2 = 120%)"
+                              value={store.multiplierOvertime}
+                              onChange={(event) =>
+                                setStore({
+                                  ...store,
+                                  multiplierOvertime: event.target.value,
+                                })
+                              }
+                              required
+                            />
+                          </div>
+                          <div className="w-1/2">
+                            <Label htmlFor="radius">
+                              Radius Presensi (in meter)
+                            </Label>
+                            <Input
+                              className="mt-2"
+                              id="radius"
+                              type="number"
+                              placeholder="Enter radius presensi"
+                              value={store.radius}
+                              onChange={(event) =>
+                                setStore({
+                                  ...store,
+                                  radius: event.target.value,
+                                })
+                              }
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Address */}
+                      <div className="grid gap-3">
+                        <Label htmlFor="address">Alamat Toko</Label>
+                        <Textarea
+                          id="address"
+                          placeholder="Enter alamat toko"
+                          value={store.address}
+                          onChange={(event) =>
+                            setStore({ ...store, address: event.target.value })
+                          }
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    {/* Right Column - Map */}
+                    <div className="flex flex-col gap-4">
+                      <div className="w-full h-[300px] rounded-lg border overflow-hidden">
+                        {position ? (
+                          <APIProvider apiKey="AIzaSyAvl5i7s8MeMKpCtor0KRXkW_ClEFPOD2A">
+                            <div style={{ height: "100%", width: "100%" }}>
+                              <Map
+                                defaultCenter={position}
+                                defaultZoom={16}
+                                onClick={(event) => {
+                                  if (!event.detail.latLng) return;
+                                  const { lat, lng } = event.detail.latLng;
+                                  setPosition({ lat, lng });
+                                  setStore({
+                                    ...store,
+                                    lat: lat.toString(),
+                                    lng: lng.toString(),
+                                  });
+                                }}
+                              >
+                                <Marker position={position} />
+                              </Map>
+                            </div>
+                          </APIProvider>
+                        ) : (
+                          <div className="flex items-center justify-center h-full text-gray-500">
+                            <div className="text-center">
+                              <MapPin className="size-8 mx-auto mb-2" />
+                              <p>
+                                Klik "Gunakan Lokasi Saat Ini" untuk memuat map
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      <Button
+                        type="button"
+                        className="w-full"
+                        onClick={onSetCurrentLocation}
+                      >
+                        <Navigation className="size-4 mr-2" />
+                        Gunakan Lokasi Saat Ini
+                      </Button>
+                    </div>
+                  </div>
+                  {/* Submit Button */}
+                  <Button
+                    type="submit"
+                    className="w-full h-10 mb-4"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <Spinner className="size-6" />
+                        Creating...
+                      </>
+                    ) : (
+                      "Create"
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Response Dialog */}
+      {response && (
+        <AlertDialog open={openDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                {response.success ? "Success" : "Error"}
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                {response.message}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction
+                onClick={() => {
+                  if (response.success) {
+                    navigate("/app/dashboard", { replace: true });
+                  } else {
+                    setOpenDialog(false);
+                  }
+                }}
+              >
+                Ok
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+    </div>
+  );
+}
